@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CWG · Weekly Content Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: #7a612a;
+    --ink: #0d0b07;
+    --parchment: #f5f0e8;
+    --node-bg: rgba(201,168,76,0.07);
+    --node-border: rgba(201,168,76,0.32);
+    --blue: #4c7ec9;
+    --blue-dim: rgba(76,126,201,0.28);
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Crimson Text', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 50% 44%, rgba(201,168,76,0.055) 0%, transparent 62%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 2.2rem 2rem 1rem;
+    border-bottom: 1px solid var(--node-border);
+  }
+  .eyebrow { font-size: 0.7rem; letter-spacing: 0.35em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 0.35rem; }
+  header h1 { font-family: 'Cinzel', serif; font-weight: 900; font-size: clamp(1.4rem, 3.2vw, 2.4rem); color: var(--gold); letter-spacing: 0.07em; }
+  header h1 em { color: var(--parchment); font-style: normal; font-weight: 400; }
+  .subtitle { margin-top: 0.3rem; font-style: italic; color: rgba(245,240,232,0.42); font-size: 0.9rem; }
+
+  /* ── WRAPPER ── */
+  .hub-wrapper { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; padding: 2rem 1.5rem 3.5rem; }
+
+  .section-label {
+    text-align: center; font-family: 'Cinzel', serif; font-size: 0.6rem;
+    letter-spacing: 0.32em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 1.6rem;
+  }
+
+  /* ── MAP CANVAS ── */
+  .map-wrap { position: relative; width: 100%; padding-bottom: 64%; min-height: 520px; }
+
+  .bg-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .bg-lines line { stroke: rgba(201,168,76,0.2); stroke-width: 1.3; stroke-dasharray: 5 8; }
+  .bg-lines line.solid { stroke-dasharray: none; stroke: rgba(201,168,76,0.38); stroke-width: 1.8; }
+  .bg-lines line.blue { stroke: rgba(76,126,201,0.22); stroke-dasharray: 3 6; }
+
+  /* ── NODES ── */
+  .nodes-layer { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  .node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    text-decoration: none; color: var(--parchment);
+    pointer-events: all;
+    transition: filter 0.2s, transform 0.2s;
+    z-index: 4;
+  }
+  .node:hover { filter: brightness(1.16); transform: translate(-50%,-50%) scale(1.06); }
+
+  .ring {
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border: 1.5px solid var(--node-border);
+    background: var(--node-bg);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    padding: 0.8rem;
+  }
+  .node:hover .ring { border-color: var(--gold); background: rgba(201,168,76,0.13); box-shadow: 0 0 20px rgba(201,168,76,0.2); }
+
+  .r-xl { width: 15vw; height: 15vw; max-width:165px; max-height:165px; min-width:115px; min-height:115px;
+    border-width: 2.5px; border-color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    box-shadow: 0 0 45px rgba(201,168,76,0.14), inset 0 0 22px rgba(0,0,0,0.32); }
+  .r-lg { width: 10.5vw; height: 10.5vw; max-width:118px; max-height:118px; min-width:82px; min-height:82px; }
+  .r-md { width: 8.5vw;  height: 8.5vw;  max-width: 95px; max-height: 95px;  min-width:66px; min-height:66px; }
+  .r-sm { width: 7vw;    height: 7vw;    max-width: 80px; max-height: 80px;  min-width:55px; min-height:55px; }
+
+  .n-blue .ring { border-color: rgba(76,126,201,0.4); background: rgba(76,126,201,0.07); }
+  .n-blue:hover .ring { border-color: var(--blue); background: rgba(76,126,201,0.13); box-shadow: 0 0 18px rgba(76,126,201,0.2); }
+  .n-blue .nt { color: #7aabf0; }
+
+  .nt { font-family: 'Cinzel', serif; font-weight: 600; line-height: 1.2; color: var(--gold-light); }
+  .r-xl .nt { font-size: clamp(0.6rem, 1.05vw, 0.92rem); }
+  .r-lg .nt { font-size: clamp(0.5rem, 0.82vw, 0.7rem); }
+  .r-md .nt { font-size: clamp(0.44rem, 0.72vw, 0.62rem); }
+  .r-sm .nt { font-size: clamp(0.38rem, 0.62vw, 0.56rem); }
+
+  .ns { font-style: italic; color: rgba(245,240,232,0.48); margin-top: 0.14rem; }
+  .r-xl .ns { font-size: clamp(0.48rem, 0.82vw, 0.7rem); }
+  .r-lg .ns { font-size: clamp(0.42rem, 0.68vw, 0.6rem); }
+  .r-md .ns { font-size: clamp(0.36rem, 0.58vw, 0.54rem); }
+  .r-sm .ns { font-size: clamp(0.32rem, 0.52vw, 0.48rem); }
+
+  .ntag { margin-top: 0.35rem; font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); }
+  .ntag-blue { color: var(--blue); }
+
+  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-bottom: 0.32rem; animation: pulse 2.8s ease-in-out infinite; }
+  @keyframes pulse {
+    0%,100% { opacity:0.3; transform:scale(0.85); box-shadow:0 0 0 0 rgba(201,168,76,0.4); }
+    50%      { opacity:1;   transform:scale(1.1);  box-shadow:0 0 0 6px rgba(201,168,76,0); }
+  }
+
+  /* ── SUB-LINKS ── */
+  .sub-links { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; margin-top: 0.4rem; pointer-events: all; }
+  .sub-chip {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    text-decoration: none; color: rgba(245,240,232,0.65);
+    font-family: 'Cinzel', serif; font-size: 0.48rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.18rem 0.45rem;
+    border: 1px solid rgba(201,168,76,0.22); border-radius: 3px;
+    background: rgba(201,168,76,0.05);
+    transition: all 0.18s ease; white-space: nowrap;
+  }
+  .sub-chip:hover { border-color: var(--gold); color: var(--gold-light); background: rgba(201,168,76,0.1); }
+  .sub-chip.x-chip { border-color: rgba(255,255,255,0.15); }
+  .sub-chip.x-chip:hover { border-color: rgba(255,255,255,0.5); color: var(--parchment); background: rgba(255,255,255,0.06); }
+  .sub-chip.blue-chip { border-color: rgba(76,126,201,0.3); }
+  .sub-chip.blue-chip:hover { border-color: var(--blue); color: #7aabf0; }
+
+  /* ══════════════════════════════════════════
+     CONTENT BUTTONS — expandable panels
+  ══════════════════════════════════════════ */
+  .content-section {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--node-border);
+    padding-top: 2rem;
+  }
+
+  .content-row {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* The button itself */
+  .c-btn {
+    background: none; border: none; padding: 0;
+    cursor: pointer; color: inherit; font: inherit;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  .c-btn-face {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 1rem 1.4rem 0.9rem;
+    border: 1px solid var(--node-border);
+    border-radius: 10px;
+    background: var(--node-bg);
+    min-width: 120px;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .c-btn:hover .c-btn-face,
+  .c-btn.open .c-btn-face {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    box-shadow: 0 0 18px rgba(201,168,76,0.12);
+  }
+  .c-btn.open .c-btn-face {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent;
+  }
+
+  .c-icon { font-size: 1.4rem; margin-bottom: 0.35rem; }
+  .c-label {
+    font-family: 'Cinzel', serif; font-size: 0.68rem;
+    letter-spacing: 0.18em; color: var(--gold);
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .c-count {
+    font-style: italic; font-size: 0.6rem;
+    color: rgba(245,240,232,0.38); margin-top: 0.2rem;
+  }
+  .c-caret {
+    font-size: 0.5rem; margin-top: 0.5rem;
+    color: var(--gold-dim);
+    transition: transform 0.2s;
+    display: block;
+  }
+  .c-btn.open .c-caret { transform: rotate(180deg); }
+
+  /* Dropdown panel */
+  .c-panel {
+    display: none;
+    flex-direction: column; gap: 0;
+    border: 1px solid var(--gold);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    background: rgba(13,11,7,0.96);
+    overflow: hidden;
+    min-width: 120px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .c-btn.open .c-panel { display: flex; }
+
+  .c-link {
+    display: flex; align-items: center; gap: 0.6rem;
+    text-decoration: none; color: var(--parchment);
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: background 0.15s;
+    font-size: 0.82rem;
+  }
+  .c-link:last-child { border-bottom: none; }
+  .c-link:hover { background: rgba(201,168,76,0.08); }
+
+  .c-link-lang {
+    font-family: 'Cinzel', serif; font-size: 0.58rem;
+    letter-spacing: 0.12em; color: var(--gold);
+    text-transform: uppercase; min-width: 28px;
+  }
+  .c-link-title {
+    font-style: italic; color: rgba(245,240,232,0.72);
+    font-size: 0.78rem; line-height: 1.3;
+  }
+  .c-link-no { /* no link yet — greyed */
+    opacity: 0.38; cursor: default;
+  }
+  .c-link-no:hover { background: none; }
+
+  /* Special blue tint for Stream+ entry */
+  .c-link.stream { background: rgba(76,126,201,0.05); }
+  .c-link.stream:hover { background: rgba(76,126,201,0.1); }
+  .c-link.stream .c-link-lang { color: #7aabf0; }
+
+  /* ── BYLINE ── */
+  .byline-block {
+    margin: 2.5rem auto 0;
+    max-width: 480px;
+    text-align: center;
+    padding: 1.6rem 2rem;
+    border: 1px solid var(--node-border);
+    border-radius: 10px;
+    background: var(--node-bg);
+  }
+  .byline-produced { font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+  .byline-name { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.06em; }
+  .byline-role { font-style: italic; font-size: 0.78rem; color: rgba(245,240,232,0.5); margin-top: 0.2rem; }
+  .byline-divider { margin: 0.9rem 0; color: var(--node-border); font-size: 0.8rem; }
+  .byline-context { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+  .byline-colette { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 600; color: var(--parchment); letter-spacing: 0.05em; }
+  .byline-colette-role { font-style: italic; font-size: 0.72rem; color: rgba(245,240,232,0.42); margin-top: 0.2rem; line-height: 1.5; }
+
+  footer { text-align: center; padding: 1.3rem; font-size: 0.66rem; color: rgba(245,240,232,0.16); letter-spacing: 0.1em; font-style: italic; border-top: 1px solid rgba(201,168,76,0.07); margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Weekly Content Production Hub</div>
+  <h1>CWG <em>·</em> Wisdom of God</h1>
+  <p class="subtitle">Every week, one chapter. Many vessels.</p>
+</header>
+
+<div class="hub-wrapper">
+  <div class="section-label">Production Map · Week of April 25, 2026</div>
+
+  <!-- ═══════ MAP ═══════ -->
+  <div class="map-wrap">
+    <svg class="bg-lines" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet">
+      <line class="solid" x1="500" y1="75"  x2="500" y2="248"/>
+      <line class="solid" x1="558" y1="270" x2="695" y2="185"/>
+      <line class="solid" x1="500" y1="355" x2="500" y2="468"/>
+      <line x1="578" y1="308" x2="808" y2="308"/>
+      <line x1="442" y1="265" x2="310" y2="200"/>
+      <line x1="428" y1="310" x2="215" y2="318"/>
+      <line x1="218" y1="118" x2="468" y2="468"/>
+      <line x1="225" y1="128" x2="298" y2="192"/>
+      <line class="blue" x1="442" y1="352" x2="218" y2="448"/>
+      <line x1="455" y1="360" x2="335" y2="530"/>
+      <line x1="858" y1="293" x2="918" y2="215"/>
+      <line x1="860" y1="323" x2="920" y2="388"/>
+    </svg>
+
+    <div class="nodes-layer">
+
+      <span class="node" style="left:50%;top:50%;">
+        <div class="ring r-xl">
+          <div class="nt">CWG<br>Wisdom<br>of God</div>
+          <div class="ns">Weekly Core</div>
+        </div>
+      </span>
+
+      <span class="node" style="left:50%;top:10%;">
+        <div class="ring r-lg">
+          <div class="pulse"></div>
+          <div class="nt">HU</div>
+          <div class="ns">Weekly Anchor</div>
+        </div>
+        <div class="ntag">Source</div>
+      </span>
+
+      <a href="https://youtu.be/dpbtUwcrHyY" target="_blank" rel="noopener" class="node" style="left:73%;top:29%;">
+        <div class="ring r-lg">
+          <div class="nt">Podcast<br>Video</div>
+          <div class="ns">Mon · Priority 1</div>
+        </div>
+        <div class="sub-links">
+          <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="sub-chip x-chip">✕ EN Article</a>
+          <a href="https://youtu.be/CN8z_LRRpiY" target="_blank" rel="noopener" class="sub-chip">▶ HU Version</a>
+          <a href="https://x.com/ZVZx1965/status/2047223731152425292" target="_blank" rel="noopener" class="sub-chip x-chip">✕ HU Article</a>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/uFSENG1IwR0" target="_blank" rel="noopener" class="node" style="left:50%;top:79%;">
+        <div class="ring r-lg">
+          <div class="nt">Debate<br>Video</div>
+          <div class="ns">Tue · Priority 2</div>
+        </div>
+        <div class="sub-links">
+          <a href="https://youtu.be/J7WfgoUuy8I" target="_blank" rel="noopener" class="sub-chip">▶ HU Version</a>
+        </div>
+        <div class="ntag">Discussion</div>
+      </a>
+
+      <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="node" style="left:84%;top:48%;">
+        <div class="ring r-md">
+          <div class="nt">X Article<br>+ Posts</div>
+          <div class="ns">Threads</div>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/-kR3EIY0bDE" target="_blank" rel="noopener" class="node" style="left:29%;top:31%;">
+        <div class="ring r-md">
+          <div class="nt">Short<br>Video</div>
+          <div class="ns">Shorts</div>
+        </div>
+        <div class="sub-links">
+          <a href="https://youtu.be/vilx_KiOw5A" target="_blank" rel="noopener" class="sub-chip">▶ Music Short</a>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/96lbb7ope7M" target="_blank" rel="noopener" class="node" style="left:18%;top:50%;">
+        <div class="ring r-md">
+          <div class="nt">Music</div>
+          <div class="ns">Audio · EN</div>
+        </div>
+        <div class="sub-links">
+          <a href="https://youtu.be/z0FKzcUGo9c" target="_blank" rel="noopener" class="sub-chip">▶ EN · HT Promo</a>
+          <a href="https://youtu.be/iUEVU191cYQ" target="_blank" rel="noopener" class="sub-chip">▶ HU Version</a>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/K1Ge7pm2QAk" target="_blank" rel="noopener" class="node" style="left:19%;top:17%;">
+        <div class="ring r-md">
+          <div class="nt">Visual<br>Explainer</div>
+          <div class="ns">5+ min · LM</div>
+        </div>
+        <div class="ntag">Debate Companion</div>
+      </a>
+
+      <a href="https://youtu.be/6mjqPIELkvQ" target="_blank" rel="noopener" class="node n-blue" style="left:19%;top:70%;">
+        <div class="ring r-md">
+          <div class="nt">Kids Story<br>Stream+</div>
+          <div class="ns">HT Exclusive</div>
+        </div>
+        <div class="ntag ntag-blue">Full · Disney-style</div>
+      </a>
+
+      <a href="https://youtu.be/cRqBrxNAxVU" target="_blank" rel="noopener" class="node" style="left:33%;top:87%;">
+        <div class="ring r-sm">
+          <div class="nt">Kids Story<br>Public</div>
+          <div class="ns">NotebookLM</div>
+        </div>
+      </a>
+
+      <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="node" style="left:91%;top:34%;">
+        <div class="ring r-sm"><div class="nt">Post</div><div class="ns">X · EN</div></div>
+      </a>
+
+      <a href="https://x.com/ZVZx1965/status/2047223731152425292" target="_blank" rel="noopener" class="node" style="left:92%;top:61%;">
+        <div class="ring r-sm"><div class="nt">Post</div><div class="ns">X · HU</div></div>
+      </a>
+
+    </div>
+  </div><!-- /map-wrap -->
+
+  <!-- ═══════ CONTENT BUTTONS ═══════ -->
+  <div class="content-section">
+    <div class="section-label">This Week's Content</div>
+    <div class="content-row">
+
+      <!-- PODCAST -->
+      <button class="c-btn" onclick="toggle(this)">
+        <div class="c-btn-face">
+          <div class="c-icon">🎙</div>
+          <div class="c-label">Podcast</div>
+          <div class="c-count">2 episodes</div>
+          <span class="c-caret">▼</span>
+        </div>
+        <div class="c-panel">
+          <a href="https://youtu.be/dpbtUwcrHyY" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">EN</span>
+            <span class="c-link-title">English Episode</span>
+          </a>
+          <a href="https://youtu.be/CN8z_LRRpiY" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">HU</span>
+            <span class="c-link-title">Hungarian Episode</span>
+          </a>
+        </div>
+      </button>
+
+      <!-- DEBATE -->
+      <button class="c-btn" onclick="toggle(this)">
+        <div class="c-btn-face">
+          <div class="c-icon">⚖️</div>
+          <div class="c-label">Debate</div>
+          <div class="c-count">2 versions</div>
+          <span class="c-caret">▼</span>
+        </div>
+        <div class="c-panel">
+          <a href="https://youtu.be/uFSENG1IwR0" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">EN</span>
+            <span class="c-link-title">English · ends with music</span>
+          </a>
+          <a href="https://youtu.be/J7WfgoUuy8I" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">HU</span>
+            <span class="c-link-title">Hungarian · source of EN remake</span>
+          </a>
+        </div>
+      </button>
+
+      <!-- MUSIC -->
+      <button class="c-btn" onclick="toggle(this)">
+        <div class="c-btn-face">
+          <div class="c-icon">🎵</div>
+          <div class="c-label">Music</div>
+          <div class="c-count">3 releases</div>
+          <span class="c-caret">▼</span>
+        </div>
+        <div class="c-panel">
+          <a href="https://youtu.be/96lbb7ope7M" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">EN</span>
+            <span class="c-link-title">1% Club</span>
+          </a>
+          <a href="https://youtu.be/z0FKzcUGo9c" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">EN</span>
+            <span class="c-link-title">HT Promo — promoting HT in English</span>
+          </a>
+          <a href="https://youtu.be/iUEVU191cYQ" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">HU</span>
+            <span class="c-link-title">Hungarian Version</span>
+          </a>
+        </div>
+      </button>
+
+      <!-- BEDTIME STORIES -->
+      <button class="c-btn" onclick="toggle(this)">
+        <div class="c-btn-face">
+          <div class="c-icon">🌙</div>
+          <div class="c-label">Bedtime Stories</div>
+          <div class="c-count">Full + Public</div>
+          <span class="c-caret">▼</span>
+        </div>
+        <div class="c-panel">
+          <a href="https://youtu.be/6mjqPIELkvQ" target="_blank" rel="noopener" class="c-link stream">
+            <span class="c-link-lang" style="color:#7aabf0;">HT</span>
+            <span class="c-link-title">Full Story · Exclusive · Stream+</span>
+          </a>
+          <a href="https://youtu.be/cRqBrxNAxVU" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">PUB</span>
+            <span class="c-link-title">Public Explainer · promotes Full Story</span>
+          </a>
+        </div>
+      </button>
+
+      <!-- CWG CHAPTER 21 -->
+      <a href="https://youtu.be/K1Ge7pm2QAk" target="_blank" rel="noopener" style="text-decoration:none;">
+        <div class="c-btn-face" style="cursor:pointer; min-width:120px; align-items:center; justify-content:center; display:flex; flex-direction:column;">
+          <div class="c-icon">📖</div>
+          <div class="c-label">CWG Chapter 21</div>
+          <div class="c-count">5 min Visual Explainer</div>
+          <span class="c-caret" style="opacity:0;">▼</span>
+        </div>
+      </a>
+
+      <!-- SHORTS -->
+      <button class="c-btn" onclick="toggle(this)">
+        <div class="c-btn-face">
+          <div class="c-icon">⚡</div>
+          <div class="c-label">Shorts</div>
+          <div class="c-count">2 shorts · X posts</div>
+          <span class="c-caret">▼</span>
+        </div>
+        <div class="c-panel">
+          <a href="https://youtu.be/-kR3EIY0bDE" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">▶</span>
+            <span class="c-link-title">Music Short · Christine Glenn's pick</span>
+          </a>
+          <a href="https://youtu.be/vilx_KiOw5A" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">▶</span>
+            <span class="c-link-title">Powerful Music Short · in Debate EN</span>
+          </a>
+          <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">✕ EN</span>
+            <span class="c-link-title">Podcast Article · English</span>
+          </a>
+          <a href="https://x.com/ZVZx1965/status/2047223731152425292" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">✕ HU</span>
+            <span class="c-link-title">Podcast Article · Hungarian</span>
+          </a>
+          <a href="https://x.com/ZVZx1965/status/2048102848769007782?s=20" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">✕ EN</span>
+            <span class="c-link-title">Debate Post · English</span>
+          </a>
+          <a href="https://x.com/ZVZx1965/status/2048104942108319897?s=20" target="_blank" rel="noopener" class="c-link">
+            <span class="c-link-lang">✕ HU</span>
+            <span class="c-link-title">Debate Post · Hungarian</span>
+          </a>
+        </div>
+      </button>
+
+    </div>
+  </div>
+
+</div><!-- /hub-wrapper -->
+
+<div class="byline-block">
+  <div class="byline-produced">Produced by</div>
+  <div class="byline-name">Zsolt Valér Zsofka</div>
+  <div class="byline-role">Country Coordinator – Hungary · Humanity's Team</div>
+  <div class="byline-divider">—</div>
+  <div class="byline-context">Internal use · Prepared for virtual meeting with</div>
+  <div class="byline-colette">Colette Fischer</div>
+  <div class="byline-colette-role">Digital Content Curator &amp; Program Development · Humanity's Team</div>
+</div>
+
+<footer>CWG · Weekly Content Hub · April 25, 2026</footer>
+
+<script>
+  function toggle(btn) {
+    // Close all others first
+    document.querySelectorAll('.c-btn.open').forEach(function(b) {
+      if (b !== btn) b.classList.remove('open');
+    });
+    btn.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>

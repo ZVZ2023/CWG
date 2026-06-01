@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evolution Revolution · Conversations with God Book 3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:        #0a0807;
+      --node-bg:   rgba(16,12,7,0.97);
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,0.22);
+      --gold-line: rgba(201,168,76,0.32);
+      --text:      #e8d8b0;
+      --muted:     #6a6050;
+      --glow-sm:   0 0 18px rgba(201,168,76,0.13), 0 0 35px rgba(201,168,76,0.06);
+      --glow-lg:   0 0 28px rgba(201,168,76,0.16), 0 0 55px rgba(201,168,76,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* atmospheric depth */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 20%, rgba(201,168,76,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 85%, rgba(201,168,76,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 85%, rgba(201,168,76,0.025) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── HEADER ─────────────────────────────────────── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+    }
+
+    .h-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.0;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+
+    .h-cwg {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .h-author {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      color: rgba(201,168,76,0.5);
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto 0;
+    }
+
+    /* ── MAP — DESKTOP RADIAL ────────────────────────── */
+    .map-shell {
+      position: relative; z-index: 1;
+      padding: 0 0 1rem;
+    }
+
+    .map-stage {
+      position: relative;
+      width: 960px;
+      height: 650px;
+      margin: 0 auto;
+    }
+
+    .map-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    /* center node */
+    .nc {
+      position: absolute;
+      width: 158px; height: 158px;
+      left: 401px; top: 246px; /* center at 480, 325 */
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid var(--gold);
+      box-shadow: var(--glow-lg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1rem;
+      z-index: 3;
+    }
+
+    .nc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-style: italic;
+      color: var(--text); line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .nc-title em { color: var(--gold); }
+
+    .nc-sub {
+      font-size: 0.4rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* satellite nodes */
+    .ns {
+      position: absolute;
+      width: 98px; height: 98px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.5);
+      box-shadow: var(--glow-sm);
+      display: flex; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 0.6rem;
+      z-index: 3;
+    }
+
+    .ns-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.82rem; font-style: italic;
+      color: var(--text); line-height: 1.3;
+    }
+
+    /* positions: left = cx - 49 */
+    .ns-podcast { left: 171px; top:  58px; } /* cx 220, cy 107 */
+    .ns-debate  { left: 691px; top:  58px; } /* cx 740, cy 107 */
+    .ns-brief   { left:  96px; top: 448px; } /* cx 145, cy 497 */
+    .ns-music   { left: 750px; top: 430px; } /* cx 799, cy 479 */
+
+    /* link panels */
+    .lp {
+      position: absolute;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .lp-podcast { left: 12px;  top: 10px;    }
+    .lp-debate  { right: 12px; top: 10px;    }
+    .lp-brief   { left: 12px;  bottom: 16px; }
+    .lp-music   { right: 12px; bottom: 16px; }
+
+    .lang-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: nowrap;
+    }
+    .lp-debate .lang-row,
+    .lp-music .lang-row { justify-content: flex-end; }
+
+    .ltag {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      min-width: 20px;
+      flex-shrink: 0;
+    }
+
+    .pb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.32rem 0.62rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.67rem;
+      letter-spacing: 0.18em;
+      border-radius: 1px;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .pb:hover {
+      background: rgba(201,168,76,0.16);
+      border-color: var(--gold);
+      color: #e8d8b0;
+    }
+
+    .music-credit {
+      font-size: 0.43rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.6;
+      margin-top: 0.15rem;
+    }
+
+    /* trigger "+" — positioned at secondary line endpoint */
+    .lp-trigger {
+      position: absolute;
+      z-index: 4;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.45);
+      background: rgba(16,12,7,0.97);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .lp-trigger:hover {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(201,168,76,0.2);
+    }
+
+    /* trigger positions: center sits at secondary line endpoint */
+    #tr-podcast { left: 121px; top:  38px; }  /* endpoint (135, 52) */
+    #tr-debate  { left: 811px; top:  38px; }  /* endpoint (825, 52) */
+    #tr-brief   { left:  81px; top: 568px; }  /* endpoint ( 95,582) */
+    #tr-music   { left: 848px; top: 544px; }  /* endpoint (862,558) */
+
+    /* link panels — hidden by default, positioned in corners */
+    .lp {
+      position: absolute;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    #lp-podcast { left: 12px;  top: 10px;    transform: translateY(-5px); }
+    #lp-debate  { right: 12px; top: 10px;    transform: translateY(-5px); }
+    #lp-brief   { left: 12px;  bottom: 16px; transform: translateY(5px);  }
+    #lp-music   { right: 12px; bottom: 16px; transform: translateY(5px);  }
+    .lp.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0) !important;
+    }
+
+    #lp-debate .lang-row,
+    #lp-music  .lang-row { justify-content: flex-end; }
+
+    /* ── MAP — MOBILE CARDS (< 640px) ───────────────── */
+    .mobile-map {
+      display: none;
+      padding: 2rem 1.2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .mc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mc {
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      border-radius: 2px;
+      padding: 1.2rem 1rem;
+    }
+
+    .mc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-style: italic;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .mc-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+    .mc-row:last-child { margin-bottom: 0; }
+
+    .mc-lang {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .mc-btns {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .pb-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0.28rem 0.5rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      border-radius: 1px;
+      transition: background 0.15s;
+    }
+    .pb-sm:hover { background: rgba(201,168,76,0.15); }
+
+    /* ── DIVIDER ─────────────────────────────────────── */
+    .section-div {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 1rem;
+    }
+    .section-div::before, .section-div::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25));
+    }
+    .section-div::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
+    }
+    .div-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── ARTICLE ─────────────────────────────────────── */
+    .article-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px;
+      margin: 3rem auto 0;
+      padding: 0 2rem 3rem;
+      text-align: center;
+    }
+
+    .sec-eye {
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+    }
+
+    .pull {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .pull em { color: var(--gold); }
+
+    .abody {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--muted);
+      text-align: left;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .abody em { color: rgba(201,168,76,0.7); font-style: italic; }
+
+    /* ── INFOGRAPHIC ─────────────────────────────────── */
+    .info-wrap {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2rem 1.8rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(201,168,76,0.12);
+      text-align: left;
+    }
+
+    .ic-title {
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      padding-bottom: 0.55rem;
+      margin-bottom: 0.9rem;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .ia .ic-title { color: var(--gold); }
+    .ib .ic-title { color: rgba(201,168,76,0.55); }
+
+    .ic-list { list-style: none; }
+    .ic-list li {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem; font-style: italic;
+      color: var(--muted);
+      padding: 0.24rem 0 0.24rem 0.9rem;
+      position: relative;
+    }
+    .ic-list li::before {
+      content: '·';
+      position: absolute; left: 0;
+      color: var(--gold); opacity: 0.5;
+    }
+
+    .vs-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: 0.25;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .flinks {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .fl {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      transition: color 0.18s;
+    }
+    .fl:hover { color: var(--gold); }
+
+    .fcredit {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,168,76,0.2);
+    }
+
+    /* ── SCALE FOR MEDIUM SCREENS ────────────────────── */
+    @media (max-width: 980px) {
+      .map-stage {
+        transform: scale(0.82);
+        transform-origin: top center;
+        margin-bottom: -117px;
+      }
+    }
+    @media (max-width: 800px) {
+      .map-stage {
+        transform: scale(0.66);
+        transform-origin: top center;
+        margin-bottom: -221px;
+      }
+    }
+    @media (max-width: 640px) {
+      .map-shell { display: none; }
+      .mobile-map { display: block; }
+      .info-wrap { grid-template-columns: 1fr; }
+      .vs-col { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ════════════════════════════════════════ -->
+<header>
+  <div class="h-eyebrow">May 2026</div>
+  <h1><em>Evolution</em> Revolution</h1>
+  <div class="h-cwg">Conversations with God &nbsp;·&nbsp; Book 3 &nbsp;·&nbsp; Chapter 17</div>
+  <div class="h-author">Zsolt Valér Zsofka</div>
+</header>
+
+<!-- ═══ MAP — DESKTOP ════════════════════════════════ -->
+<div class="map-shell">
+ <div class="map-stage">
+
+  <!-- SVG: lines + glow rings -->
+  <svg class="map-svg" viewBox="0 0 960 650" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Outer atmospheric rings around center -->
+    <circle cx="480" cy="325" r="90"  fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="10"/>
+    <circle cx="480" cy="325" r="115" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="12"/>
+
+    <!-- Glow halos around satellite nodes -->
+    <circle cx="220" cy="107" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+    <circle cx="740" cy="107" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+    <circle cx="145" cy="497" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+    <circle cx="799" cy="479" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+
+    <!-- Main dashed lines: center edge → satellite edge -->
+    <!-- center (480,325) r=79 → podcast (220,107) r=49 -->
+    <line x1="422" y1="272" x2="261" y2="137"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <!-- center → debate -->
+    <line x1="538" y1="272" x2="699" y2="137"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <!-- center → brief -->
+    <line x1="415" y1="380" x2="187" y2="472"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <!-- center → music -->
+    <line x1="546" y1="370" x2="753" y2="454"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+
+    <!-- Secondary lines: satellite → link panel corner -->
+    <line x1="220" y1="107" x2="135" y2="52"
+          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
+    <line x1="740" y1="107" x2="825" y2="52"
+          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
+    <line x1="145" y1="497" x2="95"  y2="582"
+          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
+    <line x1="799" y1="479" x2="862" y2="558"
+          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
+  </svg>
+
+  <!-- CENTER NODE -->
+  <div class="nc">
+    <div class="nc-title"><em>Evolution</em><br>Revolution</div>
+    <div class="nc-sub">CWG · BOOK 3<br>CHAPTER 17</div>
+  </div>
+
+  <!-- SATELLITE NODES -->
+  <div class="ns ns-podcast"><div class="ns-label">Podcast</div></div>
+  <div class="ns ns-debate" ><div class="ns-label">Debate</div></div>
+  <div class="ns ns-brief"  ><div class="ns-label">Brief</div></div>
+  <div class="ns ns-music"  ><div class="ns-label">Music<br>Video</div></div>
+
+  <!-- TRIGGERS at secondary line endpoints -->
+  <button class="lp-trigger" id="tr-podcast" onclick="toggleLP('podcast')">+</button>
+  <button class="lp-trigger" id="tr-debate"  onclick="toggleLP('debate')">+</button>
+  <button class="lp-trigger" id="tr-brief"   onclick="toggleLP('brief')">+</button>
+  <button class="lp-trigger" id="tr-music"   onclick="toggleLP('music')">+</button>
+
+  <!-- PODCAST PANEL (top-left corner) -->
+  <div class="lp" id="lp-podcast">
+    <div class="lang-row">
+      <span class="ltag">HU</span>
+      <a class="pb" href="https://youtu.be/6CkVRlPym84" target="_blank">▶ YT</a>
+      <a class="pb" href="https://x.com/ZVZx1965/status/2059820262825062719" target="_blank">✕ X</a>
+      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0YXjXfYmXHVDFtAHQXhW3QxrF9T6gr4eTjSkm8Ct9fL3Zu7JpEMvVCWNyKCSqA1Tol&id=61589212142331" target="_blank">f FB</a>
+    </div>
+    <div class="lang-row">
+      <span class="ltag">EN</span>
+      <a class="pb" href="https://youtu.be/YrWk60AXEuk" target="_blank">▶ YT</a>
+      <a class="pb" href="https://x.com/ZVZx1965/status/2059828920589934872" target="_blank">✕ X</a>
+      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02xxxBR7RbTts4TgybWn5F2aGMfTKsCkiJWgVN1HA3cZxvmx1zZgRWk4pCifJ1qQAGl&id=61589212142331" target="_blank">f FB</a>
+    </div>
+  </div>
+
+  <!-- DEBATE PANEL (top-right corner) -->
+  <div class="lp" id="lp-debate">
+    <div class="lang-row">
+      <span class="ltag">HU</span>
+      <a class="pb" href="https://youtu.be/7aFFWZO1FG8" target="_blank">▶ YT</a>
+      <a class="pb" href="https://x.com/ZVZx1965/status/2059256830425972800" target="_blank">✕ X</a>
+      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid07PtRjfXpoU35iY9jcfSDTa7dMFckS24ssUSyU8DRSLKMkJotnSepmHTftvv1ABHkl&id=61589212142331" target="_blank">f FB</a>
+    </div>
+    <div class="lang-row">
+      <span class="ltag">EN</span>
+      <a class="pb" href="https://youtu.be/LGefnjrouKM" target="_blank">▶ YT</a>
+      <a class="pb" href="https://x.com/ZVZx1965/status/2059288475866693792" target="_blank">✕ X</a>
+      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0u8i9SfoHpkkHWgUoKQh3rPT122jVrp2iYUMNDuAgrTFpBpD7EKU1SPT2uAS6zXsRl&id=61589212142331" target="_blank">f FB</a>
+    </div>
+  </div>
+
+  <!-- BRIEF PANEL (bottom-left corner) -->
+  <div class="lp" id="lp-brief">
+    <div class="lang-row">
+      <a class="pb" href="https://youtu.be/FHI5WgPifJI" target="_blank">▶ YT</a>
+      <a class="pb" href="https://x.com/ZVZx1965/status/2059324901194867067" target="_blank">✕ X</a>
+      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02QMDMc2dJZri7bpB3PZphn5YaQi12uuMs4MRFZiEgGyEvpReLwE2NtXowHCQPtUmTl&id=61589212142331" target="_blank">f FB</a>
+    </div>
+  </div>
+
+  <!-- MUSIC PANEL (bottom-right corner) -->
+  <div class="lp" id="lp-music">
+    <div class="lang-row">
+      <a class="pb" href="https://youtu.be/5b4PDWhHd70" target="_blank">▶ YT</a>
+    </div>
+    <div class="music-credit">Title suggested by God<br>CWG · Book 3 · Ch 17</div>
+  </div>
+
+ </div><!-- /map-stage -->
+</div><!-- /map-shell -->
+
+<!-- ═══ MAP — MOBILE CARDS ════════════════════════════ -->
+<div class="mobile-map">
+  <div class="mc-grid">
+
+    <div class="mc">
+      <div class="mc-title">Podcast</div>
+      <div class="mc-row">
+        <div class="mc-lang">HU</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/6CkVRlPym84" target="_blank">▶ YT</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2059820262825062719" target="_blank">✕ X</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0YXjXfYmXHVDFtAHQXhW3QxrF9T6gr4eTjSkm8Ct9fL3Zu7JpEMvVCWNyKCSqA1Tol&id=61589212142331" target="_blank">FB</a>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">EN</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/YrWk60AXEuk" target="_blank">▶ YT</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2059828920589934872" target="_blank">✕ X</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02xxxBR7RbTts4TgybWn5F2aGMfTKsCkiJWgVN1HA3cZxvmx1zZgRWk4pCifJ1qQAGl&id=61589212142331" target="_blank">FB</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Debate</div>
+      <div class="mc-row">
+        <div class="mc-lang">HU</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/7aFFWZO1FG8" target="_blank">▶ YT</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2059256830425972800" target="_blank">✕ X</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid07PtRjfXpoU35iY9jcfSDTa7dMFckS24ssUSyU8DRSLKMkJotnSepmHTftvv1ABHkl&id=61589212142331" target="_blank">FB</a>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">EN</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/LGefnjrouKM" target="_blank">▶ YT</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2059288475866693792" target="_blank">✕ X</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0u8i9SfoHpkkHWgUoKQh3rPT122jVrp2iYUMNDuAgrTFpBpD7EKU1SPT2uAS6zXsRl&id=61589212142331" target="_blank">FB</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Brief</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/FHI5WgPifJI" target="_blank">▶ YT</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2059324901194867067" target="_blank">✕ X</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02QMDMc2dJZri7bpB3PZphn5YaQi12uuMs4MRFZiEgGyEvpReLwE2NtXowHCQPtUmTl&id=61589212142331" target="_blank">FB</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music Video</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/5b4PDWhHd70" target="_blank">▶ YT</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Title suggested by God<br>CWG · Bk 3 · Ch 17
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TO THE POINT ══════════════════════════════════ -->
+<div class="section-div" style="margin-top:1rem;">
+  <span class="div-label">· · ·</span>
+</div>
+
+<div class="article-wrap">
+  <div class="sec-eye">To The Point</div>
+  <div class="pull">
+    The greatest danger may not be artificial intelligence itself —<br>
+    but a civilization that slowly loses the ability to pause, reflect,<br>
+    and <em>consciously choose</em> the systems shaping its future.
+  </div>
+  <p class="abody">
+    This project explores one of the defining questions of our time: can human wisdom evolve
+    fast enough to keep pace with technological acceleration? Inspired directly by
+    <em>Conversations with God — Book 3, Chapter 17</em>, where the idea of the
+    "Evolution Revolution" is introduced, these productions expand that core insight into
+    a modern civilizational context shaped by AI, algorithmic systems, and accelerating
+    technological power. Through podcasts, debates, briefs, music, and visual explainers,
+    the project examines the widening gap between external capability and internal maturity.
+    The "Evolution Revolution" is not presented as political upheaval or spiritual branding,
+    but as a conscious turning point — the possibility that humanity may participate knowingly
+    in its own evolution for the first time in history.
+  </p>
+</div>
+
+<!-- ═══ INFOGRAPHIC ═══════════════════════════════════ -->
+<div class="info-wrap">
+  <div class="ia">
+    <div class="ic-title">Conscious Evolution</div>
+    <ul class="ic-list">
+      <li>Wisdom before acceleration</li>
+      <li>Inner maturity as structural req.</li>
+      <li>Long-horizon building</li>
+      <li>Technology serves humanity</li>
+      <li>Evolution Revolution</li>
+      <li>Enoughness over scarcity</li>
+    </ul>
+  </div>
+  <div class="vs-col">⟷</div>
+  <div class="ib">
+    <div class="ic-title">Technological Assimilation</div>
+    <ul class="ic-list">
+      <li>Acceleration is unavoidable</li>
+      <li>Adaptation as survival strategy</li>
+      <li>Integration, not hesitation</li>
+      <li>Competitors do not pause</li>
+      <li>Merge or fall behind</li>
+      <li>Speed as pragmatic necessity</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="flinks">
+    <a class="fl" href="https://www.linkedin.com/in/zsoltzsofka/" target="_blank">
+      <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+    <a class="fl" href="https://x.com/ZVZx1965" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i> X
+    </a>
+    <a class="fl" href="https://www.youtube.com/@HybridIntelligence" target="_blank">
+      <i class="fab fa-youtube"></i> YouTube
+    </a>
+  </div>
+  <div class="fcredit">Zsolt Valér Zsofka &nbsp;·&nbsp; Budapest &nbsp;·&nbsp; 2026</div>
+</footer>
+
+<script>
+  function toggleLP(id) {
+    const panel   = document.getElementById('lp-' + id);
+    const trigger = document.getElementById('tr-' + id);
+    const isOpen  = panel.classList.toggle('open');
+    trigger.textContent = isOpen ? '×' : '+';
+  }
+</script>
+</body>
+</html>

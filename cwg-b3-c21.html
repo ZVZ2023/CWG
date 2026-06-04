@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>What We Bring Into the World · Conversations with God Book 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #0d0f14;
+    --bg2:       #13161e;
+    --bg3:       #1a1e28;
+    --gold:      #c9a84c;
+    --gold-lt:   #e2c47a;
+    --gold-dim:  #7a6030;
+    --text:      #e8e4d9;
+    --text-dim:  #9a9589;
+    --text-faint:#5a5650;
+    --accent:    #4a7fa5;
+    --border:    rgba(201,168,76,0.18);
+    --border2:   rgba(255,255,255,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER BAR ─────────────────────────────────────── */
+  .topbar {
+    border-bottom: 1px solid var(--border2);
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .topbar a { color: var(--gold-dim); text-decoration: none; }
+  .topbar a:hover { color: var(--gold); }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .hero {
+    padding: 80px 40px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 28px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: 1.0;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-lt);
+  }
+  .hero-subtitle {
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  .hero-author {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold-dim);
+    margin: 36px 0;
+  }
+
+  /* ── CIRCULAR NAV ───────────────────────────────────── */
+  .orbit-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px 20px;
+    background: var(--bg);
+  }
+  .orbit {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    flex-shrink: 0;
+  }
+  /* Center circle */
+  .orbit-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 156px; height: 156px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-dim);
+    background: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px;
+    z-index: 4;
+  }
+  .orbit-center-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--gold-lt);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .orbit-center-ref {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    line-height: 1.6;
+  }
+  /* Outer ring */
+  .orbit-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+  }
+  /* Connector lines (cross hairs through center) */
+  .orbit-line-h,
+  .orbit-line-v {
+    position: absolute;
+    top: 50%; left: 50%;
+    background: var(--border2);
+    z-index: 1;
+  }
+  .orbit-line-h {
+    width: 380px; height: 1px;
+    transform: translate(-50%, -50%);
+  }
+  .orbit-line-v {
+    width: 1px; height: 380px;
+    transform: translate(-50%, -50%);
+  }
+  /* Plus markers on connectors */
+  .orbit-plus {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 14px; height: 14px;
+    z-index: 3;
+    color: var(--gold-dim);
+    font-size: 14px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .orbit-plus.top    { transform: translate(-50%, calc(-50% - 100px)); }
+  .orbit-plus.right  { transform: translate(calc(-50% + 100px), -50%); }
+  .orbit-plus.bottom { transform: translate(-50%, calc(-50% + 100px)); }
+  .orbit-plus.left   { transform: translate(calc(-50% - 100px), -50%); }
+  /* Satellite nodes */
+  .orbit-node {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 92px; height: 92px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 4;
+    transition: border-color 0.25s, background 0.25s;
+    cursor: default;
+    padding: 8px;
+  }
+  .orbit-node:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.07);
+  }
+  .orbit-node.top    { transform: translate(-50%, calc(-50% - 190px)); }
+  .orbit-node.right  { transform: translate(calc(-50% + 190px), -50%); }
+  .orbit-node.bottom { transform: translate(-50%, calc(-50% + 190px)); }
+  .orbit-node.left   { transform: translate(calc(-50% - 190px), -50%); }
+  .orbit-node-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .orbit-node-sub {
+    font-size: 9px;
+    color: var(--text-faint);
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── AXIOMS STRIP ───────────────────────────────────── */
+  .axioms {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .axiom {
+    padding: 12px 40px;
+    text-align: center;
+    border-right: 1px solid var(--border2);
+    flex: 1;
+    min-width: 200px;
+  }
+  .axiom:last-child { border-right: none; }
+  .axiom-num {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .axiom-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--gold-lt);
+    font-style: italic;
+  }
+
+  /* ── MAIN CONTENT ───────────────────────────────────── */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* ── SECTION LABEL ──────────────────────────────────── */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  /* ── CONTENT CARD ───────────────────────────────────── */
+  .content-block {
+    margin-bottom: 48px;
+  }
+  .content-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  /* ── LANGUAGE ROW ───────────────────────────────────── */
+  .lang-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border2);
+  }
+  .lang-row:last-child { border-bottom: none; }
+  .lang-tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--text-dim);
+    min-width: 28px;
+  }
+  .lang-note {
+    font-size: 12px;
+    color: var(--text-faint);
+    flex: 1;
+    font-style: italic;
+  }
+  .platform-links {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .pl-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--text-dim);
+    background: var(--bg2);
+    transition: all 0.2s ease;
+  }
+  .pl-link:hover {
+    border-color: var(--gold);
+    color: var(--gold-lt);
+    background: rgba(201,168,76,0.06);
+  }
+  .pl-link .icon { font-size: 13px; }
+
+  /* ── SINGLE LINK ROW (no lang tag) ─────────────────── */
+  .single-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border2);
+    flex-wrap: wrap;
+  }
+  .single-row:last-child { border-bottom: none; }
+  .single-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    flex: 1;
+    font-style: italic;
+  }
+
+  /* ── SHORTS GRID ────────────────────────────────────── */
+  .shorts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .short-card {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .short-card-note {
+    font-size: 12px;
+    color: var(--text-faint);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ── TO THE POINT ───────────────────────────────────── */
+  .ttp-section {
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+  .ttp-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 24px;
+  }
+  .ttp-pull {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 32px;
+    padding-left: 24px;
+    border-left: 2px solid var(--gold-dim);
+  }
+  .ttp-body {
+    font-family: 'EB Garamond', serif;
+    font-size: 18px;
+    line-height: 1.85;
+    color: var(--text-dim);
+    max-width: 720px;
+  }
+  .ttp-body p { margin-bottom: 20px; }
+
+  /* ── PARADIGM TABLE ─────────────────────────────────── */
+  .paradigm {
+    margin-top: 52px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: start;
+    border: 1px solid var(--border);
+  }
+  .paradigm-col {
+    padding: 28px 30px;
+  }
+  .paradigm-col.left { border-right: 1px solid var(--border2); }
+  .paradigm-col.right { border-left: 1px solid var(--border2); }
+  .paradigm-divider {
+    padding: 28px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-faint);
+    font-size: 18px;
+  }
+  .paradigm-head {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 14px;
+  }
+  .paradigm-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+  .paradigm-title.gold { color: var(--gold-lt); }
+  .paradigm-list {
+    list-style: none;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+  .paradigm-list li::before {
+    content: '— ';
+    color: var(--text-faint);
+  }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  .footer {
+    margin-top: 80px;
+    border-top: 1px solid var(--border2);
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-links a {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── RESPONSIVE ─────────────────────────────────────── */
+  @media (max-width: 680px) {
+    .topbar, .main, .hero { padding-left: 20px; padding-right: 20px; }
+    .axioms { padding: 20px; }
+    .axiom { padding: 12px 16px; border-right: none; border-bottom: 1px solid var(--border2); }
+    .axiom:last-child { border-bottom: none; }
+    .orbit { width: 320px; height: 320px; }
+    .orbit-ring { width: 254px; height: 254px; }
+    .orbit-line-h { width: 254px; }
+    .orbit-line-v { height: 254px; }
+    .orbit-center { width: 110px; height: 110px; }
+    .orbit-center-title { font-size: 11px; }
+    .orbit-plus.top    { transform: translate(-50%, calc(-50% - 68px)); }
+    .orbit-plus.right  { transform: translate(calc(-50% + 68px), -50%); }
+    .orbit-plus.bottom { transform: translate(-50%, calc(-50% + 68px)); }
+    .orbit-plus.left   { transform: translate(calc(-50% - 68px), -50%); }
+    .orbit-node { width: 72px; height: 72px; }
+    .orbit-node-label { font-size: 9px; }
+    .orbit-node-sub { font-size: 8px; }
+    .orbit-node.top    { transform: translate(-50%, calc(-50% - 127px)); }
+    .orbit-node.right  { transform: translate(calc(-50% + 127px), -50%); }
+    .orbit-node.bottom { transform: translate(-50%, calc(-50% + 127px)); }
+    .orbit-node.left   { transform: translate(calc(-50% - 127px), -50%); }
+    .lang-row { flex-wrap: wrap; }
+    .paradigm { grid-template-columns: 1fr; }
+    .paradigm-divider { display: none; }
+    .paradigm-col.left, .paradigm-col.right { border: none; border-top: 1px solid var(--border2); }
+    .shorts-grid { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>CWG · Book 3 · Chapter 21</span>
+  <span>June 2026</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Conversations with God · Book 3 · Chapter 21</div>
+  <h1 class="hero-title">
+    <em>What We</em><br>
+    Bring Into the World
+  </h1>
+  <div class="hero-subtitle">CWG · Book 3 · Chapter 21</div>
+  <div class="hero-author">Zsolt Valér Zsofka</div>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- CIRCULAR NAV -->
+<div class="orbit-wrap">
+  <div class="orbit">
+    <!-- Ring -->
+    <div class="orbit-ring"></div>
+    <!-- Cross lines -->
+    <div class="orbit-line-h"></div>
+    <div class="orbit-line-v"></div>
+    <!-- Plus markers -->
+    <div class="orbit-plus top">+</div>
+    <div class="orbit-plus right">+</div>
+    <div class="orbit-plus bottom">+</div>
+    <div class="orbit-plus left">+</div>
+    <!-- Center -->
+    <div class="orbit-center">
+      <div class="orbit-center-title"><em>What We</em><br>Bring Into<br>the World</div>
+      <div class="orbit-center-ref">CWG · Bk 3<br>Ch 21</div>
+    </div>
+    <!-- Satellite nodes -->
+    <div class="orbit-node top">
+      <div class="orbit-node-label">Podcast</div>
+      <div class="orbit-node-sub">HU · EN</div>
+    </div>
+    <div class="orbit-node right">
+      <div class="orbit-node-label">Debate</div>
+      <div class="orbit-node-sub">HU · EN</div>
+    </div>
+    <div class="orbit-node bottom">
+      <div class="orbit-node-label">Music</div>
+      <div class="orbit-node-sub">3 tracks</div>
+    </div>
+    <div class="orbit-node left">
+      <div class="orbit-node-label">Kids<br>Story</div>
+      <div class="orbit-node-sub">HT Stream+</div>
+    </div>
+  </div>
+</div>
+
+<!-- AXIOMS STRIP -->
+<div class="axioms">
+  <div class="axiom">
+    <div class="axiom-num">Axiom I</div>
+    <div class="axiom-text">We Are All One</div>
+  </div>
+  <div class="axiom">
+    <div class="axiom-num">Axiom II</div>
+    <div class="axiom-text">There Is Enough</div>
+  </div>
+  <div class="axiom">
+    <div class="axiom-num">Axiom III</div>
+    <div class="axiom-text">There Is Nothing We Have To Do</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- PODCAST -->
+  <div class="content-block">
+    <div class="section-label">Podcast</div>
+    <div class="lang-row">
+      <span class="lang-tag">HU</span>
+      <span class="lang-note"></span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/CN8z_LRRpiY" target="_blank"><span class="icon">▶</span> YT</a>
+        <a class="pl-link" href="https://x.com/ZVZx1965/status/2047223731152425292" target="_blank"><span class="icon">✕</span> X</a>
+      </div>
+    </div>
+    <div class="lang-row">
+      <span class="lang-tag">EN</span>
+      <span class="lang-note"></span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/dpbtUwcrHyY" target="_blank"><span class="icon">▶</span> YT</a>
+        <a class="pl-link" href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank"><span class="icon">✕</span> X</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEBATE -->
+  <div class="content-block">
+    <div class="section-label">Debate</div>
+    <div class="lang-row">
+      <span class="lang-tag">HU</span>
+      <span class="lang-note">Hungarian version — the one that set the bar</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/J7WfgoUuy8I" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+    <div class="lang-row">
+      <span class="lang-tag">EN</span>
+      <span class="lang-note">Ends with a powerful music closing</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/uFSENG1IwR0" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MUSIC -->
+  <div class="content-block">
+    <div class="section-label">Music</div>
+    <div class="lang-row">
+      <span class="lang-tag">EN</span>
+      <span class="lang-note">1% Club</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/96lbb7ope7M" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+    <div class="lang-row">
+      <span class="lang-tag">EN</span>
+      <span class="lang-note">Humanity's Team — English</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/z0FKzcUGo9c" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+    <div class="lang-row">
+      <span class="lang-tag">HU</span>
+      <span class="lang-note">Humanity's Team — Hungarian</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/iUEVU191cYQ" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIDS BEDTIME STORY -->
+  <div class="content-block">
+    <div class="section-label">Kids Bedtime Story</div>
+    <div class="single-row">
+      <span class="single-label">Full story — exclusive to Humanity's Team Stream+</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/6mjqPIELkvQ" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+    <div class="single-row">
+      <span class="single-label">Public preview — designed to promote the full Stream+ version</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/cRqBrxNAxVU" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISUAL / BRIEF -->
+  <div class="content-block">
+    <div class="section-label">Visual Brief</div>
+    <div class="single-row">
+      <span class="single-label">5-minute visual source — LM production</span>
+      <div class="platform-links">
+        <a class="pl-link" href="https://youtu.be/K1Ge7pm2QAk" target="_blank"><span class="icon">▶</span> YT</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHORTS -->
+  <div class="content-block">
+    <div class="section-label">Short Videos</div>
+    <div class="shorts-grid">
+      <div class="short-card">
+        <div class="short-card-note">Music short that reached Christine Glenn (HT Director of World Regions) — forwarded to Colette Fischer (HT Digital Content Curator)</div>
+        <div class="platform-links">
+          <a class="pl-link" href="https://youtu.be/-kR3EIY0bDE" target="_blank"><span class="icon">▶</span> YT</a>
+        </div>
+      </div>
+      <div class="short-card">
+        <div class="short-card-note">Standalone music short — a slight variation is built into the Debate EN closing. Supports an X.com post independently.</div>
+        <div class="platform-links">
+          <a class="pl-link" href="https://youtu.be/vilx_KiOw5A" target="_blank"><span class="icon">▶</span> YT</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TO THE POINT -->
+  <div class="ttp-section">
+    <div class="ttp-eyebrow">To The Point</div>
+    <div class="ttp-pull">
+      The greatest threat of the AI age may not be that machines will take our jobs —<br>
+      but that we have no idea who we are <em>without</em> them.
+    </div>
+    <div class="ttp-body">
+      <p>For generations, the operating system of civilization has followed a single sequence: <em>Do. Have. Be.</em> Work hard enough to have security, status, and belonging — and only then, perhaps, become someone. The entire architecture of identity, dignity, and meaning has been built on this chain. It is not a flaw. It was the only rational response to a world defined by scarcity and survival labor.</p>
+      <p>But artificial intelligence is breaking the chain. Not gradually — irreversibly. As automation absorbs the labor that once organized human life, the question "who are you when the doing is gone?" will cease to be philosophical and become urgently practical. A civilization that cannot answer it will manufacture new compulsions, new anxieties, and new forms of artificial scarcity to fill the void.</p>
+      <p>CWG Book 3, Chapter 21 offers the counter-sequence: <em>Be. Do. Have.</em> Not as spiritual aspiration, but as the only operating system that functions in a post-scarcity, post-survival world. The being comes first — chosen, not earned. The doing flows from it. The having reflects it. This is not a reversal of the old law. It is the recovery of a deeper one.</p>
+      <p>This week's productions explore that recovery: through debate, music, story, and podcast — in both English and Hungarian — for a civilization standing at the threshold of the next chapter of its own evolution.</p>
+    </div>
+
+    <!-- PARADIGM TABLE -->
+    <div class="paradigm">
+      <div class="paradigm-col left">
+        <div class="paradigm-head">The Departing Paradigm</div>
+        <div class="paradigm-title">Do → Have → Be</div>
+        <ul class="paradigm-list">
+          <li>Work defines identity</li>
+          <li>Scarcity drives action</li>
+          <li>Labor justifies existence</li>
+          <li>Earn your place, then rest</li>
+          <li>Fear as primary motivator</li>
+          <li>AI threatens who we are</li>
+        </ul>
+      </div>
+      <div class="paradigm-divider">⟷</div>
+      <div class="paradigm-col right">
+        <div class="paradigm-head">The Arriving Paradigm</div>
+        <div class="paradigm-title gold">Be → Do → Have</div>
+        <ul class="paradigm-list">
+          <li>Being precedes all doing</li>
+          <li>Sufficiency as ground state</li>
+          <li>Choice, not compulsion</li>
+          <li>Wholeness before action</li>
+          <li>Presence as primary contribution</li>
+          <li>AI liberates who we are</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/zsoltzsofka/" target="_blank">LinkedIn</a>
+    <a href="https://x.com/ZVZx1965" target="_blank">X</a>
+    <a href="https://www.youtube.com/@HybridIntelligence" target="_blank">YouTube</a>
+  </div>
+  <div class="footer-copy">Zsolt Valér Zsofka · Budapest · 2026</div>
+</div>
+
+</body>
+</html>

@@ -266,6 +266,64 @@
   .byline-colette { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 600; color: var(--parchment); letter-spacing: 0.05em; }
   .byline-colette-role { font-style: italic; font-size: 0.72rem; color: rgba(245,240,232,0.42); margin-top: 0.2rem; line-height: 1.5; }
 
+  /* ── EPISODE ARCHIVE ── */
+  .archive-section {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--node-border);
+    padding-top: 2rem;
+  }
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .archive-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border: 1px solid var(--node-border);
+    border-radius: 10px;
+    background: var(--node-bg);
+    padding: 1.2rem 1.4rem;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  .archive-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    box-shadow: 0 0 18px rgba(201,168,76,0.12);
+  }
+  .archive-ep {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .archive-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+    margin-bottom: 0.3rem;
+  }
+  .archive-ref {
+    font-style: italic;
+    font-size: 0.68rem;
+    color: rgba(245,240,232,0.38);
+  }
+  .archive-arrow {
+    margin-top: 0.8rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+  }
+
   footer { text-align: center; padding: 1.3rem; font-size: 0.66rem; color: rgba(245,240,232,0.16); letter-spacing: 0.1em; font-style: italic; border-top: 1px solid rgba(201,168,76,0.07); margin-top: 2rem; }
 </style>
 </head>
@@ -534,6 +592,42 @@
           </a>
         </div>
       </button>
+
+    </div>
+  </div>
+
+  <!-- ═══════ EPISODE ARCHIVE ═══════ -->
+  <div class="archive-section">
+    <div class="section-label">CWG · Book 3 · Episode Archive</div>
+    <div class="archive-grid">
+
+      <a href="https://zvz2023.github.io/CWG/cwg-b3-c21.html" target="_blank" rel="noopener" class="archive-card">
+        <div class="archive-ep">E67 · Chapter 21</div>
+        <div class="archive-title">What We Bring Into the World</div>
+        <div class="archive-ref">The Three Axioms · BE–DO–HAVE</div>
+        <div class="archive-arrow">View Episode →</div>
+      </a>
+
+      <a href="https://zvz2023.github.io/CWG/cwg-b3-c20.html" target="_blank" rel="noopener" class="archive-card">
+        <div class="archive-ep">E68 · Chapter 20</div>
+        <div class="archive-title">CWG · Book 3 · Chapter 20</div>
+        <div class="archive-ref">Conversations with God</div>
+        <div class="archive-arrow">View Episode →</div>
+      </a>
+
+      <a href="https://zvz2023.github.io/CWG/cwg-b3-c19.html" target="_blank" rel="noopener" class="archive-card">
+        <div class="archive-ep">E70 · Chapter 19</div>
+        <div class="archive-title">CWG · Book 3 · Chapter 19</div>
+        <div class="archive-ref">Conversations with God</div>
+        <div class="archive-arrow">View Episode →</div>
+      </a>
+
+      <a href="https://zvz2023.github.io/CWG/cwg-b3-c17.html" target="_blank" rel="noopener" class="archive-card">
+        <div class="archive-ep">E75 · Chapter 17</div>
+        <div class="archive-title">Evolution Revolution</div>
+        <div class="archive-ref">Conversations with God</div>
+        <div class="archive-arrow">View Episode →</div>
+      </a>
 
     </div>
   </div>

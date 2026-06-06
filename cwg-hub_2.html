@@ -63,7 +63,7 @@ footer{width:100%;text-align:center;padding:24px 20px;border-top:1px solid #c9a8
 </header>
 
 <div class="constellation-wrap">
-  <canvas id="cwg-canvas" width="700" height="560"></canvas>
+  <canvas id="cwg-canvas" width="700" height="680"></canvas>
 </div>
 
 <div class="panel" id="panel">
@@ -172,7 +172,7 @@ footer{width:100%;text-align:center;padding:24px 20px;border-top:1px solid #c9a8
 
 <script>
 const cv=document.getElementById('cwg-canvas'),ctx=cv.getContext('2d');
-const W=700,H=560,CX=350,CY=262;
+const W=700,H=680,CX=350,CY=320;
 const anchor=new Date('2026-04-25');
 function schedDate(w){const d=new Date(anchor);d.setDate(d.getDate()+w*7);return d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});}
 const b3=[
@@ -190,27 +190,29 @@ b3.forEach((c,i)=>{c.week=i;c.date=schedDate(i);});
 b2.forEach((c,i)=>{c.week=21+i;c.date=schedDate(21+i);});
 b1.forEach((c,i)=>{c.week=41+i;c.date=schedDate(41+i);});
 const books=[
-  {id:1,label:'BOOK 1',chapters:b1,angle:-Math.PI/2,open:false,rot:0},
-  {id:2,label:'BOOK 2',chapters:b2,angle:Math.PI+Math.PI/6,open:false,rot:0},
-  {id:3,label:'BOOK 3',chapters:b3,angle:-Math.PI/6,open:false,rot:0},
+  {id:1,label:'BOOK 1',chapters:b1,baseAngle:-Math.PI/2,open:false,rot:0},
+  {id:2,label:'BOOK 2',chapters:b2,baseAngle:-Math.PI/2+(Math.PI*2/3),open:false,rot:0},
+  {id:3,label:'BOOK 3',chapters:b3,baseAngle:-Math.PI/2+(Math.PI*4/3),open:false,rot:0},
 ];
-const SPOKE=158,BRAD=36,CRAD=11,CORBIT=82,SPEED=0.0003;
+let bookRot=0;
+const SPOKE=210,BRAD=36,CRAD=11,CORBIT=82,SPEED=0.0003,BOOK_SPEED=0.00015;
 let last=0;
-books.forEach(b=>{b.bx=CX+Math.cos(b.angle)*SPOKE;b.by=CY+Math.sin(b.angle)*SPOKE;});
+// bx/by computed per frame in animate
 function gold(a=1){return `rgba(201,168,76,${a})`;}
 function drawHub(){
-  ctx.beginPath();ctx.arc(CX,CY,64,0,Math.PI*2);ctx.strokeStyle=gold(0.07);ctx.lineWidth=14;ctx.stroke();
-  ctx.beginPath();ctx.arc(CX,CY,54,0,Math.PI*2);ctx.fillStyle='#1c1710';ctx.fill();ctx.strokeStyle=gold(0.3);ctx.lineWidth=1.2;ctx.stroke();
-  ctx.beginPath();ctx.arc(CX,CY,47,0,Math.PI*2);ctx.strokeStyle=gold(0.12);ctx.lineWidth=0.5;ctx.stroke();
+  ctx.beginPath();ctx.arc(CX,CY,82,0,Math.PI*2);ctx.strokeStyle=gold(0.07);ctx.lineWidth=16;ctx.stroke();
+  ctx.beginPath();ctx.arc(CX,CY,72,0,Math.PI*2);ctx.fillStyle='#1c1710';ctx.fill();ctx.strokeStyle=gold(0.3);ctx.lineWidth=1.2;ctx.stroke();
+  ctx.beginPath();ctx.arc(CX,CY,64,0,Math.PI*2);ctx.strokeStyle=gold(0.12);ctx.lineWidth=0.5;ctx.stroke();
   ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.font="700 13px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText('CWG',CX,CY-9);
-  ctx.font="400 8px 'Cinzel',serif";ctx.fillStyle=gold(0.65);ctx.fillText('WISDOM',CX,CY+4);
-  ctx.font="400 7px 'Cinzel',serif";ctx.fillStyle=gold(0.4);ctx.fillText('HUB',CX,CY+14);
+  ctx.font="700 16px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText('CWG',CX,CY-12);
+  ctx.font="400 10px 'Cinzel',serif";ctx.fillStyle=gold(0.65);ctx.fillText('WISDOM',CX,CY+4);
+  ctx.font="400 8px 'Cinzel',serif";ctx.fillStyle=gold(0.4);ctx.fillText('HUB',CX,CY+18);
   ctx.restore();
 }
 function drawSpoke(b){
-  ctx.beginPath();ctx.moveTo(CX+Math.cos(b.angle)*56,CY+Math.sin(b.angle)*56);
-  ctx.lineTo(CX+Math.cos(b.angle)*(SPOKE-BRAD-2),CY+Math.sin(b.angle)*(SPOKE-BRAD-2));
+  const a=Math.atan2(b.by-CY,b.bx-CX);
+  ctx.beginPath();ctx.moveTo(CX+Math.cos(a)*74,CY+Math.sin(a)*74);
+  ctx.lineTo(b.bx-Math.cos(a)*(BRAD+2),b.by-Math.sin(a)*(BRAD+2));
   ctx.strokeStyle=gold(0.3);ctx.lineWidth=0.8;ctx.stroke();
 }
 function drawBook(b){
@@ -239,7 +241,17 @@ function drawChapters(b){
   });
 }
 function draw(){ctx.clearRect(0,0,W,H);books.forEach(b=>drawSpoke(b));books.forEach(b=>drawChapters(b));drawHub();books.forEach(b=>drawBook(b));}
-function animate(ts){books.forEach(b=>{if(b.open)b.rot+=SPEED;});draw();requestAnimationFrame(animate);}
+function animate(ts){
+  bookRot+=BOOK_SPEED;
+  books.forEach(b=>{
+    const a=b.baseAngle+bookRot;
+    b.bx=CX+Math.cos(a)*SPOKE;
+    b.by=CY+Math.sin(a)*SPOKE;
+    if(b.open)b.rot+=SPEED;
+  });
+  draw();
+  requestAnimationFrame(animate);
+}
 requestAnimationFrame(animate);
 function hit(mx,my,cx2,cy2,r){return(mx-cx2)**2+(my-cy2)**2<=r*r;}
 cv.addEventListener('click',e=>{

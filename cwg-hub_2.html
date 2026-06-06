@@ -194,7 +194,7 @@ const books=[
   {id:2,label:'BOOK 2',chapters:b2,angle:Math.PI+Math.PI/6,open:false,rot:0},
   {id:3,label:'BOOK 3',chapters:b3,angle:-Math.PI/6,open:false,rot:0},
 ];
-const SPOKE=158,BRAD=36,CRAD=11,CORBIT=82,SPEED=0.0002;
+const SPOKE=158,BRAD=36,CRAD=11,CORBIT=82,SPEED=0.0003;
 let last=0;
 books.forEach(b=>{b.bx=CX+Math.cos(b.angle)*SPOKE;b.by=CY+Math.sin(b.angle)*SPOKE;});
 function gold(a=1){return `rgba(201,168,76,${a})`;}

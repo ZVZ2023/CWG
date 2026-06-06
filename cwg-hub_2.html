@@ -195,7 +195,7 @@ const books=[
   {id:3,label:'BOOK 3',chapters:b3,baseAngle:-Math.PI/2+(Math.PI*4/3),open:false,rot:0},
 ];
 let bookRot=0;
-const SPOKE=210,BRAD=36,CRAD=11,CORBIT=82,SPEED=0.0003,BOOK_SPEED=0.00015;
+const SPOKE=210,BRAD=40,CRAD=14,CORBIT=90,SPEED=0.0003,BOOK_SPEED=0.00015;
 let last=0;
 // bx/by computed per frame in animate
 function gold(a=1){return `rgba(201,168,76,${a})`;}
@@ -204,9 +204,9 @@ function drawHub(){
   ctx.beginPath();ctx.arc(CX,CY,72,0,Math.PI*2);ctx.fillStyle='#1c1710';ctx.fill();ctx.strokeStyle=gold(0.3);ctx.lineWidth=1.2;ctx.stroke();
   ctx.beginPath();ctx.arc(CX,CY,64,0,Math.PI*2);ctx.strokeStyle=gold(0.12);ctx.lineWidth=0.5;ctx.stroke();
   ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.font="700 16px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText('CWG',CX,CY-12);
-  ctx.font="400 10px 'Cinzel',serif";ctx.fillStyle=gold(0.65);ctx.fillText('WISDOM',CX,CY+4);
-  ctx.font="400 8px 'Cinzel',serif";ctx.fillStyle=gold(0.4);ctx.fillText('HUB',CX,CY+18);
+  ctx.font="700 22px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText('CWG',CX,CY-14);
+  ctx.font="400 13px 'Cinzel',serif";ctx.fillStyle=gold(0.65);ctx.fillText('WISDOM',CX,CY+5);
+  ctx.font="400 10px 'Cinzel',serif";ctx.fillStyle=gold(0.4);ctx.fillText('HUB',CX,CY+21);
   ctx.restore();
 }
 function drawSpoke(b){
@@ -221,9 +221,9 @@ function drawBook(b){
   ctx.strokeStyle=b.open?gold(0.9):gold(0.45);ctx.lineWidth=b.open?1.4:0.8;ctx.stroke();
   ctx.beginPath();ctx.arc(b.bx,b.by,BRAD-7,0,Math.PI*2);ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.4;ctx.stroke();
   ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.font="600 7px 'Cinzel',serif";ctx.fillStyle=gold(0.6);ctx.fillText(b.label,b.bx,b.by-9);
-  ctx.font="700 15px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText(b.id,b.bx,b.by+5);
-  ctx.font="700 12px 'Cinzel',serif";ctx.fillStyle=gold(b.open?0.9:0.55);ctx.fillText(b.open?'\u2212':'+',b.bx,b.by+19);
+  ctx.font="600 11px 'Cinzel',serif";ctx.fillStyle=gold(0.6);ctx.fillText(b.label,b.bx,b.by-10);
+  ctx.font="700 20px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText(b.id,b.bx,b.by+6);
+  ctx.font="700 16px 'Cinzel',serif";ctx.fillStyle=gold(b.open?0.9:0.55);ctx.fillText(b.open?'\u2212':'+',b.bx,b.by+22);
   ctx.restore();
 }
 function drawChapters(b){
@@ -237,7 +237,7 @@ function drawChapters(b){
     ctx.beginPath();ctx.moveTo(b.bx+Math.cos(a)*(BRAD+1),b.by+Math.sin(a)*(BRAD+1));ctx.lineTo(cx2-Math.cos(a)*(CRAD+1),cy2-Math.sin(a)*(CRAD+1));ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.5;ctx.stroke();
     ctx.beginPath();ctx.arc(cx2,cy2,CRAD,0,Math.PI*2);ctx.fillStyle=ch.live?'#221d0e':'#0f0d08';ctx.fill();ctx.strokeStyle=ch.live?gold(0.9):gold(0.28);ctx.lineWidth=ch.live?1.1:0.5;ctx.stroke();
     ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.font=`${ch.live?'600':'400'} ${n>16?'5.5':'6.5'}px 'Cinzel',serif`;ctx.fillStyle=gold(ch.live?1:0.4);ctx.fillText(ch.n,cx2,cy2);ctx.restore();
+    ctx.font=`${ch.live?'600':'400'} ${n>16?'9':'10'}px 'Cinzel',serif`;ctx.fillStyle=gold(ch.live?1:0.4);ctx.fillText(ch.n,cx2,cy2);ctx.restore();
   });
 }
 function draw(){ctx.clearRect(0,0,W,H);books.forEach(b=>drawSpoke(b));books.forEach(b=>drawChapters(b));drawHub();books.forEach(b=>drawBook(b));}

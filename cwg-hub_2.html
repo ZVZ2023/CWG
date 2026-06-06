@@ -51,7 +51,13 @@ canvas{display:block;margin:0 auto;cursor:pointer;width:100%;max-width:700px}
 .archive-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#c9a84c;line-height:1.35;margin-bottom:6px}
 .archive-ref{font-family:'Crimson Text',serif;font-style:italic;font-size:12px;color:#c9a84c;opacity:0.5;margin-bottom:12px;line-height:1.4}
 .archive-arrow{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:#c9a84c;opacity:0.5}
-footer{width:100%;text-align:center;padding:24px 20px;border-top:1px solid #c9a84c18;font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:#c9a84c;opacity:0.25}
+footer{text-align:center;padding:56px 24px;border-top:1px solid #c9a84c18;}
+.ft-links{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-bottom:28px;}
+.ft-links a{font-family:'Cinzel',serif;color:#c9a84c;opacity:0.45;text-decoration:none;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;transition:color .2s,opacity .2s;}
+.ft-links a:hover{opacity:1;}
+.ft-sig{font-family:'Crimson Text',serif;font-size:.95rem;color:#c9a84c;opacity:0.5;font-style:italic;}
+.ft-sig strong{color:#c9a84c;opacity:1;font-style:normal;font-weight:600;}
+.partner-note{font-family:'Cinzel',serif;font-size:.72rem;color:#c9a84c;opacity:0.25;margin-top:14px;letter-spacing:.05em;}
 @media(max-width:500px){.content-grid{grid-template-columns:1fr}.panel-img{width:120px;min-width:120px}}
 </style>
 </head>
@@ -174,7 +180,18 @@ footer{width:100%;text-align:center;padding:24px 20px;border-top:1px solid #c9a8
   </div>
 </div>
 
-<footer>CWG · Weekly Content Hub · May 30, 2026</footer>
+<footer>
+  <div class="ft-links">
+    <a href="https://www.linkedin.com/in/zsoltzsofka/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://x.com/ZVZx1965" target="_blank" rel="noopener">X.com</a>
+    <a href="https://www.youtube.com/@HybridIntelligence" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://zvz2023.github.io/CWG/cwg-hub_2.html" target="_blank" rel="noopener">CWG Hub</a>
+    <a href="https://www.quantumleapforhumanity.com/en" target="_blank" rel="noopener">Quantum Leap</a>
+    <a href="https://www.humanitysteam.org" target="_blank" rel="noopener">Humanity's Team</a>
+  </div>
+  <p class="ft-sig"><strong>Zsolt Valér Zsofka</strong><br>Country Coordinator – Hungary · Humanity's Team</p>
+  <p class="partner-note">Hybrid Intelligence &nbsp;·&nbsp; CWG · Wisdom for the AI Age &nbsp;·&nbsp; 2026</p>
+</footer>
 
 <script>
 const cv=document.getElementById('cwg-canvas'),ctx=cv.getContext('2d');

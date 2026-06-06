@@ -4,671 +4,282 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CWG · Weekly Content Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --gold: #c9a84c;
-    --gold-light: #e8c96a;
-    --gold-dim: #7a612a;
-    --ink: #0d0b07;
-    --parchment: #f5f0e8;
-    --node-bg: rgba(201,168,76,0.07);
-    --node-border: rgba(201,168,76,0.32);
-    --blue: #4c7ec9;
-    --blue-dim: rgba(76,126,201,0.28);
-  }
-
-  body {
-    background: var(--ink);
-    color: var(--parchment);
-    font-family: 'Crimson Text', serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background: radial-gradient(ellipse at 50% 44%, rgba(201,168,76,0.055) 0%, transparent 62%);
-    pointer-events: none; z-index: 0;
-  }
-
-  /* ── HEADER ── */
-  header {
-    position: relative; z-index: 2;
-    text-align: center;
-    padding: 2.2rem 2rem 1rem;
-    border-bottom: 1px solid var(--node-border);
-  }
-  .eyebrow { font-size: 0.7rem; letter-spacing: 0.35em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 0.35rem; }
-  header h1 { font-family: 'Cinzel', serif; font-weight: 900; font-size: clamp(1.4rem, 3.2vw, 2.4rem); color: var(--gold); letter-spacing: 0.07em; }
-  header h1 em { color: var(--parchment); font-style: normal; font-weight: 400; }
-  .subtitle { margin-top: 0.3rem; font-style: italic; color: rgba(245,240,232,0.42); font-size: 0.9rem; }
-
-  /* ── WRAPPER ── */
-  .hub-wrapper { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; padding: 2rem 1.5rem 3.5rem; }
-
-  .section-label {
-    text-align: center; font-family: 'Cinzel', serif; font-size: 0.6rem;
-    letter-spacing: 0.32em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 1.6rem;
-  }
-
-  /* ── MAP CANVAS ── */
-  .map-wrap { position: relative; width: 100%; padding-bottom: 64%; min-height: 520px; }
-
-  .bg-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .bg-lines line { stroke: rgba(201,168,76,0.2); stroke-width: 1.3; stroke-dasharray: 5 8; }
-  .bg-lines line.solid { stroke-dasharray: none; stroke: rgba(201,168,76,0.38); stroke-width: 1.8; }
-  .bg-lines line.blue { stroke: rgba(76,126,201,0.22); stroke-dasharray: 3 6; }
-
-  /* ── NODES ── */
-  .nodes-layer { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-
-  .node {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; text-align: center;
-    text-decoration: none; color: var(--parchment);
-    pointer-events: all;
-    transition: filter 0.2s, transform 0.2s;
-    z-index: 4;
-  }
-  .node:hover { filter: brightness(1.16); transform: translate(-50%,-50%) scale(1.06); }
-
-  .ring {
-    border-radius: 50%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    border: 1.5px solid var(--node-border);
-    background: var(--node-bg);
-    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-    padding: 0.8rem;
-  }
-  .node:hover .ring { border-color: var(--gold); background: rgba(201,168,76,0.13); box-shadow: 0 0 20px rgba(201,168,76,0.2); }
-
-  .r-xl { width: 15vw; height: 15vw; max-width:165px; max-height:165px; min-width:115px; min-height:115px;
-    border-width: 2.5px; border-color: var(--gold);
-    background: rgba(201,168,76,0.1);
-    box-shadow: 0 0 45px rgba(201,168,76,0.14), inset 0 0 22px rgba(0,0,0,0.32); }
-  .r-lg { width: 10.5vw; height: 10.5vw; max-width:118px; max-height:118px; min-width:82px; min-height:82px; }
-  .r-md { width: 8.5vw;  height: 8.5vw;  max-width: 95px; max-height: 95px;  min-width:66px; min-height:66px; }
-  .r-sm { width: 7vw;    height: 7vw;    max-width: 80px; max-height: 80px;  min-width:55px; min-height:55px; }
-
-  .n-blue .ring { border-color: rgba(76,126,201,0.4); background: rgba(76,126,201,0.07); }
-  .n-blue:hover .ring { border-color: var(--blue); background: rgba(76,126,201,0.13); box-shadow: 0 0 18px rgba(76,126,201,0.2); }
-  .n-blue .nt { color: #7aabf0; }
-
-  .nt { font-family: 'Cinzel', serif; font-weight: 600; line-height: 1.2; color: var(--gold-light); }
-  .r-xl .nt { font-size: clamp(0.6rem, 1.05vw, 0.92rem); }
-  .r-lg .nt { font-size: clamp(0.5rem, 0.82vw, 0.7rem); }
-  .r-md .nt { font-size: clamp(0.44rem, 0.72vw, 0.62rem); }
-  .r-sm .nt { font-size: clamp(0.38rem, 0.62vw, 0.56rem); }
-
-  .ns { font-style: italic; color: rgba(245,240,232,0.48); margin-top: 0.14rem; }
-  .r-xl .ns { font-size: clamp(0.48rem, 0.82vw, 0.7rem); }
-  .r-lg .ns { font-size: clamp(0.42rem, 0.68vw, 0.6rem); }
-  .r-md .ns { font-size: clamp(0.36rem, 0.58vw, 0.54rem); }
-  .r-sm .ns { font-size: clamp(0.32rem, 0.52vw, 0.48rem); }
-
-  .ntag { margin-top: 0.35rem; font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); }
-  .ntag-blue { color: var(--blue); }
-
-  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-bottom: 0.32rem; animation: pulse 2.8s ease-in-out infinite; }
-  @keyframes pulse {
-    0%,100% { opacity:0.3; transform:scale(0.85); box-shadow:0 0 0 0 rgba(201,168,76,0.4); }
-    50%      { opacity:1;   transform:scale(1.1);  box-shadow:0 0 0 6px rgba(201,168,76,0); }
-  }
-
-  /* ── SUB-LINKS ── */
-  .sub-links { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; margin-top: 0.4rem; pointer-events: all; }
-  .sub-chip {
-    display: inline-flex; align-items: center; gap: 0.25rem;
-    text-decoration: none; color: rgba(245,240,232,0.65);
-    font-family: 'Cinzel', serif; font-size: 0.48rem;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0.18rem 0.45rem;
-    border: 1px solid rgba(201,168,76,0.22); border-radius: 3px;
-    background: rgba(201,168,76,0.05);
-    transition: all 0.18s ease; white-space: nowrap;
-  }
-  .sub-chip:hover { border-color: var(--gold); color: var(--gold-light); background: rgba(201,168,76,0.1); }
-  .sub-chip.x-chip { border-color: rgba(255,255,255,0.15); }
-  .sub-chip.x-chip:hover { border-color: rgba(255,255,255,0.5); color: var(--parchment); background: rgba(255,255,255,0.06); }
-  .sub-chip.blue-chip { border-color: rgba(76,126,201,0.3); }
-  .sub-chip.blue-chip:hover { border-color: var(--blue); color: #7aabf0; }
-
-  /* ══════════════════════════════════════════
-     CONTENT BUTTONS — expandable panels
-  ══════════════════════════════════════════ */
-  .content-section {
-    margin-top: 2.5rem;
-    border-top: 1px solid var(--node-border);
-    padding-top: 2rem;
-  }
-
-  .content-row {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* The button itself */
-  .c-btn {
-    background: none; border: none; padding: 0;
-    cursor: pointer; color: inherit; font: inherit;
-    display: flex; flex-direction: column; align-items: center;
-  }
-
-  .c-btn-face {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 1rem 1.4rem 0.9rem;
-    border: 1px solid var(--node-border);
-    border-radius: 10px;
-    background: var(--node-bg);
-    min-width: 120px;
-    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-    position: relative;
-  }
-  .c-btn:hover .c-btn-face,
-  .c-btn.open .c-btn-face {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.1);
-    box-shadow: 0 0 18px rgba(201,168,76,0.12);
-  }
-  .c-btn.open .c-btn-face {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-color: transparent;
-  }
-
-  .c-icon { font-size: 1.4rem; margin-bottom: 0.35rem; }
-  .c-label {
-    font-family: 'Cinzel', serif; font-size: 0.68rem;
-    letter-spacing: 0.18em; color: var(--gold);
-    text-transform: uppercase; white-space: nowrap;
-  }
-  .c-count {
-    font-style: italic; font-size: 0.6rem;
-    color: rgba(245,240,232,0.38); margin-top: 0.2rem;
-  }
-  .c-caret {
-    font-size: 0.5rem; margin-top: 0.5rem;
-    color: var(--gold-dim);
-    transition: transform 0.2s;
-    display: block;
-  }
-  .c-btn.open .c-caret { transform: rotate(180deg); }
-
-  /* Dropdown panel */
-  .c-panel {
-    display: none;
-    flex-direction: column; gap: 0;
-    border: 1px solid var(--gold);
-    border-top: none;
-    border-radius: 0 0 10px 10px;
-    background: rgba(13,11,7,0.96);
-    overflow: hidden;
-    min-width: 120px;
-    width: 100%;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  }
-  .c-btn.open .c-panel { display: flex; }
-
-  .c-link {
-    display: flex; align-items: center; gap: 0.6rem;
-    text-decoration: none; color: var(--parchment);
-    padding: 0.7rem 1rem;
-    border-bottom: 1px solid rgba(201,168,76,0.1);
-    transition: background 0.15s;
-    font-size: 0.82rem;
-  }
-  .c-link:last-child { border-bottom: none; }
-  .c-link:hover { background: rgba(201,168,76,0.08); }
-
-  .c-link-lang {
-    font-family: 'Cinzel', serif; font-size: 0.58rem;
-    letter-spacing: 0.12em; color: var(--gold);
-    text-transform: uppercase; min-width: 28px;
-  }
-  .c-link-title {
-    font-style: italic; color: rgba(245,240,232,0.72);
-    font-size: 0.78rem; line-height: 1.3;
-  }
-  .c-link-no { /* no link yet — greyed */
-    opacity: 0.38; cursor: default;
-  }
-  .c-link-no:hover { background: none; }
-
-  /* Special blue tint for Stream+ entry */
-  .c-link.stream { background: rgba(76,126,201,0.05); }
-  .c-link.stream:hover { background: rgba(76,126,201,0.1); }
-  .c-link.stream .c-link-lang { color: #7aabf0; }
-
-  /* ── BYLINE ── */
-  .byline-block {
-    margin: 2.5rem auto 0;
-    max-width: 480px;
-    text-align: center;
-    padding: 1.6rem 2rem;
-    border: 1px solid var(--node-border);
-    border-radius: 10px;
-    background: var(--node-bg);
-  }
-  .byline-produced { font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
-  .byline-name { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.06em; }
-  .byline-role { font-style: italic; font-size: 0.78rem; color: rgba(245,240,232,0.5); margin-top: 0.2rem; }
-  .byline-divider { margin: 0.9rem 0; color: var(--node-border); font-size: 0.8rem; }
-  .byline-context { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
-  .byline-colette { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 600; color: var(--parchment); letter-spacing: 0.05em; }
-  .byline-colette-role { font-style: italic; font-size: 0.72rem; color: rgba(245,240,232,0.42); margin-top: 0.2rem; line-height: 1.5; }
-
-  /* ── EPISODE ARCHIVE ── */
-  .archive-section {
-    margin-top: 2.5rem;
-    border-top: 1px solid var(--node-border);
-    padding-top: 2rem;
-  }
-  .archive-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  .archive-card {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    border: 1px solid var(--node-border);
-    border-radius: 10px;
-    background: var(--node-bg);
-    padding: 1.2rem 1.4rem;
-    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-  }
-  .archive-card:hover {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.1);
-    box-shadow: 0 0 18px rgba(201,168,76,0.12);
-  }
-  .archive-ep {
-    font-family: 'Cinzel', serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.22em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-  }
-  .archive-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--gold-light);
-    letter-spacing: 0.04em;
-    line-height: 1.35;
-    margin-bottom: 0.3rem;
-  }
-  .archive-ref {
-    font-style: italic;
-    font-size: 0.68rem;
-    color: rgba(245,240,232,0.38);
-  }
-  .archive-arrow {
-    margin-top: 0.8rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    font-family: 'Cinzel', serif;
-  }
-
-  footer { text-align: center; padding: 1.3rem; font-size: 0.66rem; color: rgba(245,240,232,0.16); letter-spacing: 0.1em; font-style: italic; border-top: 1px solid rgba(201,168,76,0.07); margin-top: 2rem; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0d0b07;color:#c9a84c;font-family:'Crimson Text',serif;min-height:100vh}
+body{display:flex;flex-direction:column;align-items:center}
+.site-header{width:100%;text-align:center;padding:36px 20px 20px;border-bottom:1px solid #c9a84c22}
+.site-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:5px;color:#c9a84c;opacity:0.4;margin-bottom:12px}
+.site-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,42px);font-weight:700;color:#c9a84c;letter-spacing:2px;line-height:1.1}
+.site-title em{font-style:italic;font-weight:400}
+.site-tagline{font-family:'Crimson Text',serif;font-style:italic;font-size:15px;color:#c9a84c;opacity:0.5;margin-top:10px}
+.constellation-wrap{width:100%;max-width:700px;padding:20px 0 0}
+canvas{display:block;margin:0 auto;cursor:pointer;width:100%;max-width:700px}
+.panel{width:100%;max-width:680px;margin:0 auto;background:#131009;border:1px solid #c9a84c33;overflow:hidden;transition:max-height 0.45s ease,opacity 0.35s ease,margin 0.35s ease;max-height:0;opacity:0}
+.panel.open{max-height:400px;opacity:1;margin:16px auto}
+.panel-inner{display:flex;min-height:180px;position:relative}
+.panel-img{width:200px;min-width:200px;background:#0d0b07;overflow:hidden;border-right:1px solid #c9a84c22;display:flex;align-items:center;justify-content:center}
+.panel-img img{width:100%;height:100%;object-fit:cover;display:block}
+.panel-img-placeholder{font-family:'Cinzel',serif;color:#c9a84c;font-size:9px;letter-spacing:2px;text-align:center;padding:16px;opacity:0.4;line-height:2}
+.panel-body{padding:24px 28px;flex:1}
+.panel-eyebrow{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:#c9a84c;opacity:0.4;margin-bottom:8px}
+.panel-title{font-family:'Cinzel',serif;font-size:clamp(14px,2vw,20px);font-weight:600;color:#c9a84c;line-height:1.3;margin-bottom:10px}
+.panel-desc{font-family:'Crimson Text',serif;font-style:italic;font-size:14px;color:#a89870;line-height:1.65;margin-bottom:18px}
+.panel-scheduled{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:#c9a84c55;margin-top:6px}
+.panel-link{display:inline-block;font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:#0d0b07;background:#c9a84c;padding:8px 20px;text-decoration:none;transition:opacity 0.2s}
+.panel-link:hover{opacity:0.75}
+.panel-close{position:absolute;top:12px;right:16px;color:#c9a84c33;font-size:20px;cursor:pointer;font-family:serif;line-height:1;transition:color 0.2s;background:none;border:none}
+.panel-close:hover{color:#c9a84c}
+.section-divider{width:100%;max-width:680px;border:none;border-top:1px solid #c9a84c18;margin:40px auto 0}
+.section-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:#c9a84c;opacity:0.35;text-align:center;padding:24px 0 16px}
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:680px;padding:0 20px 40px}
+.content-card{background:#111009;border:1px solid #c9a84c22;padding:16px 18px}
+.content-card-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:#c9a84c;opacity:0.5;margin-bottom:6px}
+.content-card-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#c9a84c;margin-bottom:10px;line-height:1.3}
+.content-card-sub{font-size:11px;color:#c9a84c;opacity:0.4;font-family:'Cinzel',serif;letter-spacing:1px;margin-bottom:10px}
+.link-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.link-pill{font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;color:#c9a84c;border:1px solid #c9a84c44;padding:4px 10px;text-decoration:none;transition:background 0.2s;white-space:nowrap}
+.link-pill:hover{background:#c9a84c18}
+.link-pill.primary{background:#c9a84c18;border-color:#c9a84c88}
+.archive-section{width:100%;max-width:680px;padding:0 20px 60px}
+.archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.archive-card{background:#111009;border:1px solid #c9a84c22;padding:18px 16px;text-decoration:none;transition:border-color 0.2s,background 0.2s;display:block}
+.archive-card:hover{border-color:#c9a84c66;background:#1a1610}
+.archive-ep{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:#c9a84c;opacity:0.45;margin-bottom:6px}
+.archive-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#c9a84c;line-height:1.35;margin-bottom:6px}
+.archive-ref{font-family:'Crimson Text',serif;font-style:italic;font-size:12px;color:#c9a84c;opacity:0.5;margin-bottom:12px;line-height:1.4}
+.archive-arrow{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:#c9a84c;opacity:0.5}
+footer{width:100%;text-align:center;padding:24px 20px;border-top:1px solid #c9a84c18;font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:#c9a84c;opacity:0.25}
+@media(max-width:500px){.content-grid{grid-template-columns:1fr}.panel-img{width:120px;min-width:120px}}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="eyebrow">Weekly Content Production Hub</div>
-  <h1>CWG <em>·</em> Wisdom of God</h1>
-  <p class="subtitle">Every week, one chapter. Many vessels.</p>
+<header class="site-header">
+  <div class="site-eyebrow">WEEKLY CONTENT PRODUCTION HUB</div>
+  <div class="site-title">CWG <em>·</em> Wisdom of God</div>
+  <div class="site-tagline">Every week, one chapter. Many vessels.</div>
 </header>
 
-<div class="hub-wrapper">
-  <div class="section-label">Production Map · Week of May 30, 2026</div>
+<div class="constellation-wrap">
+  <canvas id="cwg-canvas" width="700" height="560"></canvas>
+</div>
 
-  <!-- ═══════ MAP ═══════ -->
-  <div class="map-wrap">
-    <svg class="bg-lines" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet">
-      <line class="solid" x1="500" y1="75"  x2="500" y2="248"/>
-      <line class="solid" x1="558" y1="270" x2="695" y2="185"/>
-      <line class="solid" x1="500" y1="355" x2="500" y2="468"/>
-      <line x1="578" y1="308" x2="808" y2="308"/>
-      <line x1="442" y1="265" x2="310" y2="200"/>
-      <line x1="428" y1="310" x2="215" y2="318"/>
-      <line x1="218" y1="118" x2="468" y2="468"/>
-      <line x1="225" y1="128" x2="298" y2="192"/>
-      <line class="blue" x1="442" y1="352" x2="218" y2="448"/>
-      <line x1="455" y1="360" x2="335" y2="530"/>
-      <line x1="858" y1="293" x2="918" y2="215"/>
-      <line x1="860" y1="323" x2="920" y2="388"/>
-    </svg>
-
-    <div class="nodes-layer">
-
-      <span class="node" style="left:50%;top:50%;">
-        <div class="ring r-xl">
-          <div class="nt">CWG<br>Wisdom<br>of God</div>
-          <div class="ns">Weekly Core</div>
-        </div>
-      </span>
-
-      <span class="node" style="left:50%;top:10%;">
-        <div class="ring r-lg">
-          <div class="pulse"></div>
-          <div class="nt">HU</div>
-          <div class="ns">Weekly Anchor</div>
-        </div>
-        <div class="ntag">Source</div>
-      </span>
-
-      <a href="https://youtu.be/dpbtUwcrHyY" target="_blank" rel="noopener" class="node" style="left:73%;top:29%;">
-        <div class="ring r-lg">
-          <div class="nt">Podcast<br>Video</div>
-          <div class="ns">Mon · Priority 1</div>
-        </div>
-        <div class="sub-links">
-          <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="sub-chip x-chip">✕ EN Article</a>
-          <a href="https://youtu.be/CN8z_LRRpiY" target="_blank" rel="noopener" class="sub-chip">▶ HU Version</a>
-          <a href="https://x.com/ZVZx1965/status/2047223731152425292" target="_blank" rel="noopener" class="sub-chip x-chip">✕ HU Article</a>
-        </div>
-      </a>
-
-      <a href="https://youtu.be/uFSENG1IwR0" target="_blank" rel="noopener" class="node" style="left:50%;top:79%;">
-        <div class="ring r-lg">
-          <div class="nt">Debate<br>Video</div>
-          <div class="ns">Tue · Priority 2</div>
-        </div>
-        <div class="sub-links">
-          <a href="https://youtu.be/J7WfgoUuy8I" target="_blank" rel="noopener" class="sub-chip">▶ HU Version</a>
-        </div>
-        <div class="ntag">Discussion</div>
-      </a>
-
-      <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="node" style="left:84%;top:48%;">
-        <div class="ring r-md">
-          <div class="nt">X Article<br>+ Posts</div>
-          <div class="ns">Threads</div>
-        </div>
-      </a>
-
-      <a href="https://youtu.be/-kR3EIY0bDE" target="_blank" rel="noopener" class="node" style="left:29%;top:31%;">
-        <div class="ring r-md">
-          <div class="nt">Short<br>Video</div>
-          <div class="ns">Shorts</div>
-        </div>
-        <div class="sub-links">
-          <a href="https://youtu.be/vilx_KiOw5A" target="_blank" rel="noopener" class="sub-chip">▶ Music Short</a>
-        </div>
-      </a>
-
-      <a href="https://youtu.be/96lbb7ope7M" target="_blank" rel="noopener" class="node" style="left:18%;top:50%;">
-        <div class="ring r-md">
-          <div class="nt">Music</div>
-          <div class="ns">Audio · EN</div>
-        </div>
-        <div class="sub-links">
-          <a href="https://youtu.be/z0FKzcUGo9c" target="_blank" rel="noopener" class="sub-chip">▶ EN · HT Promo</a>
-          <a href="https://youtu.be/iUEVU191cYQ" target="_blank" rel="noopener" class="sub-chip">▶ HU Version</a>
-        </div>
-      </a>
-
-      <a href="https://youtu.be/K1Ge7pm2QAk" target="_blank" rel="noopener" class="node" style="left:19%;top:17%;">
-        <div class="ring r-md">
-          <div class="nt">Visual<br>Explainer</div>
-          <div class="ns">5+ min · LM</div>
-        </div>
-        <div class="ntag">Debate Companion</div>
-      </a>
-
-      <a href="https://youtu.be/6mjqPIELkvQ" target="_blank" rel="noopener" class="node n-blue" style="left:19%;top:70%;">
-        <div class="ring r-md">
-          <div class="nt">Kids Story<br>Stream+</div>
-          <div class="ns">HT Exclusive</div>
-        </div>
-        <div class="ntag ntag-blue">Full · Disney-style</div>
-      </a>
-
-      <a href="https://youtu.be/cRqBrxNAxVU" target="_blank" rel="noopener" class="node" style="left:33%;top:87%;">
-        <div class="ring r-sm">
-          <div class="nt">Kids Story<br>Public</div>
-          <div class="ns">NotebookLM</div>
-        </div>
-      </a>
-
-      <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="node" style="left:91%;top:34%;">
-        <div class="ring r-sm"><div class="nt">Post</div><div class="ns">X · EN</div></div>
-      </a>
-
-      <a href="https://x.com/ZVZx1965/status/2047223731152425292" target="_blank" rel="noopener" class="node" style="left:92%;top:61%;">
-        <div class="ring r-sm"><div class="nt">Post</div><div class="ns">X · HU</div></div>
-      </a>
-
+<div class="panel" id="panel">
+  <button class="panel-close" id="pclose">✕</button>
+  <div class="panel-inner">
+    <div class="panel-img" id="p-img-wrap">
+      <div class="panel-img-placeholder" id="p-img-ph"></div>
     </div>
-  </div><!-- /map-wrap -->
-
-  <!-- ═══════ CONTENT BUTTONS ═══════ -->
-  <div class="content-section">
-    <div class="section-label">This Week's Content</div>
-    <div class="content-row">
-
-      <!-- PODCAST -->
-      <button class="c-btn" onclick="toggle(this)">
-        <div class="c-btn-face">
-          <div class="c-icon">🎙</div>
-          <div class="c-label">Podcast</div>
-          <div class="c-count">2 episodes</div>
-          <span class="c-caret">▼</span>
-        </div>
-        <div class="c-panel">
-          <a href="https://youtu.be/dpbtUwcrHyY" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">EN</span>
-            <span class="c-link-title">English Episode</span>
-          </a>
-          <a href="https://youtu.be/CN8z_LRRpiY" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">HU</span>
-            <span class="c-link-title">Hungarian Episode</span>
-          </a>
-        </div>
-      </button>
-
-      <!-- DEBATE -->
-      <button class="c-btn" onclick="toggle(this)">
-        <div class="c-btn-face">
-          <div class="c-icon">⚖️</div>
-          <div class="c-label">Debate</div>
-          <div class="c-count">2 versions</div>
-          <span class="c-caret">▼</span>
-        </div>
-        <div class="c-panel">
-          <a href="https://youtu.be/uFSENG1IwR0" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">EN</span>
-            <span class="c-link-title">English · ends with music</span>
-          </a>
-          <a href="https://youtu.be/J7WfgoUuy8I" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">HU</span>
-            <span class="c-link-title">Hungarian · source of EN remake</span>
-          </a>
-        </div>
-      </button>
-
-      <!-- MUSIC -->
-      <button class="c-btn" onclick="toggle(this)">
-        <div class="c-btn-face">
-          <div class="c-icon">🎵</div>
-          <div class="c-label">Music</div>
-          <div class="c-count">3 releases</div>
-          <span class="c-caret">▼</span>
-        </div>
-        <div class="c-panel">
-          <a href="https://youtu.be/96lbb7ope7M" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">EN</span>
-            <span class="c-link-title">1% Club</span>
-          </a>
-          <a href="https://youtu.be/z0FKzcUGo9c" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">EN</span>
-            <span class="c-link-title">HT Promo — promoting HT in English</span>
-          </a>
-          <a href="https://youtu.be/iUEVU191cYQ" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">HU</span>
-            <span class="c-link-title">Hungarian Version</span>
-          </a>
-        </div>
-      </button>
-
-      <!-- BEDTIME STORIES -->
-      <button class="c-btn" onclick="toggle(this)">
-        <div class="c-btn-face">
-          <div class="c-icon">🌙</div>
-          <div class="c-label">Bedtime Stories</div>
-          <div class="c-count">Full + Public</div>
-          <span class="c-caret">▼</span>
-        </div>
-        <div class="c-panel">
-          <a href="https://youtu.be/6mjqPIELkvQ" target="_blank" rel="noopener" class="c-link stream">
-            <span class="c-link-lang" style="color:#7aabf0;">HT</span>
-            <span class="c-link-title">Full Story · Exclusive · Stream+</span>
-          </a>
-          <a href="https://youtu.be/cRqBrxNAxVU" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">PUB</span>
-            <span class="c-link-title">Public Explainer · promotes Full Story</span>
-          </a>
-        </div>
-      </button>
-
-      <!-- CWG CHAPTER 21 -->
-      <a href="https://youtu.be/K1Ge7pm2QAk" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="c-btn-face" style="cursor:pointer; min-width:120px; align-items:center; justify-content:center; display:flex; flex-direction:column;">
-          <div class="c-icon">📖</div>
-          <div class="c-label">CWG Chapter 21</div>
-          <div class="c-count">5 min Visual Explainer</div>
-          <span class="c-caret" style="opacity:0;">▼</span>
-        </div>
-      </a>
-
-      <!-- SHORTS -->
-      <button class="c-btn" onclick="toggle(this)">
-        <div class="c-btn-face">
-          <div class="c-icon">⚡</div>
-          <div class="c-label">Shorts</div>
-          <div class="c-count">2 shorts · X posts</div>
-          <span class="c-caret">▼</span>
-        </div>
-        <div class="c-panel">
-          <a href="https://youtu.be/-kR3EIY0bDE" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">▶</span>
-            <span class="c-link-title">Music Short · Christine Glenn's pick</span>
-          </a>
-          <a href="https://youtu.be/vilx_KiOw5A" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">▶</span>
-            <span class="c-link-title">Powerful Music Short · in Debate EN</span>
-          </a>
-          <a href="https://x.com/ZVZx1965/status/2047244429908402206" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">✕ EN</span>
-            <span class="c-link-title">Podcast Article · English</span>
-          </a>
-          <a href="https://x.com/ZVZx1965/status/2047223731152425292" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">✕ HU</span>
-            <span class="c-link-title">Podcast Article · Hungarian</span>
-          </a>
-          <a href="https://x.com/ZVZx1965/status/2048102848769007782?s=20" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">✕ EN</span>
-            <span class="c-link-title">Debate Post · English</span>
-          </a>
-          <a href="https://x.com/ZVZx1965/status/2048104942108319897?s=20" target="_blank" rel="noopener" class="c-link">
-            <span class="c-link-lang">✕ HU</span>
-            <span class="c-link-title">Debate Post · Hungarian</span>
-          </a>
-        </div>
-      </button>
-
+    <div class="panel-body">
+      <div class="panel-eyebrow" id="p-eyebrow"></div>
+      <div class="panel-title" id="p-title"></div>
+      <div class="panel-desc" id="p-desc"></div>
+      <div id="p-action"></div>
     </div>
   </div>
+</div>
 
-  <!-- ═══════ EPISODE ARCHIVE ═══════ -->
-  <div class="archive-section">
-    <div class="section-label">CWG · Book 3 · Episode Archive</div>
-    <div class="archive-grid">
+<hr class="section-divider">
+<div class="section-label">PRODUCTION MAP · WEEK OF MAY 30, 2026</div>
 
-      <a href="https://zvz2023.github.io/CWG/cwg-b3-c21.html" target="_blank" rel="noopener" class="archive-card">
-        <div class="archive-ep">E67 · Chapter 21</div>
-        <div class="archive-title">What We Bring Into the World</div>
-        <div class="archive-ref">The Three Axioms · BE–DO–HAVE</div>
-        <div class="archive-arrow">View Episode →</div>
-      </a>
-
-      <a href="https://zvz2023.github.io/CWG/cwg-b3-c20.html" target="_blank" rel="noopener" class="archive-card">
-        <div class="archive-ep">E68 · Chapter 20</div>
-        <div class="archive-title">What Remains of Us?</div>
-        <div class="archive-ref">When the Role Gets Quieter</div>
-        <div class="archive-arrow">View Episode →</div>
-      </a>
-
-      <a href="https://zvz2023.github.io/CWG/cwg-b3-c19.html" target="_blank" rel="noopener" class="archive-card">
-        <div class="archive-ep">E70 · Chapter 19</div>
-        <div class="archive-title">Already There</div>
-        <div class="archive-ref">The System Worked. That Is the Problem.</div>
-        <div class="archive-arrow">View Episode →</div>
-      </a>
-
-      <a href="https://zvz2023.github.io/CWG/cwg-b3-c17.html" target="_blank" rel="noopener" class="archive-card">
-        <div class="archive-ep">E75 · Chapter 17</div>
-        <div class="archive-title">Evolution Revolution</div>
-        <div class="archive-ref">Wisdom Before Acceleration</div>
-        <div class="archive-arrow">View Episode →</div>
-      </a>
-
-      <a href="https://zvz2023.github.io/CWG/cwg-b3-c18.html" target="_blank" rel="noopener" class="archive-card">
-        <div class="archive-ep">E73 · Chapter 18</div>
-        <div class="archive-title">What Are We Becoming?</div>
-        <div class="archive-ref">The Civilization We Would Choose</div>
-        <div class="archive-arrow">View Episode →</div>
-      </a>
-
-      <a href="https://zvz2023.github.io/CWG/cwg-b3-c16.html" target="_blank" rel="noopener" class="archive-card">
-        <div class="archive-ep">Chapter 16</div>
-        <div class="archive-title">The Story That's Crashing Civilization</div>
-        <div class="archive-ref">A Civilizational OS Diagnosis</div>
-        <div class="archive-arrow">View Episode →</div>
-      </a>
-
+<div class="content-grid">
+  <div class="content-card">
+    <div class="content-card-label">PODCAST</div>
+    <div class="content-card-title">The Story That's Crashing Civilization</div>
+    <div class="content-card-sub">2 EPISODES</div>
+    <div class="link-row">
+      <a class="link-pill primary" href="https://youtu.be/ZDWtfiUAg4Y" target="_blank">▶ EN</a>
+      <a class="link-pill" href="https://youtu.be/lruoVuk4OTM" target="_blank">▶ HU</a>
     </div>
   </div>
+  <div class="content-card">
+    <div class="content-card-label">DEBATE</div>
+    <div class="content-card-title">The Story That's Crashing Civilization</div>
+    <div class="content-card-sub">2 VERSIONS</div>
+    <div class="link-row">
+      <a class="link-pill primary" href="https://youtu.be/Aqb7loM4jhE" target="_blank">▶ EN</a>
+      <a class="link-pill" href="https://youtu.be/ia5sG0l1voM" target="_blank">▶ HU</a>
+      <a class="link-pill" href="https://x.com/ZVZx1965/status/2062851368583418285" target="_blank">✕ EN</a>
+      <a class="link-pill" href="https://x.com/ZVZx1965/status/2062229841496486083" target="_blank">✕ HU</a>
+    </div>
+  </div>
+  <div class="content-card">
+    <div class="content-card-label">MUSIC</div>
+    <div class="content-card-title">We Gather Around the Light</div>
+    <div class="content-card-sub">CWG · BK 3 · CH 16</div>
+    <div class="link-row">
+      <span class="link-pill" style="opacity:0.4;cursor:default">Coming Soon</span>
+    </div>
+  </div>
+  <div class="content-card">
+    <div class="content-card-label">QUANTUM LEAP EVENT</div>
+    <div class="content-card-title">Quantum Leap for Humanity</div>
+    <div class="content-card-sub">JUNE 21, 2026</div>
+    <div class="link-row">
+      <a class="link-pill primary" href="https://www.quantumleapforhumanity.com/en" target="_blank">🌐 Global</a>
+      <a class="link-pill" href="https://zvz2023.github.io/CWG/kvantum-ugras.html" target="_blank">🇭🇺 Magyar</a>
+    </div>
+  </div>
+</div>
 
-</div><!-- /hub-wrapper -->
+<hr class="section-divider">
+<div class="section-label">CWG · BOOK 3 · EPISODE ARCHIVE</div>
 
-<div class="byline-block">
-  <div class="byline-produced">Produced by</div>
-  <div class="byline-name">Zsolt Valér Zsofka</div>
-  <div class="byline-role">Country Coordinator – Hungary · Humanity's Team</div>
-  <div class="byline-divider">—</div>
-  <div class="byline-context">Internal use · Prepared for virtual meeting with</div>
-  <div class="byline-colette">Colette Fischer</div>
-  <div class="byline-colette-role">Digital Content Curator &amp; Program Development · Humanity's Team</div>
+<div class="archive-section">
+  <div class="archive-grid">
+    <a href="https://zvz2023.github.io/CWG/cwg-b3-c21.html" target="_blank" class="archive-card">
+      <div class="archive-ep">E67 · Chapter 21</div>
+      <div class="archive-title">What We Bring Into the World</div>
+      <div class="archive-ref">The Three Axioms · BE–DO–HAVE</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
+    <a href="https://zvz2023.github.io/CWG/cwg-b3-c20.html" target="_blank" class="archive-card">
+      <div class="archive-ep">E68 · Chapter 20</div>
+      <div class="archive-title">What Remains of Us?</div>
+      <div class="archive-ref">When the Role Gets Quieter</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
+    <a href="https://zvz2023.github.io/CWG/cwg-b3-c19.html" target="_blank" class="archive-card">
+      <div class="archive-ep">E70 · Chapter 19</div>
+      <div class="archive-title">Already There</div>
+      <div class="archive-ref">The System Worked. That Is the Problem.</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
+    <a href="https://zvz2023.github.io/CWG/cwg-b3-c18.html" target="_blank" class="archive-card">
+      <div class="archive-ep">E73 · Chapter 18</div>
+      <div class="archive-title">What Are We Becoming?</div>
+      <div class="archive-ref">The Civilization We Would Choose</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
+    <a href="https://zvz2023.github.io/CWG/cwg-b3-c17.html" target="_blank" class="archive-card">
+      <div class="archive-ep">E75 · Chapter 17</div>
+      <div class="archive-title">Evolution Revolution</div>
+      <div class="archive-ref">Wisdom Before Acceleration</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
+    <a href="https://zvz2023.github.io/CWG/cwg-b3-c16.html" target="_blank" class="archive-card">
+      <div class="archive-ep">Chapter 16</div>
+      <div class="archive-title">The Story That's Crashing Civilization</div>
+      <div class="archive-ref">A Civilizational OS Diagnosis</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
+  </div>
 </div>
 
 <footer>CWG · Weekly Content Hub · May 30, 2026</footer>
 
 <script>
-  function toggle(btn) {
-    // Close all others first
-    document.querySelectorAll('.c-btn.open').forEach(function(b) {
-      if (b !== btn) b.classList.remove('open');
-    });
-    btn.classList.toggle('open');
+const cv=document.getElementById('cwg-canvas'),ctx=cv.getContext('2d');
+const W=700,H=560,CX=350,CY=262;
+const anchor=new Date('2026-04-25');
+function schedDate(w){const d=new Date(anchor);d.setDate(d.getDate()+w*7);return d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});}
+const b3=[
+  {n:21,title:'What We Bring Into the World',desc:'Three axioms. One inversion. The civilizational case for BE\u2192DO\u2192HAVE.',url:'https://zvz2023.github.io/CWG/cwg-b3-c21.html',vid:'dpbtUwcrHyY',live:true},
+  {n:20,title:'What Remains of Us?',desc:'When the role quiets and the function ends \u2014 what is left of you?',url:'https://zvz2023.github.io/CWG/cwg-b3-c20.html',vid:'9BnrOl7k0a4',live:true},
+  {n:19,title:'Already There',desc:'The system is not broken. It worked. That is the problem.',url:'https://zvz2023.github.io/CWG/cwg-b3-c19.html',vid:'xXah6S53AkQ',live:true},
+  {n:18,title:'What Are We Becoming?',desc:'Did suffering merely traumatize humanity \u2014 or did it also forge us?',url:'https://zvz2023.github.io/CWG/cwg-b3-c18.html',vid:'TWYeJIGupx4',live:true},
+  {n:17,title:'Evolution Revolution',desc:'Can human wisdom evolve fast enough to keep pace with technological acceleration?',url:'https://zvz2023.github.io/CWG/cwg-b3-c17.html',vid:'YrWk60AXEuk',live:true},
+  {n:16,title:"The Story That's Crashing Civilization",desc:'A civilizational OS diagnosis. No politics. No preaching. Just the code.',url:'https://zvz2023.github.io/CWG/cwg-b3-c16.html',vid:'ZDWtfiUAg4Y',live:true},
+];
+for(let i=15;i>=1;i--)b3.push({n:i,live:false});
+const b2=[];for(let i=20;i>=1;i--)b2.push({n:i,live:false});
+const b1=[];for(let i=14;i>=1;i--)b1.push({n:i,live:false});
+b3.forEach((c,i)=>{c.week=i;c.date=schedDate(i);});
+b2.forEach((c,i)=>{c.week=21+i;c.date=schedDate(21+i);});
+b1.forEach((c,i)=>{c.week=41+i;c.date=schedDate(41+i);});
+const books=[
+  {id:1,label:'BOOK 1',chapters:b1,angle:-Math.PI/2,open:false,rot:0},
+  {id:2,label:'BOOK 2',chapters:b2,angle:Math.PI+Math.PI/6,open:false,rot:0},
+  {id:3,label:'BOOK 3',chapters:b3,angle:-Math.PI/6,open:false,rot:0},
+];
+const SPOKE=158,BRAD=36,CRAD=11,CORBIT=82,SPEED=0.0035;
+let last=0;
+books.forEach(b=>{b.bx=CX+Math.cos(b.angle)*SPOKE;b.by=CY+Math.sin(b.angle)*SPOKE;});
+function gold(a=1){return `rgba(201,168,76,${a})`;}
+function drawHub(){
+  ctx.beginPath();ctx.arc(CX,CY,64,0,Math.PI*2);ctx.strokeStyle=gold(0.07);ctx.lineWidth=14;ctx.stroke();
+  ctx.beginPath();ctx.arc(CX,CY,54,0,Math.PI*2);ctx.fillStyle='#1c1710';ctx.fill();ctx.strokeStyle=gold(0.3);ctx.lineWidth=1.2;ctx.stroke();
+  ctx.beginPath();ctx.arc(CX,CY,47,0,Math.PI*2);ctx.strokeStyle=gold(0.12);ctx.lineWidth=0.5;ctx.stroke();
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font="700 13px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText('CWG',CX,CY-9);
+  ctx.font="400 8px 'Cinzel',serif";ctx.fillStyle=gold(0.65);ctx.fillText('WISDOM',CX,CY+4);
+  ctx.font="400 7px 'Cinzel',serif";ctx.fillStyle=gold(0.4);ctx.fillText('HUB',CX,CY+14);
+  ctx.restore();
+}
+function drawSpoke(b){
+  ctx.beginPath();ctx.moveTo(CX+Math.cos(b.angle)*56,CY+Math.sin(b.angle)*56);
+  ctx.lineTo(CX+Math.cos(b.angle)*(SPOKE-BRAD-2),CY+Math.sin(b.angle)*(SPOKE-BRAD-2));
+  ctx.strokeStyle=gold(0.3);ctx.lineWidth=0.8;ctx.stroke();
+}
+function drawBook(b){
+  ctx.beginPath();ctx.arc(b.bx,b.by,BRAD+10,0,Math.PI*2);ctx.strokeStyle=gold(0.05);ctx.lineWidth=12;ctx.stroke();
+  ctx.beginPath();ctx.arc(b.bx,b.by,BRAD,0,Math.PI*2);ctx.fillStyle='#1c1710';ctx.fill();
+  ctx.strokeStyle=b.open?gold(0.9):gold(0.45);ctx.lineWidth=b.open?1.4:0.8;ctx.stroke();
+  ctx.beginPath();ctx.arc(b.bx,b.by,BRAD-7,0,Math.PI*2);ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.4;ctx.stroke();
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font="600 7px 'Cinzel',serif";ctx.fillStyle=gold(0.6);ctx.fillText(b.label,b.bx,b.by-9);
+  ctx.font="700 15px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText(b.id,b.bx,b.by+5);
+  ctx.font="700 12px 'Cinzel',serif";ctx.fillStyle=gold(b.open?0.9:0.55);ctx.fillText(b.open?'\u2212':'+',b.bx,b.by+19);
+  ctx.restore();
+}
+function drawChapters(b){
+  if(!b.open)return;
+  const n=b.chapters.length,step=(Math.PI*2)/n;
+  ctx.beginPath();ctx.arc(b.bx,b.by,CORBIT,0,Math.PI*2);ctx.strokeStyle=gold(0.07);ctx.lineWidth=0.5;ctx.setLineDash([2,5]);ctx.stroke();ctx.setLineDash([]);
+  b.chapters.forEach((ch,i)=>{
+    const a=b.rot+step*i;
+    const cx2=b.bx+Math.cos(a)*CORBIT,cy2=b.by+Math.sin(a)*CORBIT;
+    ch._cx=cx2;ch._cy=cy2;
+    ctx.beginPath();ctx.moveTo(b.bx+Math.cos(a)*(BRAD+1),b.by+Math.sin(a)*(BRAD+1));ctx.lineTo(cx2-Math.cos(a)*(CRAD+1),cy2-Math.sin(a)*(CRAD+1));ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx2,cy2,CRAD,0,Math.PI*2);ctx.fillStyle=ch.live?'#221d0e':'#0f0d08';ctx.fill();ctx.strokeStyle=ch.live?gold(0.9):gold(0.28);ctx.lineWidth=ch.live?1.1:0.5;ctx.stroke();
+    ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font=`${ch.live?'600':'400'} ${n>16?'5.5':'6.5'}px 'Cinzel',serif`;ctx.fillStyle=gold(ch.live?1:0.4);ctx.fillText(ch.n,cx2,cy2);ctx.restore();
+  });
+}
+function draw(){ctx.clearRect(0,0,W,H);books.forEach(b=>drawSpoke(b));books.forEach(b=>drawChapters(b));drawHub();books.forEach(b=>drawBook(b));}
+function animate(ts){const dt=ts-last;last=ts;books.forEach(b=>{if(b.open)b.rot+=SPEED*dt;});draw();requestAnimationFrame(animate);}
+requestAnimationFrame(animate);
+function hit(mx,my,cx2,cy2,r){return(mx-cx2)**2+(my-cy2)**2<=r*r;}
+cv.addEventListener('click',e=>{
+  const rect=cv.getBoundingClientRect(),sx=W/rect.width,sy=H/rect.height;
+  const mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sy;
+  for(const b of books){if(!b.open)continue;for(const ch of b.chapters){if(ch._cx===undefined)continue;if(hit(mx,my,ch._cx,ch._cy,CRAD+4)){showPanel(b,ch);return;}}}
+  for(const b of books){if(hit(mx,my,b.bx,b.by,BRAD+6)){b.open=!b.open;if(!b.open)closePanel();return;}}
+});
+cv.addEventListener('mousemove',e=>{
+  const rect=cv.getBoundingClientRect(),sx=W/rect.width,sy=H/rect.height;
+  const mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sy;
+  let p=false;
+  for(const b of books){if(hit(mx,my,b.bx,b.by,BRAD+6)){p=true;break;}if(b.open)for(const ch of b.chapters){if(ch._cx!==undefined&&hit(mx,my,ch._cx,ch._cy,CRAD+4)){p=true;break;}}}
+  cv.style.cursor=p?'pointer':'default';
+});
+function showPanel(b,ch){
+  document.getElementById('p-eyebrow').textContent=`BOOK ${b.id} \u00B7 CHAPTER ${ch.n}`;
+  const pa=document.getElementById('p-action'),wrap=document.getElementById('p-img-wrap');
+  if(ch.live){
+    document.getElementById('p-title').textContent=ch.title||`Chapter ${ch.n}`;
+    document.getElementById('p-desc').textContent=ch.desc||'';
+    pa.innerHTML=ch.url?`<a class="panel-link" href="${ch.url}" target="_blank">VIEW EPISODE \u2192</a>`:'';
+    if(ch.vid){
+      wrap.innerHTML='';
+      const img=document.createElement('img');
+      img.src=`https://img.youtube.com/vi/${ch.vid}/maxresdefault.jpg`;
+      img.onerror=()=>{img.src=`https://img.youtube.com/vi/${ch.vid}/hqdefault.jpg`;};
+      img.alt=ch.title||'';img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      wrap.appendChild(img);
+    }else{wrap.innerHTML=`<div class="panel-img-placeholder">CWG<br>BOOK ${b.id}<br>CH\u00B7${ch.n}</div>`;}
+  }else{
+    document.getElementById('p-title').textContent=`Chapter ${ch.n}`;
+    document.getElementById('p-desc').textContent='';
+    pa.innerHTML=`<div class="panel-scheduled">SCHEDULED<br>${ch.date}</div>`;
+    wrap.innerHTML=`<div class="panel-img-placeholder">CWG<br>BOOK ${b.id}<br>CH\u00B7${ch.n}<br><br>COMING<br>SOON</div>`;
   }
+  document.getElementById('panel').classList.add('open');
+}
+function closePanel(){document.getElementById('panel').classList.remove('open');}
+document.getElementById('pclose').addEventListener('click',closePanel);
 </script>
-
 </body>
 </html>

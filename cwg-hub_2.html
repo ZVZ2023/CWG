@@ -9,14 +9,14 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#0d0b07;color:#c9a84c;font-family:'Crimson Text',serif;min-height:100vh}
 body{display:flex;flex-direction:column;align-items:center}
-.site-header{width:100%;text-align:center;padding:36px 20px 20px;border-bottom:1px solid #c9a84c22}
+.site-header{width:100%;text-align:center;padding:36px 20px 12px;border-bottom:1px solid #c9a84c22}
 .site-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:5px;color:#c9a84c;opacity:0.4;margin-bottom:12px}
 .site-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,42px);font-weight:700;color:#c9a84c;letter-spacing:2px;line-height:1.1}
 .site-title em{font-style:italic;font-weight:400}
 .site-tagline{font-family:'Crimson Text',serif;font-style:italic;font-size:15px;color:#c9a84c;opacity:0.5;margin-top:10px}
-.site-body{font-family:'Crimson Text',serif;font-size:16px;color:#c9a84c;opacity:0.7;margin-top:22px;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.8;text-align:center;overflow:hidden;max-height:0;transition:max-height 0.5s ease,opacity 0.4s ease,margin-top 0.4s ease;opacity:0}
-.site-body.open{max-height:600px;opacity:0.7}
-.site-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid #c9a84c4d;background:#c9a84c0d;color:#c9a84c;font-family:'Cinzel',serif;font-size:1.1rem;line-height:1;cursor:pointer;margin-top:18px;transition:background 0.15s,border-color 0.15s,box-shadow 0.15s}
+.site-body{font-family:'Crimson Text',serif;font-size:16px;color:#c9a84c;opacity:0.7;margin-top:0;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.8;text-align:center;overflow:hidden;max-height:0;transition:max-height 0.5s ease,opacity 0.4s ease,margin-top 0.4s ease;opacity:0}
+.site-body.open{margin-top:22px;max-height:600px;opacity:0.7}
+.site-toggle{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;border:1px solid #c9a84c4d;background:#c9a84c0d;color:#c9a84c;font-family:'Cinzel',serif;font-size:0.85rem;line-height:1;cursor:pointer;vertical-align:middle;margin-left:8px;transition:background 0.15s,border-color 0.15s,box-shadow 0.15s}
 .site-toggle:hover{background:#c9a84c26;border-color:#c9a84c;box-shadow:0 0 10px #c9a84c40}
 .constellation-wrap{width:100%;max-width:700px;padding:20px 0 0}
 canvas{display:block;margin:0 auto;cursor:pointer;width:100%;max-width:700px}
@@ -69,13 +69,12 @@ footer{text-align:center;padding:56px 24px;border-top:1px solid #c9a84c18;}
 <header class="site-header">
   <div class="site-eyebrow">CONVERSATIONS WITH GOD</div>
   <div class="site-title">CWG <em>·</em> Wisdom for the AI Age</div>
-  <div class="site-tagline">God's wisdom. Humanity's trials. Now amplified by AI — how does it all serve us now?</div>
+  <div class="site-tagline">God's wisdom. Humanity's trials. Now amplified by AI — how does it all serve us now? <button class="site-toggle" id="site-toggle" onclick="toggleSiteBody()">+</button></div>
   <div class="site-body" id="site-body">
     Artificial intelligence is not just a new tool. It is the largest civilizational rupture in human history — dismantling the systems, identities, and stories we built our lives around. The Conversations with God trilogy explored the deeper questions beneath that rupture before most of us knew it was coming. We read it now — one chapter at a time — through podcast, debate, music, and story.
     <br><br>
     Does the wisdom of the past still measure up? For most of us who have sat with these three axioms — <em>We Are All One, There Is Enough, There Is Nothing We Have To Do</em> — the answer is mostly yes. If you find yourself nodding, then join us: exploring how advanced AI, aligned with that foundation, can produce genuinely better results in our daily lives, work, and becoming.
   </div>
-  <button class="site-toggle" id="site-toggle" onclick="toggleSiteBody()">+</button>
 </header>
 
 <div class="constellation-wrap">

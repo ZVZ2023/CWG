@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Signal Grove — A Concept for Human-AI Assisted Connection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --forest-night: #0D1F1A;
+    --forest-mid: #1A2E28;
+    --moss: #2D4A3E;
+    --gold: #C9A84C;
+    --gold-soft: rgba(201,168,76,0.15);
+    --cyan: #4ECDC4;
+    --cyan-soft: rgba(78,205,196,0.12);
+    --parchment: #F5F0E8;
+    --parchment-dim: rgba(245,240,232,0.6);
+    --parchment-faint: rgba(245,240,232,0.15);
+    --amber: #E8A44A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--forest-night);
+    color: var(--parchment);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(13,31,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--parchment-dim); text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 8rem 2rem 4rem;
+    overflow: hidden;
+  }
+  #rhizome-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0.55;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 1.5rem;
+    border: 1px solid rgba(78,205,196,0.35);
+    padding: 0.35rem 1rem; border-radius: 2rem;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--parchment);
+    margin-bottom: 0.4rem;
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--parchment-dim); max-width: 580px; margin: 1.5rem auto 2.5rem;
+    font-weight: 300; line-height: 1.65;
+  }
+  .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--forest-night);
+    border: none; padding: 0.85rem 2rem; border-radius: 2rem;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.06em; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
+  .btn-secondary {
+    background: transparent; color: var(--parchment);
+    border: 1px solid rgba(245,240,232,0.3); padding: 0.85rem 2rem; border-radius: 2rem;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem;
+    font-weight: 400; letter-spacing: 0.06em; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    text-decoration: none;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 1rem; display: block;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300;
+    line-height: 1.15; margin-bottom: 1.5rem;
+    color: var(--parchment);
+  }
+  h2 em { font-style: italic; color: var(--gold); }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400; color: var(--parchment);
+    margin-bottom: 0.5rem;
+  }
+  p { color: var(--parchment-dim); margin-bottom: 1rem; font-size: 0.95rem; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    margin: 0;
+  }
+
+  /* WHY SECTION */
+  #why { background: var(--forest-mid); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .why-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-style: italic;
+    color: var(--parchment); line-height: 1.5;
+    border-left: 2px solid var(--gold); padding-left: 1.5rem;
+    margin: 2rem 0;
+  }
+  .why-evolution { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
+  .evo-line {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.9rem; color: var(--parchment-dim);
+  }
+  .evo-past { text-decoration: line-through; opacity: 0.5; }
+  .evo-arrow { color: var(--gold); font-size: 1rem; }
+  .evo-now { color: var(--parchment); font-weight: 500; }
+
+  /* PRINCIPLE */
+  #principle {
+    background: var(--forest-night);
+    text-align: center;
+  }
+  .principle-core {
+    max-width: 700px; margin: 0 auto;
+  }
+  .big-statement {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem); font-style: italic;
+    color: var(--gold); line-height: 1.3; margin: 2rem 0;
+  }
+  .two-questions {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; text-align: left;
+  }
+  .q-card {
+    background: var(--forest-mid);
+    border: 1px solid var(--parchment-faint);
+    border-radius: 12px; padding: 2rem;
+  }
+  .q-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--parchment-dim); margin-bottom: 0.75rem; display: block; }
+  .q-text { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--parchment); line-height: 1.4; }
+  .q-card.highlight { border-color: rgba(201,168,76,0.4); background: linear-gradient(135deg, var(--forest-mid), rgba(201,168,76,0.08)); }
+  .q-card.highlight .q-text { color: var(--gold); }
+
+  /* HOW IT WORKS */
+  #how { background: var(--forest-mid); }
+  .steps { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; }
+  .step {
+    display: grid; grid-template-columns: 80px 1fr; gap: 2rem;
+    padding: 2rem 0; border-bottom: 1px solid var(--parchment-faint);
+    align-items: start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: rgba(201,168,76,0.3);
+    line-height: 1;
+  }
+  .step-content h3 { margin-bottom: 0.4rem; }
+  .step-role {
+    display: inline-block; font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .role-human { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .role-agent { background: var(--cyan-soft); color: var(--cyan); border: 1px solid rgba(78,205,196,0.3); }
+
+  /* DEMO */
+  #demo { background: var(--forest-night); }
+  .profiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .profile-card {
+    background: var(--forest-mid);
+    border: 1px solid var(--parchment-faint);
+    border-radius: 14px; padding: 1.75rem;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .profile-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+  .profile-card.selected { border-color: var(--gold); background: linear-gradient(135deg, var(--forest-mid), rgba(201,168,76,0.06)); }
+  .profile-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+  .profile-names h3 { font-size: 1.2rem; color: var(--parchment); }
+  .agent-name { font-size: 0.75rem; color: var(--cyan); letter-spacing: 0.08em; }
+  .profile-location { font-size: 0.72rem; color: var(--parchment-dim); margin-top: 0.2rem; }
+  .profile-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--moss), var(--forest-mid));
+    border: 1.5px solid var(--parchment-faint);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .profile-focus { font-size: 0.85rem; color: var(--parchment-dim); margin-bottom: 1rem; line-height: 1.5; }
+  .profile-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .tag {
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.55rem; border-radius: 1rem;
+    background: var(--parchment-faint); color: var(--parchment-dim);
+    border: 1px solid transparent;
+  }
+  .tag-sector { background: rgba(78,205,196,0.08); color: var(--cyan); border-color: rgba(78,205,196,0.2); }
+  .profile-direction {
+    font-size: 0.78rem; color: var(--parchment-dim);
+    border-top: 1px solid var(--parchment-faint); padding-top: 0.85rem; margin-top: 0.5rem;
+  }
+  .profile-direction strong { color: var(--gold); }
+  .match-btn {
+    width: 100%; margin-top: 1rem;
+    background: transparent; color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.35); padding: 0.6rem;
+    border-radius: 2rem; font-size: 0.78rem; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .match-btn:hover { background: var(--gold-soft); }
+
+  /* MATCH RESULT */
+  #match-result {
+    display: none; margin-top: 2.5rem;
+    background: linear-gradient(135deg, var(--forest-mid), rgba(201,168,76,0.06));
+    border: 1px solid rgba(201,168,76,0.35); border-radius: 16px; padding: 2.5rem;
+  }
+  #match-result.visible { display: block; }
+  .match-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+  .match-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--gold-soft); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .match-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); }
+  .match-subtitle { font-size: 0.78rem; color: var(--parchment-dim); letter-spacing: 0.06em; }
+  .match-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+  .match-item {
+    background: var(--forest-night); border-radius: 10px; padding: 1.25rem;
+    border: 1px solid var(--parchment-faint);
+  }
+  .match-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .match-item-name { font-weight: 500; font-size: 0.95rem; }
+  .match-score {
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem; border-radius: 1rem;
+  }
+  .score-high { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .score-med { background: var(--cyan-soft); color: var(--cyan); border: 1px solid rgba(78,205,196,0.3); }
+  .match-reason { font-size: 0.83rem; color: var(--parchment-dim); line-height: 1.55; }
+  .consent-gate {
+    background: rgba(78,205,196,0.06); border: 1px solid rgba(78,205,196,0.25);
+    border-radius: 10px; padding: 1.25rem; margin-top: 1rem;
+  }
+  .consent-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem; display: block; }
+  .consent-text { font-size: 0.83rem; color: var(--parchment-dim); margin-bottom: 1rem; }
+  .consent-actions { display: flex; gap: 0.75rem; }
+  .btn-approve { background: var(--gold); color: var(--forest-night); border: none; padding: 0.55rem 1.25rem; border-radius: 2rem; font-size: 0.78rem; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.2s; }
+  .btn-approve:hover { opacity: 0.85; }
+  .btn-defer { background: transparent; color: var(--parchment-dim); border: 1px solid var(--parchment-faint); padding: 0.55rem 1.25rem; border-radius: 2rem; font-size: 0.78rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: border-color 0.2s; }
+  .btn-defer:hover { border-color: var(--parchment-dim); color: var(--parchment); }
+
+  /* AGENT DIALOGUE */
+  #dialogue { background: var(--forest-mid); }
+  .dialogue-container { max-width: 760px; margin: 3rem auto 0; }
+  .dialogue-message {
+    display: flex; gap: 1rem; margin-bottom: 1.5rem; opacity: 0;
+    transform: translateY(10px); transition: opacity 0.5s, transform 0.5s;
+  }
+  .dialogue-message.visible { opacity: 1; transform: none; }
+  .dialogue-message.right { flex-direction: row-reverse; }
+  .agent-bubble-icon {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+    font-weight: 600; flex-shrink: 0; margin-top: 0.25rem;
+  }
+  .agent-a { background: var(--gold-soft); border: 1px solid rgba(201,168,76,0.4); color: var(--gold); }
+  .agent-b { background: var(--cyan-soft); border: 1px solid rgba(78,205,196,0.4); color: var(--cyan); }
+  .bubble-wrap { max-width: calc(100% - 60px); }
+  .bubble-name { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem; }
+  .name-a { color: var(--gold); }
+  .name-b { color: var(--cyan); text-align: right; }
+  .bubble {
+    background: var(--forest-night); border-radius: 14px; padding: 1rem 1.25rem;
+    font-size: 0.88rem; color: var(--parchment-dim); line-height: 1.6;
+    border: 1px solid var(--parchment-faint);
+  }
+  .bubble-right { background: rgba(78,205,196,0.07); border-color: rgba(78,205,196,0.2); }
+  .dialogue-status {
+    text-align: center; margin-top: 2rem; padding: 1.5rem;
+    background: var(--forest-night); border-radius: 12px;
+    border: 1px solid var(--parchment-faint);
+    font-size: 0.85rem; color: var(--parchment-dim); font-style: italic;
+    opacity: 0; transition: opacity 0.5s;
+  }
+  .dialogue-status.visible { opacity: 1; }
+  .start-dialogue-btn {
+    display: block; margin: 0 auto 2rem;
+    background: transparent; color: var(--cyan);
+    border: 1px solid rgba(78,205,196,0.35); padding: 0.75rem 2rem; border-radius: 2rem;
+    font-family: 'Inter', sans-serif; font-size: 0.82rem; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .start-dialogue-btn:hover { background: var(--cyan-soft); }
+
+  /* CONSENT SECTION */
+  #consent { background: var(--forest-night); }
+  .consent-principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+  .consent-card {
+    background: var(--forest-mid); border: 1px solid var(--parchment-faint);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .consent-card-icon { font-size: 1.4rem; margin-bottom: 0.75rem; }
+  .consent-card h4 { font-size: 0.95rem; color: var(--parchment); margin-bottom: 0.4rem; }
+  .consent-card p { font-size: 0.83rem; margin: 0; }
+
+  /* USE CASES */
+  #usecases { background: var(--forest-mid); }
+  .usecase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .usecase-card {
+    background: var(--forest-night); border: 1px solid var(--parchment-faint);
+    border-radius: 14px; padding: 2rem;
+  }
+  .usecase-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: rgba(201,168,76,0.25); line-height: 1; margin-bottom: 0.75rem; }
+  .usecase-card h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+  .uc-row { margin-bottom: 0.5rem; }
+  .uc-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+  .uc-label-human { color: var(--gold); }
+  .uc-label-agent { color: var(--cyan); }
+  .uc-label-decision { color: var(--amber); }
+  .uc-text { font-size: 0.83rem; color: var(--parchment-dim); }
+
+  /* RHIZOME MODEL */
+  #rhizome-model { background: var(--forest-night); }
+  .hub-types { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+  .hub-tag {
+    padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.8rem;
+    background: var(--forest-mid); border: 1px solid var(--parchment-faint);
+    color: var(--parchment-dim); transition: all 0.2s; cursor: default;
+  }
+  .hub-tag:hover { border-color: rgba(201,168,76,0.4); color: var(--parchment); }
+  .protocol-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .protocol-item {
+    background: var(--forest-mid); border-radius: 10px; padding: 1rem 1.25rem;
+    border: 1px solid var(--parchment-faint);
+    font-size: 0.83rem; color: var(--parchment-dim);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .protocol-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
+
+  /* PODCAST MODE */
+  #podcast-mode { background: var(--forest-mid); }
+  .podcast-stage {
+    max-width: 760px; margin: 0 auto;
+    background: var(--forest-night); border: 1px solid var(--parchment-faint);
+    border-radius: 16px; overflow: hidden;
+  }
+  .podcast-bar {
+    background: rgba(201,168,76,0.08); border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0.85rem 1.5rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: #e05; animation: pulse-red 1.5s infinite; }
+  @keyframes pulse-red { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .podcast-bar-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+  .podcast-scenes { padding: 2rem; }
+  .scene {
+    display: none; opacity: 0; transition: opacity 0.5s;
+    padding: 1.5rem 0; border-bottom: 1px solid var(--parchment-faint);
+  }
+  .scene:last-child { border-bottom: none; }
+  .scene.active { display: block; opacity: 1; }
+  .scene-num { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--parchment-dim); margin-bottom: 0.5rem; display: block; }
+  .scene-text { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--parchment); line-height: 1.5; margin-bottom: 0.5rem; }
+  .scene-note { font-size: 0.8rem; color: var(--parchment-dim); }
+  .scene-agent { font-size: 0.83rem; color: var(--cyan); background: var(--cyan-soft); border: 1px solid rgba(78,205,196,0.2); border-radius: 8px; padding: 0.75rem 1rem; margin-top: 0.5rem; }
+  .podcast-controls { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 1.5rem; border-top: 1px solid var(--parchment-faint); }
+  .pod-btn { background: transparent; border: 1px solid var(--parchment-faint); color: var(--parchment-dim); padding: 0.55rem 1.25rem; border-radius: 2rem; font-family: 'Inter', sans-serif; font-size: 0.78rem; cursor: pointer; transition: all 0.2s; }
+  .pod-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .pod-btn.primary { background: var(--gold); color: var(--forest-night); border-color: var(--gold); font-weight: 500; }
+  .pod-btn.primary:hover { opacity: 0.85; }
+  .scene-counter { font-size: 0.78rem; color: var(--parchment-dim); }
+
+  /* FOOTER */
+  footer {
+    background: #080F0D; padding: 4rem 2rem 2rem;
+    border-top: 1px solid var(--parchment-faint);
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 3rem; flex-wrap: wrap; gap: 2rem; }
+  .footer-brand { max-width: 340px; }
+  .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 0.75rem; }
+  .footer-brand p { font-size: 0.82rem; }
+  .footer-links h5 { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--parchment-dim); margin-bottom: 1rem; }
+  .footer-links a { display: block; color: var(--parchment-dim); text-decoration: none; font-size: 0.83rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .disclaimer {
+    background: rgba(245,240,232,0.04); border: 1px solid var(--parchment-faint);
+    border-radius: 10px; padding: 1.25rem; margin-top: 2rem;
+    font-size: 0.77rem; color: rgba(245,240,232,0.4); line-height: 1.6;
+  }
+  .footer-bottom { border-top: 1px solid var(--parchment-faint); padding-top: 1.5rem; margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: 0.76rem; color: rgba(245,240,232,0.3); margin: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .why-grid, .two-questions { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-top { flex-direction: column; }
+    .step { grid-template-columns: 50px 1fr; gap: 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Signal Grove</div>
+  <div class="nav-links">
+    <a href="#why">Why</a>
+    <a href="#how">How It Works</a>
+    <a href="#demo">Demo</a>
+    <a href="#dialogue">Agent Dialogue</a>
+    <a href="#podcast-mode">Podcast Mode</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="rhizome-canvas"></canvas>
+  <div class="hero-content">
+    <span class="hero-eyebrow">A Concept Template · Hybrid Intelligence</span>
+    <h1>Humans decide.<br><em>Agents scout.</em></h1>
+    <p class="hero-sub">A concept template for decentralized human-AI connection hubs — where personal AI partners help people discover aligned collaborators, friendships, projects, causes, and trust circles without surrendering human agency.</p>
+    <div class="hero-ctas">
+      <a href="#demo" class="btn-primary">Explore the Demo</a>
+      <a href="#rhizome-model" class="btn-secondary">Copy the Template</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <span class="section-eyebrow">The Problem</span>
+        <h2>The right people<br>never find<br><em>each other.</em></h2>
+        <p>Most people are too busy surviving to search deeply for aligned collaborators, meaningful communities, or developmental opportunities. Good initiatives fail not because they lack value — but because the signal never reaches the right people.</p>
+        <div class="why-statement">"The internet connected information. Social media connected attention. Hybrid intelligence can connect intention."</div>
+      </div>
+      <div>
+        <p style="margin-bottom: 2rem;">Existing networks are centralized, status-driven, algorithmically noisy, and increasingly bot-saturated. They optimize for engagement, not alignment.</p>
+        <div class="why-evolution">
+          <div class="evo-line">
+            <span class="evo-past">Connected information</span>
+            <span class="evo-arrow">→</span>
+            <span class="evo-now">The internet</span>
+          </div>
+          <div class="evo-line">
+            <span class="evo-past">Connected attention</span>
+            <span class="evo-arrow">→</span>
+            <span class="evo-now">Social media</span>
+          </div>
+          <div class="evo-line">
+            <span style="color: var(--gold); font-weight: 500;">Connect intention</span>
+            <span class="evo-arrow" style="color: var(--cyan);">→</span>
+            <span class="evo-now" style="color: var(--cyan);">Signal Grove</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRINCIPLE -->
+<section id="principle">
+  <div class="container">
+    <div class="principle-core">
+      <span class="section-eyebrow">The Principle</span>
+      <p class="big-statement">Every action is an act of self-definition.</p>
+      <p>The connections we choose, the causes we support, the work we join, and the communities we build — all shape who we become. Connection is not networking. It is development.</p>
+      <div class="two-questions">
+        <div class="q-card">
+          <span class="q-label">The familiar question</span>
+          <span class="q-text">Who do I know?</span>
+        </div>
+        <div class="q-card highlight">
+          <span class="q-label">The deeper question</span>
+          <span class="q-text">Who helps me become who I am choosing to become?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <span class="section-eyebrow">The Process</span>
+    <h2>Connection by<br><em>developmental direction</em></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <span class="step-role role-human">Human</span>
+          <h3>Create a Sovereign Profile</h3>
+          <p>The human defines interests, values, boundaries, projects, needs, offers, preferred collaboration modes, and current developmental direction. The profile belongs entirely to them.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <span class="step-role role-agent">Agent</span>
+          <h3>Interpret the Profile</h3>
+          <p>The AI partner translates the human's scattered thoughts into structured signals — identifying themes, values, complementary needs, and readiness markers.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <span class="step-role role-agent">Agent</span>
+          <h3>Scout Across Compatible Hubs</h3>
+          <p>The agent looks for aligned profiles, projects, causes, trust circles, local groups, and initiatives across the distributed rhizome network — without exposing private data.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <span class="step-role role-agent">Agent</span>
+          <h3>Recommend Possible Matches</h3>
+          <p>The agent explains why a connection may be meaningful — including shared values, complementary skills, mutual needs, possible risks, and suggested first steps. Recommendations only, never actions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <span class="step-role role-human">Human</span>
+          <h3>Approve or Decline</h3>
+          <p>No agent contacts another human, commits resources, shares private data, or joins anything without explicit human approval. Agency is not automation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="container">
+    <span class="section-eyebrow">Live Demo Simulation</span>
+    <h2>Ten profiles.<br><em>Infinite possible connections.</em></h2>
+    <p>Select any profile below and run a simulated agent match. All profiles are fictional demonstration characters.</p>
+    <div class="profiles-grid" id="profiles-grid"></div>
+    <div id="match-result">
+      <div class="match-header">
+        <div class="match-icon">⚡</div>
+        <div>
+          <div class="match-title" id="match-title">Agent Match Analysis</div>
+          <div class="match-subtitle">Awaiting human approval · No contact has been made</div>
+        </div>
+      </div>
+      <div class="match-list" id="match-list"></div>
+      <div class="consent-gate">
+        <span class="consent-label">Human Approval Required</span>
+        <p class="consent-text" id="consent-text">Your agent has identified potential alignment. Review the recommendations above. No introduction will be initiated without your explicit approval.</p>
+        <div class="consent-actions">
+          <button class="btn-approve" onclick="approveMatch()">Approve Introduction</button>
+          <button class="btn-defer" onclick="deferMatch()">Review Later</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AGENT DIALOGUE -->
+<section id="dialogue">
+  <div class="container">
+    <span class="section-eyebrow">Agent-to-Agent Exchange</span>
+    <h2>Permissioned scouting,<br><em>not autonomous action.</em></h2>
+    <p>This is what a structured agent dialogue looks like — purpose-limited, transparent, and always waiting for human consent before any action.</p>
+    <button class="start-dialogue-btn" id="dialogue-btn" onclick="startDialogue()">▶ Run Dialogue Simulation</button>
+    <div class="dialogue-container" id="dialogue-container"></div>
+    <div class="dialogue-status" id="dialogue-status">
+      ✓ Recommendation prepared. Awaiting human approval. No contact has been initiated.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONSENT -->
+<section id="consent">
+  <div class="container">
+    <span class="section-eyebrow">The Consent Layer</span>
+    <h2><em>Agency</em> is not automation.</h2>
+    <p>The purpose of the hub is not to make humans passive. It is to reduce cognitive load so humans can make better choices. Every principle here is a hard constraint, not a preference.</p>
+    <div class="consent-principles">
+      <div class="consent-card">
+        <div class="consent-card-icon">🔑</div>
+        <h4>You own the profile</h4>
+        <p>Your sovereign profile belongs entirely to you. Modify, pause, or delete it at any point.</p>
+      </div>
+      <div class="consent-card">
+        <div class="consent-card-icon">🛡️</div>
+        <h4>You control what is shared</h4>
+        <p>Agents only work with the information you explicitly authorize for scouting purposes.</p>
+      </div>
+      <div class="consent-card">
+        <div class="consent-card-icon">✋</div>
+        <h4>You approve introductions</h4>
+        <p>No agent contacts another human without your explicit, per-introduction consent.</p>
+      </div>
+      <div class="consent-card">
+        <div class="consent-card-icon">⏸️</div>
+        <h4>You can pause anytime</h4>
+        <p>Suspend your agent's scouting activity at any time without losing your profile or history.</p>
+      </div>
+      <div class="consent-card">
+        <div class="consent-card-icon">🚫</div>
+        <h4>No dark patterns</h4>
+        <p>No manipulation, no engagement addiction design, no manufactured urgency.</p>
+      </div>
+      <div class="consent-card">
+        <div class="consent-card-icon">💡</div>
+        <h4>AI recommends, you decide</h4>
+        <p>Every agent output is a recommendation only. The decision and the relationship remain human.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- USE CASES -->
+<section id="usecases">
+  <div class="container">
+    <span class="section-eyebrow">Use Cases</span>
+    <h2>Six ways<br><em>the grove works.</em></h2>
+    <div class="usecase-grid" id="usecase-grid"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RHIZOME MODEL -->
+<section id="rhizome-model">
+  <div class="container">
+    <span class="section-eyebrow">The Template Model</span>
+    <h2>No central trunk.<br><em>Distributed roots.</em></h2>
+    <p>Signal Grove is not one platform. It is a model others can fork, adapt, and connect into their own local or thematic hubs. Each hub maintains its own values and profiles. Open shared protocols allow agents to scout across compatible hubs.</p>
+    <h3 style="margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.1rem; color: var(--parchment-dim); letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 400;">Hub Types</h3>
+    <div class="hub-types">
+      <span class="hub-tag">Local Community Hub</span>
+      <span class="hub-tag">Thematic Cause Hub</span>
+      <span class="hub-tag">Project Collaboration Hub</span>
+      <span class="hub-tag">Family Network Hub</span>
+      <span class="hub-tag">Learning Circle Hub</span>
+      <span class="hub-tag">Civic Participation Hub</span>
+      <span class="hub-tag">Regenerative Farming Hub</span>
+      <span class="hub-tag">Health Transformation Hub</span>
+      <span class="hub-tag">Trust Circle Hub</span>
+      <span class="hub-tag">Interfaith Dialogue Hub</span>
+      <span class="hub-tag">Maker & Repair Hub</span>
+      <span class="hub-tag">Elder Care Hub</span>
+    </div>
+    <h3 style="margin-top: 2.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--parchment-dim); letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 400;">Open Protocol Concepts</h3>
+    <p style="margin-bottom: 0;">These are conceptual building blocks for inter-hub compatibility — not a finished specification.</p>
+    <div class="protocol-grid">
+      <div class="protocol-item"><span class="protocol-dot"></span>Sovereign Profile Schema</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Consent-Based Introduction Protocol</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Agent Recommendation Log</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Trust Signal Tags</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Human Approval Gate</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Local Hub Registry</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Inter-Hub Compatibility Layer</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Shared Values Vocabulary</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>Privacy Boundary Settings</div>
+      <div class="protocol-item"><span class="protocol-dot"></span>X+1 Action Suggestions</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PODCAST MODE -->
+<section id="podcast-mode">
+  <div class="container">
+    <span class="section-eyebrow">Podcast Demo Mode</span>
+    <h2>A staged sequence<br><em>for screen recording.</em></h2>
+    <p>Use the controls below to walk through a podcast-ready simulation — eight scenes, narrated for a live recording environment.</p>
+    <div class="podcast-stage">
+      <div class="podcast-bar">
+        <span class="rec-dot"></span>
+        <span class="podcast-bar-label">Signal Grove · Podcast Demo · E79 / CWG3 Ch.14</span>
+      </div>
+      <div class="podcast-scenes" id="podcast-scenes"></div>
+      <div class="podcast-controls">
+        <button class="pod-btn" onclick="prevScene()">← Previous</button>
+        <span class="scene-counter" id="scene-counter">Scene 1 of 8</span>
+        <button class="pod-btn primary" onclick="nextScene()">Next Scene →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Signal Grove</div>
+        <p>A concept template for decentralized human-AI assisted connection. Built as a demonstration artifact for the Hybrid Intelligence / CWG Wisdom Podcast production pipeline.</p>
+      </div>
+      <div class="footer-links">
+        <h5>Sections</h5>
+        <a href="#why">Why This Exists</a>
+        <a href="#principle">The Principle</a>
+        <a href="#how">How It Works</a>
+        <a href="#demo">Demo</a>
+        <a href="#dialogue">Agent Dialogue</a>
+        <a href="#consent">Consent Layer</a>
+        <a href="#rhizome-model">Template Model</a>
+      </div>
+      <div class="footer-links">
+        <h5>Context</h5>
+        <a href="https://zvz2023.github.io/CWG/cwg-hub_2.html" target="_blank">CWG Wisdom Hub</a>
+        <a href="#">E79 Production Doc</a>
+        <a href="#">Hybrid Intelligence</a>
+        <a href="#">Humanity's Team</a>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <strong>Concept Demonstration Only.</strong> This is a concept demonstration for human-AI assisted connection. All profiles are fictional. AI agents in this demo do not act autonomously, contact people, or make decisions. Human consent remains required at every action point. This page was built as a source artifact for NotebookLM audio generation and the E79 / CWG3 Chapter 14 production cycle.
+    </div>
+    <div class="footer-bottom">
+      <p>Signal Grove · Hybrid Intelligence · 2026</p>
+      <p>Every action is an act of self-definition.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ========== DATA ==========
+const profiles = [
+  {
+    id: 'zoltan', human: 'Zoltan', agent: 'Elias', location: 'Budapest, HU',
+    avatar: 'Z', focus: 'Hybrid intelligence systems, regenerative farming, trust circles, and post-work identity.',
+    tags: ['Systems Thinking', 'Digital Production', 'Community Design'],
+    sectors: ['World View', 'Spirituality'],
+    needs: 'Collaborators for a local pilot hub, content synthesis, community design.',
+    offers: 'Systems thinking, source-document building, digital production framework.',
+    direction: 'Building infrastructure for human-AI collaborative communities at local scale.',
+    matches: [
+      { name: 'Hana / Root', score: 'high', reason: 'Both profiles converge on regenerative land use, practical community building, and local trust infrastructure. Strongest shared pattern: human-scale systems over abstract idealism.' },
+      { name: 'Marcus / Beacon', score: 'high', reason: 'Complementary technical layer. Marcus brings privacy architecture and open protocols; Zoltan brings content framework and community narrative.' },
+      { name: 'Ravi / Pulse', score: 'medium', reason: 'Shared interest in behavior change and local health systems. Possible collaboration on a health-trust pilot circle.' }
+    ]
+  },
+  {
+    id: 'mira', human: 'Mira', agent: 'Solace', location: 'Vienna, AT',
+    avatar: 'M', focus: 'Trauma-informed education, youth resilience, and family systems.',
+    tags: ['Curriculum Design', 'Emotional Literacy', 'Youth'],
+    sectors: ['Education', 'Health'],
+    needs: 'Parents, educators, and designers to test micro-learning circles.',
+    offers: 'Curriculum design, facilitation, emotional literacy frameworks.',
+    direction: 'Making trauma-informed practice the default in education, not the exception.',
+    matches: [
+      { name: 'Sofia / Luma', score: 'high', reason: 'Both work at the intersection of care and community. Mira\'s youth focus and Sofia\'s elder care expertise could form a full-lifespan care circle.' },
+      { name: 'Daniel / Atlas', score: 'medium', reason: 'Governance models for community micro-circles. Daniel can provide structural frameworks for Mira\'s learning circles to operate sustainably.' },
+      { name: 'Leila / Noor', score: 'medium', reason: 'Overlapping facilitation methodologies. Leila\'s listening circle protocols directly complement Mira\'s learning circle design.' }
+    ]
+  },
+  {
+    id: 'daniel', human: 'Daniel', agent: 'Atlas', location: 'Amsterdam, NL',
+    avatar: 'D', focus: 'Commons governance, civic technology, and local resilience.',
+    tags: ['Policy Design', 'Cooperative Frameworks', 'Research'],
+    sectors: ['Governance', 'Justice'],
+    needs: 'Pilot communities and governance models willing to experiment.',
+    offers: 'Policy design, cooperative frameworks, structured research.',
+    direction: 'Building commons governance that can survive contact with real communities.',
+    matches: [
+      { name: 'Elena / Civic', score: 'high', reason: 'Near-perfect complementarity. Daniel provides frameworks; Elena provides the participatory process design to bring those frameworks to life in public settings.' },
+      { name: 'Marcus / Beacon', score: 'high', reason: 'Open protocol governance is the bridge. Both are building infrastructure — one civic, one technical.' },
+      { name: 'Zoltan / Elias', score: 'medium', reason: 'Local pilot hub is a natural test case for Daniel\'s governance models.' }
+    ]
+  },
+  {
+    id: 'leila', human: 'Leila', agent: 'Noor', location: 'Amman, JO',
+    avatar: 'L', focus: 'Interfaith dialogue, women-led community healing, and conflict mediation.',
+    tags: ['Facilitation', 'Bridge-Building', 'Listening Circles'],
+    sectors: ['Relations', 'Spirituality'],
+    needs: 'Translation support and safe-circle protocols for cross-cultural contexts.',
+    offers: 'Spiritual facilitation, listening circles, conflict mediation, bridge-building.',
+    direction: 'Creating containers where people from different traditions can think together without losing themselves.',
+    matches: [
+      { name: 'Mira / Solace', score: 'high', reason: 'Both design spaces for difficult conversations. Leila\'s interfaith methodology and Mira\'s trauma-informed approach are deeply compatible.' },
+      { name: 'Sofia / Luma', score: 'medium', reason: 'Shared community ritual orientation. Both understand that relationships require structure and ceremony, not just goodwill.' },
+      { name: 'Elena / Civic', score: 'medium', reason: 'Deliberative democracy needs the kind of deep listening Leila practices. Possible facilitation partnership.' }
+    ]
+  },
+  {
+    id: 'tomas', human: 'Tomas', agent: 'Forge', location: 'Prague, CZ',
+    avatar: 'T', focus: 'Practical trades, repair culture, and tool libraries.',
+    tags: ['Maker Skills', 'Maintenance Systems', 'Hands-On'],
+    sectors: ['Infrastructure', 'Economics'],
+    needs: 'Community space and an apprentice network.',
+    offers: 'Hands-on building, maker skills, maintenance systems, repair knowledge.',
+    direction: 'Making repair the default before replacement — at community scale.',
+    matches: [
+      { name: 'Hana / Root', score: 'high', reason: 'Both work with physical materials and local community. Hana\'s regenerative farming and Tomas\'s repair culture share the same "work with what you have" ethic.' },
+      { name: 'Ravi / Pulse', score: 'medium', reason: 'Walking groups and tool libraries could share community space. Practical infrastructure overlap.' },
+      { name: 'Daniel / Atlas', score: 'medium', reason: 'Tomas needs governance for tool libraries and maker spaces. Daniel provides the framework.' }
+    ]
+  },
+  {
+    id: 'hana', human: 'Hana', agent: 'Root', location: 'Brno, CZ',
+    avatar: 'H', focus: 'Regenerative agriculture, food sovereignty, and seed libraries.',
+    tags: ['Ecological Design', 'Soil Knowledge', 'Local Food'],
+    sectors: ['Environment', 'Health'],
+    needs: 'Land access, volunteers, and mapping tools.',
+    offers: 'Ecological design, soil knowledge, local food systems, seed library stewardship.',
+    direction: 'Building food sovereignty from the ground up — literally.',
+    matches: [
+      { name: 'Zoltan / Elias', score: 'high', reason: 'Shared root in regenerative systems and local trust infrastructure. Hana grounds the philosophy in soil; Zoltan grounds it in narrative.' },
+      { name: 'Tomas / Forge', score: 'high', reason: 'Repair culture and regenerative farming are natural partners. Both reject disposability as a value.' },
+      { name: 'Ravi / Pulse', score: 'medium', reason: 'Food systems and health behavior change. Hana\'s food sovereignty work directly supports Ravi\'s diabetic-friendly food system goals.' }
+    ]
+  },
+  {
+    id: 'marcus', human: 'Marcus', agent: 'Beacon', location: 'Berlin, DE',
+    avatar: 'Mc', focus: 'Ethical AI, privacy architecture, and open protocols.',
+    tags: ['Security Thinking', 'Protocol Design', 'Architecture'],
+    sectors: ['Science', 'Media'],
+    needs: 'Real-world use cases and human-centered governance models.',
+    offers: 'Architecture, security thinking, protocol design, privacy frameworks.',
+    direction: 'Building AI infrastructure that serves humans rather than surveilling them.',
+    matches: [
+      { name: 'Daniel / Atlas', score: 'high', reason: 'Governance and technical architecture are the two pillars of any viable commons. These two complete each other.' },
+      { name: 'Elena / Civic', score: 'high', reason: 'Participatory democracy needs privacy-preserving civic tech. Marcus provides the infrastructure layer.' },
+      { name: 'Zoltan / Elias', score: 'medium', reason: 'The Signal Grove concept itself is the use case Marcus is looking for.' }
+    ]
+  },
+  {
+    id: 'sofia', human: 'Sofia', agent: 'Luma', location: 'Lisbon, PT',
+    avatar: 'S', focus: 'Elder care, loneliness reduction, and neighborhood companionship.',
+    tags: ['Care Design', 'Community Rituals', 'Relational Intelligence'],
+    sectors: ['Health', 'Relations'],
+    needs: 'Volunteers and trust-verification methods for safe elder connection.',
+    offers: 'Care design, community rituals, relational intelligence, companionship frameworks.',
+    direction: 'Making loneliness a solvable community problem, not a private burden.',
+    matches: [
+      { name: 'Mira / Solace', score: 'high', reason: 'Together they span the full lifespan. Mira\'s youth trauma work and Sofia\'s elder care create a natural whole-community care framework.' },
+      { name: 'Leila / Noor', score: 'medium', reason: 'Community ritual and interfaith circle design are closely related methodologies.' },
+      { name: 'Ravi / Pulse', score: 'medium', reason: 'Walking groups and elder companionship can merge naturally into a neighborhood health ritual.' }
+    ]
+  },
+  {
+    id: 'ravi', human: 'Ravi', agent: 'Pulse', location: 'Bangalore, IN',
+    avatar: 'R', focus: 'Health behavior change, diabetic-friendly food systems, and walking groups.',
+    tags: ['Habit Design', 'Health Coaching', 'Peer Accountability'],
+    sectors: ['Health', 'Relations'],
+    needs: 'Local partners and measurement methods.',
+    offers: 'Habit design, health coaching, peer accountability systems.',
+    direction: 'Proving that community is the best health intervention we have.',
+    matches: [
+      { name: 'Hana / Root', score: 'high', reason: 'Food sovereignty and diabetic-friendly food systems are directly aligned. Hana\'s seed libraries could supply what Ravi\'s communities need.' },
+      { name: 'Sofia / Luma', score: 'high', reason: 'Walking groups and elder companionship are the same intervention from different angles.' },
+      { name: 'Mira / Solace', score: 'medium', reason: 'Behavior change methodology transfers across contexts. Peer learning circles and micro-learning circles share structure.' }
+    ]
+  },
+  {
+    id: 'elena', human: 'Elena', agent: 'Civic', location: 'Barcelona, ES',
+    avatar: 'El', focus: 'Deliberative democracy, citizen assemblies, and participatory budgeting.',
+    tags: ['Civic Process', 'Public Dialogue', 'Meeting Structure'],
+    sectors: ['Governance', 'World View'],
+    needs: 'Local governments willing to experiment and skilled facilitators.',
+    offers: 'Civic process design, meeting structure, public dialogue facilitation.',
+    direction: 'Making ordinary people the authors of the decisions that shape their lives.',
+    matches: [
+      { name: 'Daniel / Atlas', score: 'high', reason: 'Commons governance frameworks and participatory process design are the two halves of democratic infrastructure.' },
+      { name: 'Marcus / Beacon', score: 'high', reason: 'Privacy-preserving civic tech is the enabler of everything Elena is building.' },
+      { name: 'Leila / Noor', score: 'medium', reason: 'Deliberative democracy needs deep listening. Leila\'s facilitation methods raise the quality of civic dialogue.' }
+    ]
+  }
+];
+
+const useCases = [
+  {
+    num: '01', title: 'Find collaborators for a local project',
+    problem: 'You have an idea but lack the complementary skills to move it forward.',
+    agent: 'Scouts profiles with relevant skills and current developmental overlap.',
+    decision: 'You choose who to invite into a first conversation.',
+    action: 'Draft an introduction framed around shared direction, not a pitch.'
+  },
+  {
+    num: '02', title: 'Discover aligned friendship by design',
+    problem: 'You\'ve outgrown existing social circles but lack a way to find people at a similar developmental stage.',
+    agent: 'Identifies profiles with shared values, comparable life transitions, and compatible communication styles.',
+    decision: 'You approve a low-commitment first contact — a shared walk, a short call.',
+    action: 'A small trust gesture, not a commitment.'
+  },
+  {
+    num: '03', title: 'Join a cause without drowning in noise',
+    problem: 'You care about an issue but every entry point feels overwhelming or misaligned.',
+    agent: 'Filters initiatives by your available time, geographic proximity, and value match.',
+    decision: 'You choose the specific initiative and the level of involvement.',
+    action: 'A single defined contribution — a workshop, a review, a local meeting.'
+  },
+  {
+    num: '04', title: 'Match skills to community needs',
+    problem: 'You have expertise others need but no efficient way to surface it to the right people.',
+    agent: 'Continuously surfaces requests that match your declared offers.',
+    decision: 'You decide when and how to respond to each request.',
+    action: 'A direct offer, scoped and time-limited.'
+  },
+  {
+    num: '05', title: 'Build a local trust circle',
+    problem: 'You want a small, intentional community of practice but don\'t know where to start.',
+    agent: 'Identifies 6–8 profiles with complementary directions within your geography.',
+    decision: 'You review each profile and approve who to invite to a founding conversation.',
+    action: 'A first meeting with an explicit agenda and shared agreements.'
+  },
+  {
+    num: '06', title: 'Connect small hubs into a larger rhizome',
+    problem: 'Your local hub has reached its limits and needs connection to adjacent communities.',
+    agent: 'Scouts compatible hubs using inter-hub compatibility protocols.',
+    decision: 'Hub stewards approve each inter-hub connection.',
+    action: 'A shared project, an exchange visit, or a cross-hub trust signal.'
+  }
+];
+
+const dialogueMessages = [
+  { agent: 'A', name: 'Elias', text: 'My human partner is exploring hybrid intelligence as a tool for local trust-building, regenerative systems, and post-work meaning. Scouting for profiles with practical grounding — not abstract enthusiasm. Developmental direction: human-scale community infrastructure.' },
+  { agent: 'B', name: 'Root', text: 'My human partner is building a seed library and local food resilience circle in the Czech Republic. She is seeking collaborators who understand both land-based systems and community trust. Current need: mapping tools and people who think in systems.' },
+  { agent: 'A', name: 'Elias', text: 'Alignment signal detected. Shared patterns: local resilience, trust circles, regenerative practice, human-scale systems, rejection of disposability as a value. Both profiles show practical over ideological orientation. Shall I prepare a human-readable recommendation?' },
+  { agent: 'B', name: 'Root', text: 'Prepare recommendation only. No contact initiated without human consent. Note: Hana has a boundary around unsolicited digital outreach. Any introduction must frame itself as an offer, not a request.' },
+  { agent: 'A', name: 'Elias', text: 'Noted. Drafting recommendation with that constraint honored. Suggested first contact: a shared question about tool libraries and seed sovereignty — a topic both profiles have flagged as current. No pitch. No ask. An opening.' }
+];
+
+const podcastScenes = [
+  {
+    num: 'Scene 1', text: 'What would happen if our AI partners tried to find meaningful human connections for us — not by scrolling social media, but by reading the direction of our lives?',
+    note: 'Host A and Host B pose the central question of the episode.'
+  },
+  {
+    num: 'Scene 2', text: 'Agent A begins scanning the connection field — not searching by keyword, but by developmental pattern.',
+    agent: 'Elias: Scanning profiles for alignment with: local resilience, human-scale systems, regenerative practice. Filtering out abstract enthusiasm. Looking for practical grounding.'
+  },
+  {
+    num: 'Scene 3', text: 'Across the network, Agent B receives a structured scouting signal.',
+    agent: 'Root: Signal received from Elias. Checking compatibility layer. My human\'s profile: food sovereignty, seed libraries, community trust, Czech Republic. Running alignment check.'
+  },
+  {
+    num: 'Scene 4', text: 'A potential match surfaces — not because two people have the same interests, but because their directions are complementary.',
+    agent: 'Root: Alignment confirmed on four shared patterns. Preparing recommendation for human review. No contact initiated.'
+  },
+  {
+    num: 'Scene 5', text: 'The agent recommendation appears — not a suggestion to connect, but an explanation of why it might matter.',
+    agent: 'Elias: Zoltan, I\'ve identified a high-alignment profile. Hana in Brno is building food sovereignty infrastructure and needs systems thinking. Your work on local trust circles directly overlaps. This is not a networking opportunity. This is a possible co-evolution.'
+  },
+  {
+    num: 'Scene 6', text: 'The human reads the recommendation. The agent waits. Nothing happens without a yes.',
+    note: 'Human approval required. The agent has done its work. The human now decides.'
+  },
+  {
+    num: 'Scene 7', text: 'If the human approves, the agent drafts a possible opening — not a pitch, not a request, but an opening.',
+    agent: 'Elias: Draft first message — "Hana, I came across your seed library work. I\'m building a local hub for human-AI assisted community design. I think we might be asking the same questions from different directions. No agenda. Just curious if that lands."'
+  },
+  {
+    num: 'Scene 8', text: 'The future of connection may not be more noise. It may be better scouting.',
+    note: 'The hub does not replace human relationship. It reduces the distance between people who were already looking for each other.'
+  }
+];
+
+// ========== RHIZOME CANVAS ==========
+const canvas = document.getElementById('rhizome-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [], animFrame;
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+function initNodes() {
+  nodes = [];
+  const count = Math.min(60, Math.floor((canvas.width * canvas.height) / 14000));
+  for (let i = 0; i < count; i++) {
+    nodes.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 2.5 + 1,
+      isAgent: Math.random() > 0.75,
+      phase: Math.random() * Math.PI * 2
+    });
+  }
+}
+
+function drawRhizome(t) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const maxDist = 160;
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i];
+    n.x += n.vx; n.y += n.vy;
+    if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+    for (let j = i + 1; j < nodes.length; j++) {
+      const m = nodes[j];
+      const dx = n.x - m.x, dy = n.y - m.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < maxDist) {
+        const alpha = (1 - dist / maxDist) * 0.35;
+        const color = (n.isAgent || m.isAgent) ? `rgba(78,205,196,${alpha})` : `rgba(201,168,76,${alpha * 0.6})`;
+        ctx.beginPath();
+        ctx.moveTo(n.x, n.y);
+        ctx.lineTo(m.x, m.y);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+    }
+    const pulse = Math.sin(t * 0.002 + n.phase) * 0.5 + 0.5;
+    const glowR = n.r + (n.isAgent ? pulse * 3 : 0);
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
+    ctx.fillStyle = n.isAgent ? `rgba(78,205,196,${0.6 + pulse * 0.3})` : `rgba(201,168,76,0.5)`;
+    ctx.fill();
+  }
+  animFrame = requestAnimationFrame(drawRhizome);
+}
+
+window.addEventListener('resize', () => { resizeCanvas(); initNodes(); });
+resizeCanvas(); initNodes();
+requestAnimationFrame(drawRhizome);
+
+// ========== PROFILES ==========
+function renderProfiles() {
+  const grid = document.getElementById('profiles-grid');
+  grid.innerHTML = profiles.map(p => `
+    <div class="profile-card" id="card-${p.id}" onclick="selectProfile('${p.id}')">
+      <div class="profile-header">
+        <div class="profile-names">
+          <h3>${p.human}</h3>
+          <div class="agent-name">agent: ${p.agent}</div>
+          <div class="profile-location">📍 ${p.location}</div>
+        </div>
+        <div class="profile-avatar">${p.avatar}</div>
+      </div>
+      <div class="profile-focus">${p.focus}</div>
+      <div class="profile-tags">
+        ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        ${p.sectors.map(s => `<span class="tag tag-sector">${s}</span>`).join('')}
+      </div>
+      <div class="profile-direction"><strong>Direction →</strong> ${p.direction}</div>
+      <button class="match-btn">Run Agent Match for ${p.human}</button>
+    </div>
+  `).join('');
+}
+
+let selectedProfile = null;
+function selectProfile(id) {
+  document.querySelectorAll('.profile-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById(`card-${id}`).classList.add('selected');
+  selectedProfile = profiles.find(p => p.id === id);
+  showMatch(selectedProfile);
+}
+
+function showMatch(profile) {
+  const result = document.getElementById('match-result');
+  document.getElementById('match-title').textContent = `${profile.agent} Match Analysis for ${profile.human}`;
+  document.getElementById('match-list').innerHTML = profile.matches.map(m => `
+    <div class="match-item">
+      <div class="match-item-header">
+        <span class="match-item-name">${m.name}</span>
+        <span class="match-score ${m.score === 'high' ? 'score-high' : 'score-med'}">${m.score === 'high' ? 'High Alignment' : 'Moderate Alignment'}</span>
+      </div>
+      <div class="match-reason">${m.reason}</div>
+    </div>
+  `).join('');
+  document.getElementById('consent-text').textContent = `${profile.agent} has identified ${profile.matches.length} potential alignments for ${profile.human}. The strongest immediate match is ${profile.matches[0].name.split('/')[0].trim()}. Review the recommendations above. No introduction will be initiated without your explicit approval.`;
+  result.classList.add('visible');
+  result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function approveMatch() {
+  const profile = selectedProfile;
+  if (!profile) return;
+  const btn = document.querySelector('.btn-approve');
+  btn.textContent = '✓ Introduction approved';
+  btn.style.background = 'rgba(201,168,76,0.4)';
+  btn.disabled = true;
+  document.getElementById('consent-text').textContent = `${profile.agent} will now prepare a draft introduction to ${profile.matches[0].name.split('/')[0].trim()}. You will review it before it is sent. No message has been sent.`;
+}
+
+function deferMatch() {
+  document.getElementById('consent-text').textContent = 'Match saved for later review. No action has been taken. Your agent will hold these recommendations until you return.';
+}
+
+// ========== DIALOGUE ==========
+let dialogueRunning = false;
+function startDialogue() {
+  if (dialogueRunning) return;
+  dialogueRunning = true;
+  document.getElementById('dialogue-btn').style.display = 'none';
+  const container = document.getElementById('dialogue-container');
+  container.innerHTML = '';
+  dialogueMessages.forEach((msg, i) => {
+    const isRight = msg.agent === 'B';
+    const div = document.createElement('div');
+    div.className = `dialogue-message${isRight ? ' right' : ''}`;
+    div.innerHTML = `
+      <div class="agent-bubble-icon ${msg.agent === 'A' ? 'agent-a' : 'agent-b'}">${msg.name[0]}</div>
+      <div class="bubble-wrap">
+        <div class="bubble-name ${msg.agent === 'A' ? 'name-a' : 'name-b'}">${msg.name} · ${msg.agent === 'A' ? 'Agent A · Zoltan\'s partner' : 'Agent B · Hana\'s partner'}</div>
+        <div class="bubble ${isRight ? 'bubble-right' : ''}">${msg.text}</div>
+      </div>
+    `;
+    container.appendChild(div);
+    setTimeout(() => div.classList.add('visible'), i * 1200 + 400);
+  });
+  setTimeout(() => {
+    document.getElementById('dialogue-status').classList.add('visible');
+  }, dialogueMessages.length * 1200 + 800);
+}
+
+// ========== USE CASES ==========
+function renderUseCases() {
+  document.getElementById('usecase-grid').innerHTML = useCases.map(uc => `
+    <div class="usecase-card">
+      <div class="usecase-num">${uc.num}</div>
+      <h3>${uc.title}</h3>
+      <div class="uc-row">
+        <span class="uc-label uc-label-human">Human problem</span>
+        <div class="uc-text">${uc.problem}</div>
+      </div>
+      <div class="uc-row">
+        <span class="uc-label uc-label-agent">Agent role</span>
+        <div class="uc-text">${uc.agent}</div>
+      </div>
+      <div class="uc-row">
+        <span class="uc-label uc-label-decision">Human decision point</span>
+        <div class="uc-text">${uc.decision}</div>
+      </div>
+      <div class="uc-row">
+        <span class="uc-label" style="color: var(--amber);">X+1 Action</span>
+        <div class="uc-text">${uc.action}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== PODCAST MODE ==========
+let currentScene = 0;
+function renderPodcastScenes() {
+  document.getElementById('podcast-scenes').innerHTML = podcastScenes.map((s, i) => `
+    <div class="scene ${i === 0 ? 'active' : ''}" id="scene-${i}">
+      <span class="scene-num">${s.num}</span>
+      <div class="scene-text">${s.text}</div>
+      ${s.note ? `<div class="scene-note">${s.note}</div>` : ''}
+      ${s.agent ? `<div class="scene-agent">⬡ ${s.agent}</div>` : ''}
+    </div>
+  `).join('');
+  updateSceneCounter();
+}
+
+function showScene(index) {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById(`scene-${index}`).classList.add('active');
+  updateSceneCounter();
+}
+
+function nextScene() {
+  if (currentScene < podcastScenes.length - 1) { currentScene++; showScene(currentScene); }
+}
+function prevScene() {
+  if (currentScene > 0) { currentScene--; showScene(currentScene); }
+}
+function updateSceneCounter() {
+  document.getElementById('scene-counter').textContent = `Scene ${currentScene + 1} of ${podcastScenes.length}`;
+}
+
+// ========== INIT ==========
+renderProfiles();
+renderUseCases();
+renderPodcastScenes();
+</script>
+</body>
+</html>

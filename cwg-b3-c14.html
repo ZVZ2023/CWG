@@ -31,6 +31,7 @@
       overflow-x: hidden;
     }
 
+    /* atmospheric depth */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -41,6 +42,7 @@
       pointer-events: none; z-index: 0;
     }
 
+    /* ── HEADER ─────────────────────────────────────── */
     header {
       position: relative; z-index: 1;
       text-align: center;
@@ -87,6 +89,7 @@
       margin: 2rem auto 0;
     }
 
+    /* ── MAP — DESKTOP RADIAL ────────────────────────── */
     .map-shell {
       position: relative; z-index: 1;
       padding: 0 0 1rem;
@@ -106,10 +109,11 @@
       overflow: visible;
     }
 
+    /* center node */
     .nc {
       position: absolute;
       width: 158px; height: 158px;
-      left: 401px; top: 246px;
+      left: 401px; top: 246px; /* center at 480, 325 */
       border-radius: 50%;
       background: var(--node-bg);
       border: 1px solid var(--gold);
@@ -135,6 +139,7 @@
       line-height: 1.7;
     }
 
+    /* satellite nodes */
     .ns {
       position: absolute;
       width: 98px; height: 98px;
@@ -142,10 +147,16 @@
       background: var(--node-bg);
       border: 1px solid rgba(201,168,76,0.5);
       box-shadow: var(--glow-sm);
-      display: flex; align-items: center;
+      display: flex; flex-direction: column; align-items: center;
       justify-content: center; text-align: center;
       padding: 0.6rem;
       z-index: 3;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .ns:hover, .ns.open {
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
     }
 
     .ns-label {
@@ -154,11 +165,13 @@
       color: var(--text); line-height: 1.3;
     }
 
-    .ns-podcast { left: 171px; top:  58px; }
-    .ns-debate  { left: 691px; top:  58px; }
-    .ns-brief   { left:  96px; top: 448px; }
-    .ns-music   { left: 750px; top: 430px; }
+    /* positions: left = cx - 49 */
+    .ns-podcast { left: 171px; top:  58px; } /* cx 220, cy 107 */
+    .ns-debate  { left: 691px; top:  58px; } /* cx 740, cy 107 */
+    .ns-brief   { left:  96px; top: 448px; } /* cx 145, cy 497 */
+    .ns-music   { left: 750px; top: 430px; } /* cx 799, cy 479 */
 
+    /* link panels */
     .lp {
       position: absolute;
       z-index: 3;
@@ -172,103 +185,74 @@
     .lp-brief   { left: 12px;  bottom: 16px; }
     .lp-music   { right: 12px; bottom: 16px; }
 
-    .lang-row {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      flex-wrap: nowrap;
-    }
-    .lp-debate .lang-row,
-    .lp-music .lang-row { justify-content: flex-end; }
-
-    .ltag {
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      color: var(--muted);
-      min-width: 20px;
-      flex-shrink: 0;
-    }
-
-    .pb {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.28rem;
-      padding: 0.32rem 0.62rem;
-      border: 1px solid rgba(201,168,76,0.3);
-      background: rgba(201,168,76,0.05);
-      color: var(--gold);
-      text-decoration: none;
-      font-family: 'Cinzel', serif;
-      font-size: 0.67rem;
-      letter-spacing: 0.18em;
-      border-radius: 1px;
-      white-space: nowrap;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-    .pb:hover {
-      background: rgba(201,168,76,0.16);
-      border-color: var(--gold);
-      color: #e8d8b0;
-    }
-
-    .music-credit {
-      font-size: 0.43rem;
-      letter-spacing: 0.22em;
-      color: var(--muted);
-      text-align: right;
-      line-height: 1.6;
-      margin-top: 0.15rem;
-    }
-
-    .lp-trigger {
+    /* orbiting "moon" links — small circles that fan out around a satellite */
+    .moon {
       position: absolute;
-      z-index: 4;
-      width: 28px; height: 28px;
+      width: 58px; height: 58px;
       border-radius: 50%;
-      border: 1px solid rgba(201,168,76,0.45);
-      background: rgba(16,12,7,0.97);
-      color: var(--gold);
-      font-family: 'Cinzel', serif;
-      font-size: 1.1rem;
-      line-height: 1;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
-    }
-    .lp-trigger:hover {
-      background: rgba(201,168,76,0.12);
-      border-color: var(--gold);
-      box-shadow: 0 0 10px rgba(201,168,76,0.2);
-    }
-
-    #tr-podcast { left: 121px; top:  38px; }
-    #tr-debate  { left: 811px; top:  38px; }
-    #tr-brief   { left:  81px; top: 568px; }
-    #tr-music   { left: 848px; top: 544px; }
-
-    .lp {
-      position: absolute;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 4;
       opacity: 0;
+      transform: scale(0.3);
       pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.15s, border-color 0.15s;
     }
-    #lp-podcast { left: 12px;  top: 10px;    transform: translateY(-5px); }
-    #lp-debate  { right: 12px; top: 10px;    transform: translateY(-5px); }
-    #lp-brief   { left: 12px;  bottom: 16px; transform: translateY(5px);  }
-    #lp-music   { right: 12px; bottom: 16px; transform: translateY(5px);  }
-    .lp.open {
+    .moon.open {
       opacity: 1;
+      transform: scale(1);
       pointer-events: all;
-      transform: translateY(0) !important;
+    }
+    .moon:hover {
+      background: rgba(201,168,76,0.14);
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+    .moon .m-lang {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+    .moon .m-plat {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
     }
 
-    #lp-debate .lang-row,
-    #lp-music  .lang-row { justify-content: flex-end; }
+    /* always-visible caption near Music node */
+    .music-caption {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+      z-index: 2;
+      pointer-events: none;
+    }
 
+    /* "+" indicator inside each satellite node, under the label */
+    .ns-plus {
+      margin-top: 0.35rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: rgba(201,168,76,0.6);
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .ns:hover .ns-plus { color: var(--gold); }
+    .ns.open .ns-plus { color: var(--gold); }
+
+    /* ── MAP — MOBILE CARDS (< 640px) ───────────────── */
     .mobile-map {
       display: none;
       padding: 2rem 1.2rem;
@@ -324,20 +308,22 @@
     .pb-sm {
       display: inline-flex;
       align-items: center;
-      gap: 0.2rem;
-      padding: 0.28rem 0.5rem;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
       border: 1px solid rgba(201,168,76,0.3);
       background: rgba(201,168,76,0.05);
       color: var(--gold);
       text-decoration: none;
       font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
-      border-radius: 1px;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      border-radius: 16px;
+      white-space: nowrap;
       transition: background 0.15s;
     }
     .pb-sm:hover { background: rgba(201,168,76,0.15); }
 
+    /* ── DIVIDER ─────────────────────────────────────── */
     .section-div {
       position: relative; z-index: 1;
       display: flex;
@@ -364,6 +350,7 @@
       flex-shrink: 0;
     }
 
+    /* ── ARTICLE ─────────────────────────────────────── */
     .article-wrap {
       position: relative; z-index: 1;
       max-width: 760px;
@@ -402,6 +389,7 @@
     }
     .abody em { color: rgba(201,168,76,0.7); font-style: italic; }
 
+    /* ── INFOGRAPHIC ─────────────────────────────────── */
     .info-wrap {
       position: relative; z-index: 1;
       display: grid;
@@ -449,42 +437,7 @@
       opacity: 0.25;
     }
 
-    /* ── SIGNAL GROVE BANNER ─────────────────────────── */
-    .sg-wrap {
-      position: relative; z-index: 1;
-      max-width: 700px;
-      margin: 0 auto 3rem;
-      padding: 1.6rem 2rem;
-      text-align: center;
-    }
-    .sg-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem;
-      border: 1px solid rgba(201,168,76,0.35);
-      background: rgba(201,168,76,0.04);
-      color: var(--gold);
-      text-decoration: none;
-      font-family: 'Cinzel', serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      border-radius: 1px;
-      transition: background 0.18s, border-color 0.18s;
-    }
-    .sg-link:hover {
-      background: rgba(201,168,76,0.12);
-      border-color: var(--gold);
-    }
-    .sg-note {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 0.8rem;
-    }
-
+    /* ── FOOTER ──────────────────────────────────────── */
     footer {
       position: relative; z-index: 1;
       border-top: 1px solid rgba(201,168,76,0.12);
@@ -518,6 +471,7 @@
       color: rgba(201,168,76,0.2);
     }
 
+    /* ── SCALE FOR MEDIUM SCREENS ────────────────────── */
     @media (max-width: 980px) {
       .map-stage {
         transform: scale(0.82);
@@ -554,15 +508,20 @@
 <div class="map-shell">
  <div class="map-stage">
 
+  <!-- SVG: lines + glow rings -->
   <svg class="map-svg" viewBox="0 0 960 650" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Outer atmospheric rings around center -->
     <circle cx="480" cy="325" r="90"  fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="10"/>
     <circle cx="480" cy="325" r="115" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="12"/>
 
+    <!-- Glow halos around satellite nodes -->
     <circle cx="220" cy="107" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
     <circle cx="740" cy="107" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
     <circle cx="145" cy="497" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
     <circle cx="799" cy="479" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
 
+    <!-- Main dashed lines: center edge → satellite edge -->
     <line x1="422" y1="272" x2="261" y2="137"
           stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
     <line x1="538" y1="272" x2="699" y2="137"
@@ -571,15 +530,6 @@
           stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
     <line x1="546" y1="370" x2="753" y2="454"
           stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
-
-    <line x1="220" y1="107" x2="135" y2="52"
-          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
-    <line x1="740" y1="107" x2="825" y2="52"
-          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
-    <line x1="145" y1="497" x2="95"  y2="582"
-          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
-    <line x1="799" y1="479" x2="862" y2="558"
-          stroke="rgba(201,168,76,0.18)" stroke-width="1" stroke-dasharray="3 9"/>
   </svg>
 
   <!-- CENTER NODE -->
@@ -588,69 +538,89 @@
     <div class="nc-sub">CWG · BOOK 3<br>CHAPTER 14</div>
   </div>
 
-  <!-- SATELLITE NODES -->
-  <div class="ns ns-podcast"><div class="ns-label">Podcast</div></div>
-  <div class="ns ns-debate" ><div class="ns-label">Debate</div></div>
-  <div class="ns ns-brief"  ><div class="ns-label">Brief</div></div>
-  <div class="ns ns-music"  ><div class="ns-label">Music<br>Video</div></div>
-
-  <!-- TRIGGERS -->
-  <button class="lp-trigger" id="tr-podcast" onclick="toggleLP('podcast')">+</button>
-  <button class="lp-trigger" id="tr-debate"  onclick="toggleLP('debate')">+</button>
-  <button class="lp-trigger" id="tr-brief"   onclick="toggleLP('brief')">+</button>
-  <button class="lp-trigger" id="tr-music"   onclick="toggleLP('music')">+</button>
-
-  <!-- PODCAST PANEL -->
-  <div class="lp" id="lp-podcast">
-    <div class="lang-row">
-      <span class="ltag">HU</span>
-      <a class="pb" href="https://youtu.be/seakTWq83g0" target="_blank">▶ YT</a>
-      <a class="pb" href="https://x.com/ZVZx1965/status/2067286899446739365" target="_blank">✕ X</a>
-      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02ko2h9ejDzYhRUtMr2E4Wg5z1hj6KE64e5C2ezPRS5eKapMC4jZLaf3VPc99e3bEzl&id=61589212142331" target="_blank">f FB</a>
-    </div>
-    <div class="lang-row">
-      <span class="ltag">EN</span>
-      <a class="pb" href="https://youtu.be/Vtig7nNisuY" target="_blank">▶ YT</a>
-      <a class="pb" href="https://x.com/ZVZx1965/status/2067640633536508365" target="_blank">✕ X</a>
-      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02r6g7woTT3jQ9UXAK4Bn8XJP8T5YVME3MTCykbCzUbs3CFt6HQY6QJqKZzV9qKqBSl&id=61589212142331" target="_blank">f FB</a>
-    </div>
+  <!-- SATELLITE NODES — click anywhere on the node to expand its links -->
+  <div class="ns ns-podcast" id="ns-podcast" onclick="toggleLP('podcast')">
+    <div class="ns-label">Podcast</div>
+    <div class="ns-plus" id="plus-podcast">+</div>
+  </div>
+  <div class="ns ns-debate" id="ns-debate" onclick="toggleLP('debate')">
+    <div class="ns-label">Debate</div>
+    <div class="ns-plus" id="plus-debate">+</div>
+  </div>
+  <div class="ns ns-brief" id="ns-brief" onclick="toggleLP('brief')">
+    <div class="ns-label">Brief</div>
+    <div class="ns-plus" id="plus-brief">+</div>
+  </div>
+  <div class="ns ns-music" id="ns-music" onclick="toggleLP('music')">
+    <div class="ns-label">Music<br>Video</div>
+    <div class="ns-plus" id="plus-music">+</div>
   </div>
 
-  <!-- DEBATE PANEL -->
-  <div class="lp" id="lp-debate">
-    <div class="lang-row">
-      <span class="ltag">HU</span>
-      <a class="pb" href="https://youtu.be/ghTfu3bucVo" target="_blank">▶ YT</a>
-      <a class="pb" href="https://x.com" target="_blank">✕ X</a>
-      <a class="pb" href="https://www.facebook.com/permalink.php?story_fbid=pfbid025xa9g6bk3m3Ji8KRk56WiHyWPYcWLg7upTGHBcvR8Tw65sRE1Q6bxupgtCCeo3nol&id=61589212142331" target="_blank">f FB</a>
-    </div>
-    <div class="lang-row">
-      <span class="ltag">EN</span>
-      <a class="pb" href="https://youtu.be/MV6Xgbm9vUo" target="_blank">▶ YT</a>
-      <a class="pb" href="https://x.com" target="_blank">✕ X</a>
-      <a class="pb" href="https://www.facebook.com/permalink.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02rQUeDJkv46CoyzhTd5gUQ8EWvPj54YQNy2gwkz73mEoJDcRDNYP2buCRJnYvcucVl%26id%3D61589212142331" target="_blank">f FB</a>
-    </div>
+  <!-- ORBITING MOON LINKS — fanned toward open space around each satellite -->
+
+  <!-- Podcast moons -->
+  <a class="moon" data-group="podcast" style="left:273.7px; top:47.9px; transition-delay:0s"
+     href="https://youtu.be/seakTWq83g0" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcast" style="left:273.7px; top:108.1px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2067286899446739365" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="podcast" style="left:235px; top:154.2px; transition-delay:0.08s"
+     href="https://youtu.be/Vtig7nNisuY" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcast" style="left:175.7px; top:164.7px; transition-delay:0.12s"
+     href="https://x.com/ZVZx1965/status/2067640633536508365" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">X.com</span>
+  </a>
+
+  <!-- Debate moons -->
+  <a class="moon" data-group="debate" style="left:726.3px; top:164.7px; transition-delay:0s"
+     href="https://youtu.be/ghTfu3bucVo" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="debate" style="left:667px; top:154.2px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="debate" style="left:628.3px; top:108.1px; transition-delay:0.08s"
+     href="https://youtu.be/MV6Xgbm9vUo" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="debate" style="left:628.3px; top:47.9px; transition-delay:0.12s"
+     href="https://x.com/ZVZx1965" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">X.com</span>
+  </a>
+
+  <!-- Brief moons -->
+  <a class="moon" data-group="brief" style="left:120.6px; top:380.1px; transition-delay:0s"
+     href="https://youtu.be/8QQGvq-eOGI" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="brief" style="left:176px; top:403.7px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2066565389731954919?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">X.com</span>
+  </a>
+
+  <!-- Music moons -->
+  <a class="moon" data-group="music" style="left:683.2px; top:464.2px; transition-delay:0s"
+     href="https://youtu.be/udtZU41APXs" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music" style="left:726.9px; top:373.3px; transition-delay:0.04s"
+     href="https://note.com/makimaki8055/n/n3a50bfe597c7" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">note.com</span>
+  </a>
+
+  <!-- Always-visible music credit -->
+  <div class="music-caption" style="left:744px; top:548px; width:130px;">
+    Words in a Dress<br>w/ Wednesday · CWG · Bk 3 · Ch 14
   </div>
 
-  <!-- BRIEF PANEL -->
-  <div class="lp" id="lp-brief">
-    <div class="lang-row">
-      <a class="pb" href="https://youtu.be/8QQGvq-eOGI" target="_blank">▶ YT</a>
-      <a class="pb" href="https://x.com/ZVZx1965/status/2066565389731954919?s=20" target="_blank">✕ X</a>
-      <a class="pb" href="#" target="_blank">f FB</a>
-    </div>
-  </div>
-
-  <!-- MUSIC PANEL -->
-  <div class="lp" id="lp-music">
-    <div class="lang-row">
-      <a class="pb" href="https://youtu.be/udtZU41APXs" target="_blank">▶ YT</a>
-    </div>
-    <div class="music-credit">Words in a Dress<br>w/ Wednesday (note.com)</div>
-  </div>
-
- </div>
-</div>
+ </div><!-- /map-stage -->
+</div><!-- /map-shell -->
 
 <!-- ═══ MAP — MOBILE CARDS ════════════════════════════ -->
 <div class="mobile-map">
@@ -661,17 +631,15 @@
       <div class="mc-row">
         <div class="mc-lang">HU</div>
         <div class="mc-btns">
-          <a class="pb-sm" href="https://youtu.be/seakTWq83g0" target="_blank">▶ YT</a>
-          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2067286899446739365" target="_blank">✕ X</a>
-          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02ko2h9ejDzYhRUtMr2E4Wg5z1hj6KE64e5C2ezPRS5eKapMC4jZLaf3VPc99e3bEzl&id=61589212142331" target="_blank">FB</a>
+          <a class="pb-sm" href="https://youtu.be/seakTWq83g0" onclick="event.stopPropagation()" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2067286899446739365" onclick="event.stopPropagation()" target="_blank">X.com</a>
         </div>
       </div>
       <div class="mc-row">
         <div class="mc-lang">EN</div>
         <div class="mc-btns">
-          <a class="pb-sm" href="https://youtu.be/Vtig7nNisuY" target="_blank">▶ YT</a>
-          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2067640633536508365" target="_blank">✕ X</a>
-          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02r6g7woTT3jQ9UXAK4Bn8XJP8T5YVME3MTCykbCzUbs3CFt6HQY6QJqKZzV9qKqBSl&id=61589212142331" target="_blank">FB</a>
+          <a class="pb-sm" href="https://youtu.be/Vtig7nNisuY" onclick="event.stopPropagation()" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2067640633536508365" onclick="event.stopPropagation()" target="_blank">X.com</a>
         </div>
       </div>
     </div>
@@ -681,15 +649,15 @@
       <div class="mc-row">
         <div class="mc-lang">HU</div>
         <div class="mc-btns">
-          <a class="pb-sm" href="https://youtu.be/ghTfu3bucVo" target="_blank">▶ YT</a>
-          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid025xa9g6bk3m3Ji8KRk56WiHyWPYcWLg7upTGHBcvR8Tw65sRE1Q6bxupgtCCeo3nol&id=61589212142331" target="_blank">FB</a>
+          <a class="pb-sm" href="https://youtu.be/ghTfu3bucVo" onclick="event.stopPropagation()" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965" onclick="event.stopPropagation()" target="_blank">X.com</a>
         </div>
       </div>
       <div class="mc-row">
         <div class="mc-lang">EN</div>
         <div class="mc-btns">
-          <a class="pb-sm" href="https://youtu.be/MV6Xgbm9vUo" target="_blank">▶ YT</a>
-          <a class="pb-sm" href="#" target="_blank">FB</a>
+          <a class="pb-sm" href="https://youtu.be/MV6Xgbm9vUo" onclick="event.stopPropagation()" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965" onclick="event.stopPropagation()" target="_blank">X.com</a>
         </div>
       </div>
     </div>
@@ -697,9 +665,10 @@
     <div class="mc">
       <div class="mc-title">Brief</div>
       <div class="mc-row">
+        <div class="mc-lang">EN</div>
         <div class="mc-btns">
-          <a class="pb-sm" href="https://youtu.be/8QQGvq-eOGI" target="_blank">▶ YT</a>
-          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2066565389731954919?s=20" target="_blank">✕ X</a>
+          <a class="pb-sm" href="https://youtu.be/8QQGvq-eOGI" onclick="event.stopPropagation()" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2066565389731954919?s=20" onclick="event.stopPropagation()" target="_blank">X.com</a>
         </div>
       </div>
     </div>
@@ -708,11 +677,12 @@
       <div class="mc-title">Music Video</div>
       <div class="mc-row">
         <div class="mc-btns">
-          <a class="pb-sm" href="https://youtu.be/udtZU41APXs" target="_blank">▶ YT</a>
+          <a class="pb-sm" href="https://youtu.be/udtZU41APXs" onclick="event.stopPropagation()" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://note.com/makimaki8055/n/n3a50bfe597c7" onclick="event.stopPropagation()" target="_blank">note.com</a>
         </div>
       </div>
       <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
-        Words in a Dress · w/ Wednesday<br>note.com collaboration
+        Words in a Dress · w/ Wednesday<br>CWG · Bk 3 · Ch 14
       </div>
     </div>
 
@@ -720,11 +690,14 @@
 </div>
 
 <!-- ═══ SIGNAL GROVE LINK ══════════════════════════════ -->
-<div class="sg-wrap">
-  <a class="sg-link" href="https://zvz2023.github.io/CWG/signal-grove-e79.html" target="_blank">
-    <i class="fa-solid fa-seedling"></i> Explore the Signal Grove Concept
+<div class="sg-wrap" style="position:relative; z-index:1; max-width:700px; margin:0 auto 1rem; padding:1.6rem 2rem; text-align:center;">
+  <a href="https://zvz2023.github.io/CWG/signal-grove-e79.html" target="_blank"
+     style="display:inline-flex; align-items:center; gap:0.6rem; padding:0.7rem 1.6rem; border:1px solid rgba(201,168,76,0.35); background:rgba(201,168,76,0.04); color:var(--gold); text-decoration:none; font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; border-radius:1px; transition:background 0.18s,border-color 0.18s;">
+    Explore the Signal Grove Concept
   </a>
-  <div class="sg-note">A decentralized human-AI connection hub, built as a companion artifact for this chapter.</div>
+  <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.78rem; color:var(--muted); margin-top:0.8rem;">
+    A decentralized human-AI connection hub, built as a companion artifact for this chapter.
+  </div>
 </div>
 
 <!-- ═══ TO THE POINT ══════════════════════════════════ -->
@@ -739,17 +712,17 @@
     Every connection we <em>choose</em> becomes part of who we are becoming.
   </div>
   <p class="abody">
-    This project explores one of the deepest questions in <em>Conversations with God — Book 3,
-    Chapter 14</em>: how does humanity discover what truly serves it? Not through sudden
-    philosophical enlightenment, but through structural change — shifting incentives, evolving
-    norms, and the quiet accumulation of conscious choices. The podcast traces this civilizational
-    pattern from historical examples into a forward-looking thought experiment: Signal Grove, a
-    decentralized model for AI-assisted human discovery, where personal AI partners scout for
-    aligned collaborators while humans remain fully sovereign over every decision. The debate
-    pressure-tests that claim directly, asking whether AI-guided discovery strengthens civilization
-    or quietly fragments it. During production, a real-world example of the exact mechanism
-    appeared unannounced — a creative collaboration with a musician in Japan, born from an AI
-    recommendation and carried forward entirely by human choice.
+    This project explores one of the deepest questions in <em>Conversations with God —
+    Book 3, Chapter 14</em>: how does humanity discover what truly serves it? Not through
+    sudden philosophical enlightenment, but through structural change — shifting incentives,
+    evolving norms, and the quiet accumulation of conscious choices. The podcast traces this
+    civilizational pattern from historical examples into a forward-looking thought experiment:
+    Signal Grove, a decentralized model for AI-assisted human discovery, where personal AI
+    partners scout for aligned collaborators while humans remain fully sovereign over every
+    decision. The debate pressure-tests that claim directly, asking whether AI-guided discovery
+    strengthens civilization or quietly fragments it. During production, a real-world example
+    of the exact mechanism appeared unannounced — a creative collaboration with a musician in
+    Japan, born from an AI recommendation and carried forward entirely by human choice.
   </p>
 </div>
 
@@ -789,7 +762,7 @@
     <a class="fl" href="https://x.com/ZVZx1965" target="_blank">
       <i class="fa-brands fa-x-twitter"></i> X
     </a>
-    <a class="fl" href="https://www.youtube.com/@digi_Gem_Hunter-ZVZx" target="_blank">
+    <a class="fl" href="https://www.youtube.com/@HybridIntelligence" target="_blank">
       <i class="fab fa-youtube"></i> YouTube
     </a>
   </div>
@@ -798,10 +771,25 @@
 
 <script>
   function toggleLP(id) {
-    const panel   = document.getElementById('lp-' + id);
-    const trigger = document.getElementById('tr-' + id);
-    const isOpen  = panel.classList.toggle('open');
-    trigger.textContent = isOpen ? '×' : '+';
+    const node  = document.getElementById('ns-' + id);
+    const plus  = document.getElementById('plus-' + id);
+    const moons = document.querySelectorAll('.moon[data-group="' + id + '"]');
+
+    const isOpen = !node.classList.contains('open');
+
+    // close any other open node first
+    document.querySelectorAll('.ns.open').forEach(n => {
+      if (n !== node) {
+        const gid = n.id.replace('ns-', '');
+        document.getElementById('plus-' + gid).textContent = '+';
+        n.classList.remove('open');
+        document.querySelectorAll('.moon[data-group="' + gid + '"]').forEach(m => m.classList.remove('open'));
+      }
+    });
+
+    node.classList.toggle('open', isOpen);
+    plus.textContent = isOpen ? '×' : '+';
+    moons.forEach(m => m.classList.toggle('open', isOpen));
   }
 </script>
 </body>

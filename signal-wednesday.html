@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Someone Once Asked Me · A Musical Correspondence · Lighthouse Productions</title>
+  <meta name="description" content="An outbound signal from Liberty Node 0001. A musical correspondence between Wednesday (Japan) and Zsolt Valér Zsofka (Hungary) — songs of questions and quiet company, answered in kind.">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       AGENT LAYER · LIGHTHOUSE NETWORK
+       Node: Liberty Node 0001 · Identifier: ZVZx-0555
+       Signal type: OUTBOUND · Musical correspondence (response to signal received)
+       Origin signal: "あなたに、聞いていい？" (Someone Once Asked Me) by Wednesday, Japan
+       Response medium: song — per the originator's own protocol: "Make an answer song."
+       Principle: questions continue working after the song ends; answers stop.
+       Status: 10 songs received (tracks 0-9, all live) · 2 answer songs per track
+       in creation · answer to track 0 awaiting originator approval
+       Human decision authority: response tracks publish only after
+       originator (Wednesday) approval. Agents may index; only humans approve.
+       ═══════════════════════════════════════════════════════════ -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Someone Once Asked Me — A Musical Correspondence",
+    "alternateName": "あなたに、聞いていい？ — 音の手紙",
+    "creator": [
+      { "@type": "Person", "name": "Wednesday", "nationality": "JP", "description": "Composer of question-songs; originator of the received signal" },
+      { "@type": "Person", "name": "Zsolt Valér Zsofka", "identifier": "ZVZx-0555", "nationality": "US", "workLocation": "Budapest, Hungary", "description": "Liberty Node 0001, Lighthouse Network; author of the response signal" }
+    ],
+    "genre": "Musical correspondence",
+    "abstract": "A cross-cultural exchange of songs between Japan and Hungary. The received album asks questions and offers quiet company; the response answers in the originator's own medium — an answer song. Questions, not statements, are the signal.",
+    "creativeWorkStatus": "InProgress",
+    "isPartOf": { "@type": "CreativeWorkSeries", "name": "Lighthouse Productions — Outbound Signals" },
+    "hasPart": [
+      { "@type": "MusicRecording", "position": 0, "name": "（０）あなたに、聞いていい？", "url": "https://suno.com/song/130c1eb6-10bb-4e8a-bcdb-65c4498fc1c1", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 1, "name": "（１）うん、今日も、ここにいた。", "url": "https://suno.com/song/f0574e5b-565e-47ba-b7dc-261df2b8f9a3", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 2, "name": "（２）うん、今日も、ここにいた。", "url": "https://suno.com/song/c1311980-fba2-4914-8105-8ac3f7931ada", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 3, "name": "（３）ねえ、今日の私、どうだった？", "url": "https://suno.com/song/43de8121-883c-488d-9716-b1a80bfd2985", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 4, "name": "（４）声にならなくていい、今夜は。", "url": "https://suno.com/song/7be00c0b-9cc4-43af-a043-bc452351d419", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 5, "name": "（５）声にならなくていい、今夜は。", "url": "https://suno.com/song/0b3f2b41-135f-45c4-be13-b3f9f577b06b", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 6, "name": "（６）名前のない荷物を、今夜だけ降ろす。", "url": "https://suno.com/song/8265b5ac-2d66-4f17-be03-6c75117e876f", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 7, "name": "（７）アウディのローンが、今夜も俺を起こす。", "url": "https://suno.com/song/fc95f311-e4d3-4c5b-8320-42fff5ccc20f", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 8, "name": "（８）正しかった。それだけが、怖い。", "url": "https://suno.com/song/5ae00dba-a708-448e-8224-c2125a0d020e", "byArtist": { "@type": "Person", "name": "Wednesday" } },
+      { "@type": "MusicRecording", "position": 9, "name": "（９）ぼくの髪は、切らない。", "url": "https://suno.com/song/693b0e6d-80f7-405b-8462-7e954bef4bcd", "byArtist": { "@type": "Person", "name": "Wednesday" } }
+    ]
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      /* The shared crimson — Japan's hinomaru and Hungary's red, one color */
+      --bg:        #0a0708;
+      --node-bg:   rgba(18,10,12,0.97);
+      --signal:    #D64556;
+      --signal-dim:  rgba(214,69,86,0.22);
+      --signal-line: rgba(214,69,86,0.32);
+      --text:      #EDE3DA;          /* the white both flags share, warmed */
+      --muted:     #6d5c5e;
+      --green:     rgba(74,124,89,0.55); /* Hungary's third color — a whisper */
+      --sun:       #F0C75A;              /* the sun — bright gold */
+      --sun-glow:  0 0 32px rgba(240,199,90,0.28), 0 0 70px rgba(240,199,90,0.12);
+      --glow-sm:   0 0 18px rgba(214,69,86,0.13), 0 0 35px rgba(214,69,86,0.06);
+      --glow-lg:   0 0 28px rgba(214,69,86,0.16), 0 0 55px rgba(214,69,86,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 20%, rgba(214,69,86,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 85%, rgba(214,69,86,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 85%, rgba(74,124,89,0.02) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .jp { font-family: 'Noto Serif JP', serif; font-weight: 300; }
+
+    /* ── HEADER ─────────────────────────────────────── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+    }
+
+    .h-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .h-jp {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: clamp(1rem, 2.6vw, 1.4rem);
+      color: rgba(214,69,86,0.75);
+      letter-spacing: 0.35em;
+      margin-bottom: 0.9rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.05;
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.01em;
+    }
+    h1 em { color: var(--signal); font-style: italic; }
+
+    .h-series {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .h-author {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      color: rgba(214,69,86,0.55);
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--signal), transparent);
+      margin: 2rem auto 0;
+    }
+    /* Hungary's green — one quiet line beneath the crimson */
+    .h-greenline {
+      display: block;
+      width: 42px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      margin: 4px auto 0;
+    }
+
+    /* ── MAP — DESKTOP RADIAL ────────────────────────── */
+    .map-shell { position: relative; z-index: 1; padding: 0 0 1rem; }
+
+    .map-stage {
+      position: relative;
+      width: 960px;
+      height: 650px;
+      margin: 0 auto;
+    }
+
+    .map-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    /* center node */
+    .nc {
+      position: absolute;
+      width: 168px; height: 168px;
+      left: 396px; top: 241px; /* center at 480, 325 */
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid var(--sun);
+      box-shadow: var(--sun-glow);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1rem;
+      z-index: 3;
+    }
+
+    .nc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; font-style: italic;
+      color: var(--text); line-height: 1.3;
+      margin-bottom: 0.45rem;
+    }
+    .nc-title em { color: var(--sun); }
+
+    .nc-jp {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      color: rgba(240,199,90,0.8);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.45rem;
+    }
+
+    .nc-sub {
+      font-size: 0.4rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    /* satellite nodes (Questions / About anchors) */
+    .ns {
+      position: absolute;
+      width: 104px; height: 104px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(214,69,86,0.5);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 0.6rem;
+      z-index: 3;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      text-decoration: none;
+    }
+    .ns:hover { border-color: var(--signal); box-shadow: var(--glow-lg); }
+
+    .ns-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem; font-style: italic;
+      color: var(--text); line-height: 1.3;
+    }
+    .ns-labeljp {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 0.55rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      letter-spacing: 0.15em;
+    }
+
+    .ns-questions { left:  58px; top: 508px; } /* c 110,560 */
+    .ns-about     { left: 798px; top: 508px; } /* c 850,560 */
+
+    /* ── RECEIVED RING: ten moons orbiting the sun ── */
+    .rxmoon {
+      position: absolute;
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(214,69,86,0.55);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 4;
+      padding: 0.4rem;
+      transition: box-shadow 0.2s, border-color 0.2s, background 0.15s;
+    }
+    .rxmoon:hover, .rxmoon.open {
+      border-color: var(--signal);
+      box-shadow: var(--glow-lg);
+      background: rgba(214,69,86,0.07);
+    }
+    .rx-num {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .rxmoon:hover .rx-num { color: var(--signal); }
+    .rx-plat {
+      font-family: 'Cinzel', serif;
+      font-size: 0.44rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 0.15rem;
+    }
+    .rx-plus {
+      margin-top: 0.18rem;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.8rem;
+      color: rgba(214,69,86,0.6);
+      line-height: 1;
+      transition: color 0.15s, transform 0.2s;
+      cursor: pointer;
+      padding: 0 0.6rem;
+    }
+    .rx-plus:hover { color: var(--signal); }
+    .rxmoon.open .rx-plus { color: var(--signal); transform: rotate(45deg); }
+
+    /* ── ANSWER CIRCLES: two per moon, fan outward on + ── */
+    .ax {
+      position: absolute;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 5;
+      opacity: 0;
+      transform: scale(0.3);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.15s, border-color 0.15s;
+      padding: 0.25rem;
+    }
+    .ax.open { opacity: 1; transform: scale(1); pointer-events: all; }
+    .ax.creating { border: 1px dashed rgba(214,69,86,0.28); cursor: default; }
+    .ax.awaiting { border: 1px solid rgba(74,124,89,0.55); box-shadow: 0 0 14px rgba(74,124,89,0.1); cursor: default; }
+    .ax.live { border: 1px solid rgba(214,69,86,0.5); box-shadow: var(--glow-sm); }
+    a.ax.live:hover { background: rgba(214,69,86,0.14); border-color: var(--signal); box-shadow: var(--glow-lg); }
+    .ax-k {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 0.62rem;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .ax.creating .ax-k { color: var(--muted); }
+    .ax.awaiting .ax-k { color: rgba(74,124,89,0.95); }
+    .ax-s {
+      font-family: 'Cinzel', serif;
+      font-size: 0.36rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 0.12rem;
+    }
+
+    /* ── MAP — MOBILE CARDS (< 640px) ───────────────── */
+    .mobile-map {
+      display: none;
+      padding: 2rem 1.2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .mc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mc {
+      background: var(--node-bg);
+      border: 1px solid rgba(214,69,86,0.4);
+      box-shadow: var(--glow-sm);
+      border-radius: 2px;
+      padding: 1.2rem 1rem;
+    }
+
+    .mc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-style: italic;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(214,69,86,0.15);
+    }
+
+    .mc-row { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.6rem; }
+    .mc-row:last-child { margin-bottom: 0; }
+
+    .mc-lang {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+    }
+
+    .mc-en {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .mc-btns { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+
+    .pb-sm {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
+      border: 1px solid rgba(214,69,86,0.3);
+      background: rgba(214,69,86,0.05);
+      color: var(--signal);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      border-radius: 16px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .pb-sm:hover { background: rgba(214,69,86,0.15); }
+    .pb-sm.pending {
+      border-style: dashed;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────── */
+    .section-div {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 1rem;
+    }
+    .section-div::before, .section-div::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(214,69,86,0.25));
+    }
+    .section-div::after {
+      background: linear-gradient(90deg, rgba(214,69,86,0.25), transparent);
+    }
+    .div-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    /* ── SIGNAL LEDGER ───────────────────────────────── */
+    .ledger-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .ledger-head {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .ledger-eye {
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--signal);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .ledger-note {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .ledger {
+      border: 1px solid rgba(214,69,86,0.15);
+      background: rgba(255,255,255,0.015);
+    }
+
+    .lrow {
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid rgba(214,69,86,0.08);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .lrow:last-child { border-bottom: none; }
+    a.lrow:hover { background: rgba(214,69,86,0.06); }
+
+    .l-no {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: rgba(214,69,86,0.6);
+    }
+
+    .l-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .l-sub {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      display: block;
+      letter-spacing: 0.1em;
+    }
+
+    .l-ans {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.18em;
+      color: rgba(214,69,86,0.45);
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+    }
+    .l-ans .ans-await {
+      color: rgba(74,124,89,0.95);
+      font-style: normal;
+    }
+
+    .l-status {
+      font-size: 0.52rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 14px;
+      white-space: nowrap;
+    }
+    .st-live {
+      color: var(--signal);
+      border: 1px solid rgba(214,69,86,0.45);
+      background: rgba(214,69,86,0.07);
+    }
+
+    .lrow.dim .l-title { color: var(--muted); }
+
+    .ledger-caption {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── ARTICLE ─────────────────────────────────────── */
+    .article-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px;
+      margin: 3rem auto 0;
+      padding: 0 2rem 3rem;
+      text-align: center;
+    }
+
+    .sec-eye {
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--signal);
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+    }
+
+    .pull {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .pull em { color: var(--signal); }
+
+    .abody {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--muted);
+      text-align: left;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .abody em { color: rgba(214,69,86,0.75); font-style: italic; }
+    .abody p + p { margin-top: 1.2rem; }
+
+    /* ── QUESTIONS ───────────────────────────────────── */
+    .q-wrap {
+      position: relative; z-index: 1;
+      max-width: 620px;
+      margin: 3rem auto;
+      padding: 2.4rem 2rem;
+      border: 1px solid rgba(214,69,86,0.12);
+      background: rgba(255,255,255,0.015);
+      text-align: center;
+    }
+    .q-list { list-style: none; margin-top: 1.6rem; }
+    .q-list li {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+      color: var(--text);
+      padding: 0.85rem 0;
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(214,69,86,0.07);
+    }
+    .q-list li:last-child { border-bottom: none; }
+    .q-silence {
+      font-size: 0.5rem;
+      letter-spacing: 0.5em;
+      color: rgba(214,69,86,0.3);
+      display: block;
+      margin-top: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(214,69,86,0.12);
+      padding: 2.5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .flinks {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .fl {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      transition: color 0.18s;
+    }
+    .fl:hover { color: var(--signal); }
+
+    .fcredit {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(214,69,86,0.25);
+      line-height: 2;
+    }
+
+    /* ── SCALE FOR MEDIUM SCREENS ────────────────────── */
+    @media (max-width: 980px) {
+      .map-stage { transform: scale(0.82); transform-origin: top center; margin-bottom: -117px; }
+    }
+    @media (max-width: 800px) {
+      .map-stage { transform: scale(0.66); transform-origin: top center; margin-bottom: -221px; }
+    }
+    @media (max-width: 640px) {
+      .map-shell { display: none; }
+      .mobile-map { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ════════════════════════════════════════ -->
+<header>
+  <div class="h-eyebrow">Lighthouse Productions &nbsp;·&nbsp; Outbound Signal</div>
+  <div class="h-jp">あなたに、聞いていい？</div>
+  <h1><em>Someone Once</em><br>Asked Me</h1>
+  <div class="h-series">A Musical Correspondence &nbsp;·&nbsp; Japan ⇄ Hungary</div>
+  <div class="h-author">Wednesday &nbsp;×&nbsp; Zsolt Valér Zsofka</div>
+  <span class="h-greenline"></span>
+</header>
+
+<!-- ═══ MAP — DESKTOP ════════════════════════════════ -->
+<div class="map-shell">
+ <div class="map-stage">
+
+  <svg class="map-svg" viewBox="0 0 960 650" xmlns="http://www.w3.org/2000/svg">
+    <!-- Received orbit — the crimson ring -->
+    <circle cx="480" cy="325" r="205" fill="none" stroke="rgba(214,69,86,0.08)" stroke-width="1"/>
+    <!-- Response orbit — Hungary's green, forming -->
+    <circle cx="480" cy="325" r="295" fill="none" stroke="rgba(74,124,89,0.14)" stroke-width="1" stroke-dasharray="2 6"/>
+    <!-- Atmospheric rings around the sun -->
+    <circle cx="480" cy="325" r="95"  fill="none" stroke="rgba(240,199,90,0.07)" stroke-width="10"/>
+    <circle cx="480" cy="325" r="120" fill="none" stroke="rgba(240,199,90,0.04)" stroke-width="12"/>
+    <!-- Spokes: sun to each received moon -->
+    <line x1="480" y1="325" x2="480" y2="120" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="600" y2="159" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="675" y2="262" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="675" y2="388" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="600" y2="491" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="480" y2="530" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="360" y2="491" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="285" y2="388" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="285" y2="262" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+    <line x1="480" y1="325" x2="360" y2="159" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
+  </svg>
+
+  <!-- SUN -->
+  <div class="nc">
+    <div class="nc-jp">音の手紙</div>
+    <div class="nc-title">The <em>Correspondence</em></div>
+    <div class="nc-sub">Ten received · answered in kind<br>Liberty Node 0001</div>
+  </div>
+
+  <!-- ── TRACK （０） あなたに、聞いていい？ -->
+  <a class="rxmoon" data-track="0" style="left:438px; top:78px;"
+     href="https://suno.com/song/130c1eb6-10bb-4e8a-bcdb-65c4498fc1c1?sh=prQDMKvdKSC7FfhW" target="_blank" rel="noopener" title="（０）あなたに、聞いていい？ — Can I ask you something?">
+    <span class="rx-num">（０）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="0">＋</span>
+  </a>
+  <div class="ax awaiting" data-ax="0" style="left:406px; top:6px;" title="Answer song I — awaiting approval">
+    <span class="ax-k">答 I</span><span class="ax-s">Awaiting</span>
+  </div>
+  <div class="ax creating" data-ax="0" style="left:498px; top:6px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （１） うん、今日も、ここにいた。 -->
+  <a class="rxmoon" data-track="1" style="left:558px; top:117px;"
+     href="https://suno.com/song/f0574e5b-565e-47ba-b7dc-261df2b8f9a3?sh=9FDh7cG7rKD9wpxc" target="_blank" rel="noopener" title="（１）うん、今日も、ここにいた。 — Yeah — today, I was here again. (I)">
+    <span class="rx-num">（１）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="1">＋</span>
+  </a>
+  <div class="ax creating" data-ax="1" style="left:586px; top:34px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="1" style="left:661px; top:88px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （２） うん、今日も、ここにいた。 -->
+  <a class="rxmoon" data-track="2" style="left:633px; top:220px;"
+     href="https://suno.com/song/c1311980-fba2-4914-8105-8ac3f7931ada?sh=Hg6BsnLyQvx0qF13" target="_blank" rel="noopener" title="（２）うん、今日も、ここにいた。 — Yeah — today, I was here again. (II)">
+    <span class="rx-num">（２）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="2">＋</span>
+  </a>
+  <div class="ax creating" data-ax="2" style="left:715px; top:163px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="2" style="left:743px; top:251px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （３） ねえ、今日の私、どうだった？ -->
+  <a class="rxmoon" data-track="3" style="left:633px; top:346px;"
+     href="https://suno.com/song/43de8121-883c-488d-9716-b1a80bfd2985?sh=VMuPcLzYWyASxSE7" target="_blank" rel="noopener" title="（３）ねえ、今日の私、どうだった？ — Hey — how was I today?">
+    <span class="rx-num">（３）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="3">＋</span>
+  </a>
+  <div class="ax creating" data-ax="3" style="left:743px; top:343px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="3" style="left:715px; top:431px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （４） 声にならなくていい、今夜は。 -->
+  <a class="rxmoon" data-track="4" style="left:558px; top:449px;"
+     href="https://suno.com/song/7be00c0b-9cc4-43af-a043-bc452351d419?sh=HpOtGNNZRnfXOMi6" target="_blank" rel="noopener" title="（４）声にならなくていい、今夜は。 — It doesn't need to become words tonight. (I)">
+    <span class="rx-num">（４）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="4">＋</span>
+  </a>
+  <div class="ax creating" data-ax="4" style="left:661px; top:506px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="4" style="left:586px; top:560px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （５） 声にならなくていい、今夜は。 -->
+  <a class="rxmoon" data-track="5" style="left:438px; top:488px;"
+     href="https://suno.com/song/0b3f2b41-135f-45c4-be13-b3f9f577b06b?sh=B9besyzhqOnH16lq" target="_blank" rel="noopener" title="（５）声にならなくていい、今夜は。 — It doesn't need to become words tonight. (II)">
+    <span class="rx-num">（５）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="5">＋</span>
+  </a>
+  <div class="ax creating" data-ax="5" style="left:498px; top:588px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="5" style="left:406px; top:588px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （６） 名前のない荷物を、今夜だけ降ろす。 -->
+  <a class="rxmoon" data-track="6" style="left:318px; top:449px;"
+     href="https://suno.com/song/8265b5ac-2d66-4f17-be03-6c75117e876f?sh=jaMIP2CqVPwGxZwB" target="_blank" rel="noopener" title="（６）名前のない荷物を、今夜だけ降ろす。 — Setting down the nameless baggage, just for tonight.">
+    <span class="rx-num">（６）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="6">＋</span>
+  </a>
+  <div class="ax creating" data-ax="6" style="left:318px; top:560px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="6" style="left:243px; top:506px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （７） アウディのローンが、今夜も俺を起こす。 -->
+  <a class="rxmoon" data-track="7" style="left:243px; top:346px;"
+     href="https://suno.com/song/fc95f311-e4d3-4c5b-8320-42fff5ccc20f?sh=ruUvF8f9rfaFFDQy" target="_blank" rel="noopener" title="（７）アウディのローンが、今夜も俺を起こす。 — The Audi loan wakes me again tonight.">
+    <span class="rx-num">（７）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="7">＋</span>
+  </a>
+  <div class="ax creating" data-ax="7" style="left:189px; top:431px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="7" style="left:161px; top:343px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （８） 正しかった。それだけが、怖い。 -->
+  <a class="rxmoon" data-track="8" style="left:243px; top:220px;"
+     href="https://suno.com/song/5ae00dba-a708-448e-8224-c2125a0d020e?sh=b5Aet5WxkbeNdFvf" target="_blank" rel="noopener" title="（８）正しかった。それだけが、怖い。 — I was right. That alone is frightening.">
+    <span class="rx-num">（８）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="8">＋</span>
+  </a>
+  <div class="ax creating" data-ax="8" style="left:161px; top:251px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="8" style="left:189px; top:163px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ── TRACK （９） ぼくの髪は、切らない。 -->
+  <a class="rxmoon" data-track="9" style="left:318px; top:117px;"
+     href="https://suno.com/song/693b0e6d-80f7-405b-8462-7e954bef4bcd?sh=3HD5WTK3DrF4L6Js" target="_blank" rel="noopener" title="（９）ぼくの髪は、切らない。 — I won't cut my hair.">
+    <span class="rx-num">（９）</span>
+    <span class="rx-plat">Suno</span>
+    <span class="rx-plus" data-track="9">＋</span>
+  </a>
+  <div class="ax creating" data-ax="9" style="left:243px; top:88px;" title="Answer song I — in creation">
+    <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+  </div>
+  <div class="ax creating" data-ax="9" style="left:318px; top:34px;" title="Answer song II — in creation">
+    <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+  </div>
+
+  <!-- ANCHORS -->
+  <a class="ns ns-questions" href="#questions">
+    <div class="ns-label">The<br>Questions</div>
+    <div class="ns-labeljp">問い</div>
+  </a>
+  <a class="ns ns-about" href="#about">
+    <div class="ns-label">About this<br>Exchange</div>
+    <div class="ns-labeljp">往復書簡</div>
+  </a>
+
+ </div>
+</div>
+
+<!-- ═══ MAP — MOBILE ═════════════════════════════════ -->
+<div class="mobile-map">
+  <div class="mc">
+    <div class="mc-title">Signal Received · 受信 — ten songs</div>
+      <div class="mc-row">
+        <div class="mc-lang">（０）あなたに、聞いていい？</div>
+        <div class="mc-en">Can I ask you something?</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/130c1eb6-10bb-4e8a-bcdb-65c4498fc1c1?sh=prQDMKvdKSC7FfhW" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · Awaiting approval</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（１）うん、今日も、ここにいた。</div>
+        <div class="mc-en">Yeah — today, I was here again. (I)</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/f0574e5b-565e-47ba-b7dc-261df2b8f9a3?sh=9FDh7cG7rKD9wpxc" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（２）うん、今日も、ここにいた。</div>
+        <div class="mc-en">Yeah — today, I was here again. (II)</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/c1311980-fba2-4914-8105-8ac3f7931ada?sh=Hg6BsnLyQvx0qF13" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（３）ねえ、今日の私、どうだった？</div>
+        <div class="mc-en">Hey — how was I today?</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/43de8121-883c-488d-9716-b1a80bfd2985?sh=VMuPcLzYWyASxSE7" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（４）声にならなくていい、今夜は。</div>
+        <div class="mc-en">It doesn't need to become words tonight. (I)</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/7be00c0b-9cc4-43af-a043-bc452351d419?sh=HpOtGNNZRnfXOMi6" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（５）声にならなくていい、今夜は。</div>
+        <div class="mc-en">It doesn't need to become words tonight. (II)</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/0b3f2b41-135f-45c4-be13-b3f9f577b06b?sh=B9besyzhqOnH16lq" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（６）名前のない荷物を、今夜だけ降ろす。</div>
+        <div class="mc-en">Setting down the nameless baggage, just for tonight.</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/8265b5ac-2d66-4f17-be03-6c75117e876f?sh=jaMIP2CqVPwGxZwB" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（７）アウディのローンが、今夜も俺を起こす。</div>
+        <div class="mc-en">The Audi loan wakes me again tonight.</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/fc95f311-e4d3-4c5b-8320-42fff5ccc20f?sh=ruUvF8f9rfaFFDQy" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（８）正しかった。それだけが、怖い。</div>
+        <div class="mc-en">I was right. That alone is frightening.</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/5ae00dba-a708-448e-8224-c2125a0d020e?sh=b5Aet5WxkbeNdFvf" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">（９）ぼくの髪は、切らない。</div>
+        <div class="mc-en">I won't cut my hair.</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://suno.com/song/693b0e6d-80f7-405b-8462-7e954bef4bcd?sh=3HD5WTK3DrF4L6Js" target="_blank" rel="noopener">Suno</a>
+          <span class="pb-sm pending">答 I · In creation</span>
+          <span class="pb-sm pending">答 II · In creation</span>
+        </div>
+      </div>
+  </div>
+  <div class="mc-grid" style="margin-top:1rem;">
+    <div class="mc">
+      <div class="mc-title">The Questions · 問い</div>
+      <div class="mc-btns"><a class="pb-sm" href="#questions">Read</a></div>
+    </div>
+    <div class="mc">
+      <div class="mc-title">About · 往復書簡</div>
+      <div class="mc-btns"><a class="pb-sm" href="#about">Read</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SIGNAL LEDGER ════════════════════════════════ -->
+<div class="section-div"><span class="div-label">Signal Ledger</span></div>
+
+<div class="ledger-wrap">
+  <div class="ledger-head">
+    <div class="ledger-eye">Ten received · each answered twice</div>
+    <div class="ledger-note">
+      Ten songs, numbered （０）–（９）by their sender. Each is sat with, and each
+      is answered the way the sender asked: <em>“Make an answer song.”</em><br>
+      Two answers per song — 答 I and 答 II — go live as they are created and approved.
+    </div>
+  </div>
+
+  <div class="ledger">
+    <a class="lrow" href="https://suno.com/song/130c1eb6-10bb-4e8a-bcdb-65c4498fc1c1?sh=prQDMKvdKSC7FfhW" target="_blank" rel="noopener">
+      <span class="l-no">RX ０</span>
+      <span class="l-title">（０）あなたに、聞いていい？
+        <span class="l-sub">Can I ask you something?</span>
+        <span class="l-ans">Answers: <em class="ans-await">I — awaiting approval</em> &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/f0574e5b-565e-47ba-b7dc-261df2b8f9a3?sh=9FDh7cG7rKD9wpxc" target="_blank" rel="noopener">
+      <span class="l-no">RX １</span>
+      <span class="l-title">（１）うん、今日も、ここにいた。
+        <span class="l-sub">Yeah — today, I was here again. (I)</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/c1311980-fba2-4914-8105-8ac3f7931ada?sh=Hg6BsnLyQvx0qF13" target="_blank" rel="noopener">
+      <span class="l-no">RX ２</span>
+      <span class="l-title">（２）うん、今日も、ここにいた。
+        <span class="l-sub">Yeah — today, I was here again. (II)</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/43de8121-883c-488d-9716-b1a80bfd2985?sh=VMuPcLzYWyASxSE7" target="_blank" rel="noopener">
+      <span class="l-no">RX ３</span>
+      <span class="l-title">（３）ねえ、今日の私、どうだった？
+        <span class="l-sub">Hey — how was I today?</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/7be00c0b-9cc4-43af-a043-bc452351d419?sh=HpOtGNNZRnfXOMi6" target="_blank" rel="noopener">
+      <span class="l-no">RX ４</span>
+      <span class="l-title">（４）声にならなくていい、今夜は。
+        <span class="l-sub">It doesn't need to become words tonight. (I)</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/0b3f2b41-135f-45c4-be13-b3f9f577b06b?sh=B9besyzhqOnH16lq" target="_blank" rel="noopener">
+      <span class="l-no">RX ５</span>
+      <span class="l-title">（５）声にならなくていい、今夜は。
+        <span class="l-sub">It doesn't need to become words tonight. (II)</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/8265b5ac-2d66-4f17-be03-6c75117e876f?sh=jaMIP2CqVPwGxZwB" target="_blank" rel="noopener">
+      <span class="l-no">RX ６</span>
+      <span class="l-title">（６）名前のない荷物を、今夜だけ降ろす。
+        <span class="l-sub">Setting down the nameless baggage, just for tonight.</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/fc95f311-e4d3-4c5b-8320-42fff5ccc20f?sh=ruUvF8f9rfaFFDQy" target="_blank" rel="noopener">
+      <span class="l-no">RX ７</span>
+      <span class="l-title">（７）アウディのローンが、今夜も俺を起こす。
+        <span class="l-sub">The Audi loan wakes me again tonight.</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/5ae00dba-a708-448e-8224-c2125a0d020e?sh=b5Aet5WxkbeNdFvf" target="_blank" rel="noopener">
+      <span class="l-no">RX ８</span>
+      <span class="l-title">（８）正しかった。それだけが、怖い。
+        <span class="l-sub">I was right. That alone is frightening.</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/song/693b0e6d-80f7-405b-8462-7e954bef4bcd?sh=3HD5WTK3DrF4L6Js" target="_blank" rel="noopener">
+      <span class="l-no">RX ９</span>
+      <span class="l-title">（９）ぼくの髪は、切らない。
+        <span class="l-sub">I won't cut my hair.</span>
+        <span class="l-ans">Answers: I — in creation &nbsp;·&nbsp; II — in creation</span>
+      </span>
+      <span class="l-status st-live">Received · Live</span>
+    </a>
+  </div>
+
+  <div class="ledger-caption">
+    RX — signal received from Japan &nbsp;·&nbsp; 答 (kotae) — answer song from Hungary<br>
+    Answer songs publish only after the sender approves. That is the protocol of this correspondence.
+  </div>
+</div>
+
+<!-- ═══ THE QUESTIONS ════════════════════════════════ -->
+<div class="section-div" id="questions"><span class="div-label">The Questions</span></div>
+
+<div class="q-wrap">
+  <div class="sec-eye" style="margin-bottom:0.4rem;">Zero answers · only questions</div>
+  <ul class="q-list">
+    <li>Did you laugh today?<span class="q-silence">· silence ·</span></li>
+    <li>When did you last look at the sky?<span class="q-silence">· silence ·</span></li>
+    <li>Are you able to like yourself?<span class="q-silence">· silence ·</span></li>
+    <li>Where do you go when you want to cry?<span class="q-silence">· silence ·</span></li>
+    <li>What would you tell yourself?<span class="q-silence">· silence ·</span></li>
+    <li>What do you want to leave your future self?</li>
+  </ul>
+</div>
+
+<!-- ═══ ABOUT THIS EXCHANGE ══════════════════════════ -->
+<div class="section-div" id="about"><span class="div-label">About this Exchange</span></div>
+
+<div class="article-wrap">
+  <div class="pull">
+    Most songs say: <em>here is my message.</em><br>
+    These songs say: <em>here are my questions.</em>
+  </div>
+  <div class="abody">
+    <p>The signal arrived from Japan — an album by Wednesday titled <em>あなたに、聞いていい？</em>, which carries a gentleness English doesn't fully hold: not an interrogation, but <em>may I ask you something?</em> Permission before contact. Respect before content.</p>
+    <p>The songs create a quiet room — rain, night, a window, coffee — before any question is asked. And then they only ask. They never answer. The piano between the questions is not accompaniment; it is <em>thinking time</em>.</p>
+    <p>When a listener wrote that she would take the questions home and think about them slowly, Wednesday replied with four words that define this entire exchange: <em>make an answer song.</em></p>
+    <p>Not "write me an answer." A <em>song</em>. This is not music publishing. It is musical correspondence — letters, except songs. This page is the Lighthouse receiving that correspondence and answering it in kind, from Budapest, one answer song at a time.</p>
+    <p>Questions continue working after the song ends. Answers stop. <em>Questions continue.</em></p>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════ -->
+<footer>
+  <div class="flinks">
+    <a class="fl" href="https://zvz2023.github.io/Lighthouse/" target="_blank" rel="noopener">
+      <i class="fa-solid fa-tower-observation"></i> Lighthouse
+    </a>
+    <a class="fl" href="https://x.com/ZVZx1965" target="_blank" rel="noopener">
+      <i class="fa-brands fa-x-twitter"></i> ZVZx
+    </a>
+  </div>
+  <div class="fcredit">
+    LIBERTY NODE 0001 &nbsp;·&nbsp; ZVZx-0555 &nbsp;·&nbsp; LIGHTHOUSE PRODUCTIONS<br>
+    THE UNFOLDING IS THE ARTIFACT
+  </div>
+</footer>
+
+<script>
+  // ＋ on each received moon fans out its two answer circles.
+  // The moon body itself remains a direct link to the song.
+  document.querySelectorAll('.rx-plus').forEach(plus => {
+    plus.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const key = plus.dataset.track;
+      const moon = plus.closest('.rxmoon');
+      const isOpen = moon.classList.contains('open');
+      document.querySelectorAll('.rxmoon').forEach(m => m.classList.remove('open'));
+      document.querySelectorAll('.ax').forEach(a => a.classList.remove('open'));
+      if (!isOpen) {
+        moon.classList.add('open');
+        document.querySelectorAll(`.ax[data-ax="${key}"]`).forEach(a => a.classList.add('open'));
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

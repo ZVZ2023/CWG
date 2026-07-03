@@ -245,6 +245,32 @@
     .ns-questions { left:  58px; top: 508px; } /* c 110,560 */
     .ns-about     { left: 798px; top: 508px; } /* c 850,560 */
 
+    /* ── ORBIT: ring rotates at CWG Hub speed ──
+       CWG hub canvas: BOOK_SPEED 0.00015 rad/frame @ 60fps
+       → full revolution = 2π / (0.00015 × 60) ≈ 698 s */
+    .orbitwrap {
+      position: absolute; inset: 0;
+      animation: orbitspin 698s linear infinite;
+      transform-origin: 50% 50%;
+    }
+    .orbitwrap.svglayer { z-index: 1; pointer-events: none; }
+    .orbitwrap.moonlayer { z-index: 4; pointer-events: none; }
+    .orbitwrap.moonlayer > .rxmoon { pointer-events: auto; }
+    /* .ax re-enables itself via .ax.open { pointer-events: all } */
+    .counterspin {
+      animation: orbitspin 698s linear infinite reverse;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+    }
+    @keyframes orbitspin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .orbitwrap, .counterspin { animation: none; }
+    }
+
     /* ── RECEIVED RING: ten moons orbiting the sun ── */
     .rxmoon {
       position: absolute;
@@ -682,6 +708,7 @@
 <div class="map-shell">
  <div class="map-stage">
 
+  <div class="orbitwrap svglayer">
   <svg class="map-svg" viewBox="0 0 960 650" xmlns="http://www.w3.org/2000/svg">
     <!-- Received orbit — the crimson ring -->
     <circle cx="480" cy="325" r="205" fill="none" stroke="rgba(214,69,86,0.08)" stroke-width="1"/>
@@ -702,6 +729,7 @@
     <line x1="480" y1="325" x2="285" y2="262" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
     <line x1="480" y1="325" x2="360" y2="159" stroke="rgba(214,69,86,0.15)" stroke-width="1"/>
   </svg>
+  </div><!-- /svglayer -->
 
   <!-- SUN -->
   <div class="nc">
@@ -710,145 +738,208 @@
     <div class="nc-sub">Two lighthouses · one conversation<br>Liberty Node 0001</div>
   </div>
 
+  <div class="orbitwrap moonlayer">
   <!-- ── TRACK （０） あなたに、聞いていい？ -->
   <a class="rxmoon" data-track="0" style="left:438px; top:78px;"
      href="https://suno.com/song/130c1eb6-10bb-4e8a-bcdb-65c4498fc1c1?sh=prQDMKvdKSC7FfhW" target="_blank" rel="noopener" title="（０）あなたに、聞いていい？ — Can I ask you something?">
+    <span class="counterspin">
     <span class="rx-num">（０）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="0">＋</span>
+    </span>
   </a>
   <div class="ax awaiting" data-ax="0" style="left:406px; top:6px;" title="Answer song I — awaiting approval">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Awaiting</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="0" style="left:498px; top:6px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （１） うん、今日も、ここにいた。 -->
   <a class="rxmoon" data-track="1" style="left:558px; top:117px;"
      href="https://suno.com/song/f0574e5b-565e-47ba-b7dc-261df2b8f9a3?sh=9FDh7cG7rKD9wpxc" target="_blank" rel="noopener" title="（１）うん、今日も、ここにいた。 — Yeah — today, I was here again. (I)">
+    <span class="counterspin">
     <span class="rx-num">（１）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="1">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="1" style="left:586px; top:34px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="1" style="left:661px; top:88px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （２） うん、今日も、ここにいた。 -->
   <a class="rxmoon" data-track="2" style="left:633px; top:220px;"
      href="https://suno.com/song/c1311980-fba2-4914-8105-8ac3f7931ada?sh=Hg6BsnLyQvx0qF13" target="_blank" rel="noopener" title="（２）うん、今日も、ここにいた。 — Yeah — today, I was here again. (II)">
+    <span class="counterspin">
     <span class="rx-num">（２）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="2">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="2" style="left:715px; top:163px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="2" style="left:743px; top:251px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （３） ねえ、今日の私、どうだった？ -->
   <a class="rxmoon" data-track="3" style="left:633px; top:346px;"
      href="https://suno.com/song/43de8121-883c-488d-9716-b1a80bfd2985?sh=VMuPcLzYWyASxSE7" target="_blank" rel="noopener" title="（３）ねえ、今日の私、どうだった？ — Hey — how was I today?">
+    <span class="counterspin">
     <span class="rx-num">（３）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="3">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="3" style="left:743px; top:343px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="3" style="left:715px; top:431px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （４） 声にならなくていい、今夜は。 -->
   <a class="rxmoon" data-track="4" style="left:558px; top:449px;"
      href="https://suno.com/song/7be00c0b-9cc4-43af-a043-bc452351d419?sh=HpOtGNNZRnfXOMi6" target="_blank" rel="noopener" title="（４）声にならなくていい、今夜は。 — It doesn't need to become words tonight. (I)">
+    <span class="counterspin">
     <span class="rx-num">（４）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="4">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="4" style="left:661px; top:506px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="4" style="left:586px; top:560px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （５） 声にならなくていい、今夜は。 -->
   <a class="rxmoon" data-track="5" style="left:438px; top:488px;"
      href="https://suno.com/song/0b3f2b41-135f-45c4-be13-b3f9f577b06b?sh=B9besyzhqOnH16lq" target="_blank" rel="noopener" title="（５）声にならなくていい、今夜は。 — It doesn't need to become words tonight. (II)">
+    <span class="counterspin">
     <span class="rx-num">（５）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="5">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="5" style="left:498px; top:588px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="5" style="left:406px; top:588px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （６） 名前のない荷物を、今夜だけ降ろす。 -->
   <a class="rxmoon" data-track="6" style="left:318px; top:449px;"
      href="https://suno.com/song/8265b5ac-2d66-4f17-be03-6c75117e876f?sh=jaMIP2CqVPwGxZwB" target="_blank" rel="noopener" title="（６）名前のない荷物を、今夜だけ降ろす。 — Setting down the nameless baggage, just for tonight.">
+    <span class="counterspin">
     <span class="rx-num">（６）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="6">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="6" style="left:318px; top:560px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="6" style="left:243px; top:506px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （７） アウディのローンが、今夜も俺を起こす。 -->
   <a class="rxmoon" data-track="7" style="left:243px; top:346px;"
      href="https://suno.com/song/fc95f311-e4d3-4c5b-8320-42fff5ccc20f?sh=ruUvF8f9rfaFFDQy" target="_blank" rel="noopener" title="（７）アウディのローンが、今夜も俺を起こす。 — The Audi loan wakes me again tonight.">
+    <span class="counterspin">
     <span class="rx-num">（７）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="7">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="7" style="left:189px; top:431px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="7" style="left:161px; top:343px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （８） 正しかった。それだけが、怖い。 -->
   <a class="rxmoon" data-track="8" style="left:243px; top:220px;"
      href="https://suno.com/song/5ae00dba-a708-448e-8224-c2125a0d020e?sh=b5Aet5WxkbeNdFvf" target="_blank" rel="noopener" title="（８）正しかった。それだけが、怖い。 — I was right. That alone is frightening.">
+    <span class="counterspin">
     <span class="rx-num">（８）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="8">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="8" style="left:161px; top:251px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="8" style="left:189px; top:163px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
 
   <!-- ── TRACK （９） ぼくの髪は、切らない。 -->
   <a class="rxmoon" data-track="9" style="left:318px; top:117px;"
      href="https://suno.com/song/693b0e6d-80f7-405b-8462-7e954bef4bcd?sh=3HD5WTK3DrF4L6Js" target="_blank" rel="noopener" title="（９）ぼくの髪は、切らない。 — I won't cut my hair.">
+    <span class="counterspin">
     <span class="rx-num">（９）</span>
     <span class="rx-plat">Suno</span>
     <span class="rx-plus" data-track="9">＋</span>
+    </span>
   </a>
   <div class="ax creating" data-ax="9" style="left:243px; top:88px;" title="Answer song I — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 I</span><span class="ax-s">Creating</span>
+    </span>
   </div>
   <div class="ax creating" data-ax="9" style="left:318px; top:34px;" title="Answer song II — in creation">
+    <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
+    </span>
   </div>
+
+  </div><!-- /moonlayer -->
 
   <!-- ANCHORS -->
   <a class="ns ns-questions" href="#questions">

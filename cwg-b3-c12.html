@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Becoming Larger Than Myself · Conversations with God Book 3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:        #0a0807;
+      --node-bg:   rgba(16,12,7,0.97);
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,0.22);
+      --gold-line: rgba(201,168,76,0.32);
+      --text:      #e8d8b0;
+      --muted:     #6a6050;
+      --glow-sm:   0 0 18px rgba(201,168,76,0.13), 0 0 35px rgba(201,168,76,0.06);
+      --glow-lg:   0 0 28px rgba(201,168,76,0.16), 0 0 55px rgba(201,168,76,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 20%, rgba(201,168,76,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 85%, rgba(201,168,76,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 85%, rgba(201,168,76,0.025) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── HEADER ─────────────────────────────────────── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+    }
+
+    .h-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.0;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+
+    .h-cwg {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .h-author {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      color: rgba(201,168,76,0.5);
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto 0;
+    }
+
+    /* ── MAP — DESKTOP RADIAL ────────────────────────── */
+    .map-shell {
+      position: relative; z-index: 1;
+      padding: 0 0 1rem;
+    }
+
+    .map-stage {
+      position: relative;
+      width: 960px;
+      height: 650px;
+      margin: 0 auto;
+    }
+
+    .map-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .nc {
+      position: absolute;
+      width: 158px; height: 158px;
+      left: 401px; top: 246px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid var(--gold);
+      box-shadow: var(--glow-lg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1rem;
+      z-index: 3;
+    }
+
+    .nc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-style: italic;
+      color: var(--text); line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .nc-title em { color: var(--gold); }
+
+    .nc-sub {
+      font-size: 0.4rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .ns {
+      position: absolute;
+      width: 98px; height: 98px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.5);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 0.6rem;
+      z-index: 3;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .ns:hover, .ns.open {
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+
+    .ns-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.82rem; font-style: italic;
+      color: var(--text); line-height: 1.3;
+    }
+
+    .ns-podcast { left: 171px; top:  58px; }
+    .ns-debate  { left: 691px; top:  58px; }
+    .ns-brief   { left:  96px; top: 448px; }
+    .ns-music   { left: 750px; top: 430px; }
+
+    .moon {
+      position: absolute;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 4;
+      opacity: 0;
+      transform: scale(0.3);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.15s, border-color 0.15s;
+    }
+    .moon.open {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: all;
+    }
+    .moon:hover {
+      background: rgba(201,168,76,0.14);
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+    .moon .m-lang {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+    .moon .m-plat {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+    }
+
+    .music-caption {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .ns-plus {
+      margin-top: 0.35rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: rgba(201,168,76,0.6);
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .ns:hover .ns-plus { color: var(--gold); }
+    .ns.open .ns-plus { color: var(--gold); }
+
+    /* ── MAP — MOBILE CARDS ───────────────────────────── */
+    .mobile-map {
+      display: none;
+      padding: 2rem 1.2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .mc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mc {
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      border-radius: 2px;
+      padding: 1.2rem 1rem;
+    }
+
+    .mc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-style: italic;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .mc-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+    .mc-row:last-child { margin-bottom: 0; }
+
+    .mc-lang {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .mc-btns {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .pb-sm {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      border-radius: 16px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .pb-sm:hover { background: rgba(201,168,76,0.15); }
+
+    /* ── DIVIDER ─────────────────────────────────────── */
+    .section-div {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 1rem;
+    }
+    .section-div::before, .section-div::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25));
+    }
+    .section-div::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
+    }
+    .div-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── ARTICLE ─────────────────────────────────────── */
+    .article-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px;
+      margin: 3rem auto 0;
+      padding: 0 2rem 3rem;
+      text-align: center;
+    }
+
+    .sec-eye {
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+    }
+
+    .pull {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .pull em { color: var(--gold); }
+
+    .abody {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--muted);
+      text-align: left;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .abody em { color: rgba(201,168,76,0.7); font-style: italic; }
+
+    /* ── INFOGRAPHIC ─────────────────────────────────── */
+    .info-wrap {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2rem 1.8rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(201,168,76,0.12);
+      text-align: left;
+    }
+
+    .ic-title {
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      padding-bottom: 0.55rem;
+      margin-bottom: 0.9rem;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .ia .ic-title { color: var(--gold); }
+    .ib .ic-title { color: rgba(201,168,76,0.55); }
+
+    .ic-list { list-style: none; }
+    .ic-list li {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem; font-style: italic;
+      color: var(--muted);
+      padding: 0.24rem 0 0.24rem 0.9rem;
+      position: relative;
+    }
+    .ic-list li::before {
+      content: '·';
+      position: absolute; left: 0;
+      color: var(--gold); opacity: 0.5;
+    }
+
+    .vs-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: 0.25;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .flinks {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .fl {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      transition: color 0.18s;
+    }
+    .fl:hover { color: var(--gold); }
+
+    .fcredit {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,168,76,0.2);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 980px) {
+      .map-stage {
+        transform: scale(0.82);
+        transform-origin: top center;
+        margin-bottom: -117px;
+      }
+    }
+    @media (max-width: 800px) {
+      .map-stage {
+        transform: scale(0.66);
+        transform-origin: top center;
+        margin-bottom: -221px;
+      }
+    }
+    @media (max-width: 640px) {
+      .map-shell { display: none; }
+      .mobile-map { display: block; }
+      .info-wrap { grid-template-columns: 1fr; }
+      .vs-col { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ════════════════════════════════════════ -->
+<header>
+  <div class="h-eyebrow">July 2026</div>
+  <h1><em>Becoming Larger</em><br>Than Myself</h1>
+  <div class="h-cwg">Conversations with God &nbsp;·&nbsp; Book 3 &nbsp;·&nbsp; Chapter 12</div>
+  <div class="h-author">Zsolt Valér Zsofka</div>
+</header>
+
+<!-- ═══ MAP — DESKTOP ════════════════════════════════ -->
+<div class="map-shell">
+ <div class="map-stage">
+
+  <svg class="map-svg" viewBox="0 0 960 650" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="480" cy="325" r="90"  fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="10"/>
+    <circle cx="480" cy="325" r="115" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="12"/>
+
+    <circle cx="220" cy="107" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+    <circle cx="740" cy="107" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+    <circle cx="145" cy="497" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+    <circle cx="799" cy="479" r="55" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="8"/>
+
+    <line x1="422" y1="272" x2="261" y2="137"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="538" y1="272" x2="699" y2="137"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="415" y1="380" x2="187" y2="472"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="546" y1="370" x2="753" y2="454"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+  </svg>
+
+  <!-- CENTER NODE -->
+  <div class="nc">
+    <div class="nc-title"><em>Source ·</em><br><em>Soul · Love</em></div>
+    <div class="nc-sub">CWG · BOOK 3<br>CHAPTER 12</div>
+  </div>
+
+  <!-- SATELLITE NODES -->
+  <div class="ns ns-podcast" id="ns-podcast" onclick="toggleLP('podcast')">
+    <div class="ns-label">Podcast</div>
+    <div class="ns-plus" id="plus-podcast">+</div>
+  </div>
+  <div class="ns ns-debate" id="ns-debate" onclick="toggleLP('debate')">
+    <div class="ns-label">Debate</div>
+    <div class="ns-plus" id="plus-debate">+</div>
+  </div>
+  <div class="ns ns-brief" id="ns-brief" onclick="toggleLP('brief')">
+    <div class="ns-label">Brief</div>
+    <div class="ns-plus" id="plus-brief">+</div>
+  </div>
+  <div class="ns ns-music" id="ns-music" onclick="toggleLP('music')">
+    <div class="ns-label">Music<br>Video</div>
+    <div class="ns-plus" id="plus-music">+</div>
+  </div>
+
+  <!-- PODCAST MOONS -->
+  <a class="moon" data-group="podcast" style="left:273.7px; top:47.9px; transition-delay:0s"
+     href="https://youtu.be/IGanBCuc_tA" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcast" style="left:273.7px; top:108.1px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2071624324285444212" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="podcast" style="left:235px; top:154.2px; transition-delay:0.08s"
+     href="https://youtu.be/BuLvqeOQnNY" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcast" style="left:175.7px; top:164.7px; transition-delay:0.12s"
+     href="https://x.com/ZVZx1965/status/2071770367014666752" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">X.com</span>
+  </a>
+
+  <!-- DEBATE MOONS -->
+  <a class="moon" data-group="debate" style="left:726.3px; top:164.7px; transition-delay:0s"
+     href="https://youtu.be/bYliPok1F5k" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="debate" style="left:667px; top:154.2px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">HU</span><span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="debate" style="left:628.3px; top:108.1px; transition-delay:0.08s"
+     href="https://youtu.be/XNopIlJQWj0" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="debate" style="left:628.3px; top:47.9px; transition-delay:0.12s"
+     href="https://x.com/ZVZx1965/status/2072095711907225917" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">X.com</span>
+  </a>
+
+  <!-- BRIEF MOONS -->
+  <a class="moon" data-group="brief" style="left:120.6px; top:380.1px; transition-delay:0s"
+     href="https://youtu.be/7Bw5Ve9Aw9M" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="brief" style="left:176px; top:403.7px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2072396140494881124" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-lang">EN</span><span class="m-plat">X.com</span>
+  </a>
+
+  <!-- MUSIC MOONS -->
+  <a class="moon" data-group="music" style="left:683.2px; top:464.2px; transition-delay:0s"
+     href="https://youtu.be/5mS4C-C-spI" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">God Will</span>
+  </a>
+
+  <div class="music-caption" style="left:744px; top:548px; width:130px;">
+    God Will Take Care of Me<br>CWG · Bk 3 · Ch 12
+  </div>
+
+ </div><!-- /map-stage -->
+</div><!-- /map-shell -->
+
+<!-- ═══ MAP — MOBILE CARDS ════════════════════════════ -->
+<div class="mobile-map">
+  <div class="mc-grid">
+
+    <div class="mc">
+      <div class="mc-title">Podcast</div>
+      <div class="mc-row">
+        <div class="mc-lang">HU</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/IGanBCuc_tA" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2071624324285444212" target="_blank">X.com</a>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">EN</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/BuLvqeOQnNY" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2071770367014666752" target="_blank">X.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Debate</div>
+      <div class="mc-row">
+        <div class="mc-lang">HU</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/bYliPok1F5k" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965" target="_blank">X.com</a>
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-lang">EN</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/XNopIlJQWj0" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2072095711907225917" target="_blank">X.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Brief</div>
+      <div class="mc-row">
+        <div class="mc-lang">EN</div>
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/7Bw5Ve9Aw9M" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2072396140494881124" target="_blank">X.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/5mS4C-C-spI" target="_blank">God Will</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        God Will Take Care of Me<br>CWG · Bk 3 · Ch 12
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TO THE POINT ══════════════════════════════════ -->
+<div class="section-div" style="margin-top:1rem;">
+  <span class="div-label">· · ·</span>
+</div>
+
+<div class="article-wrap">
+  <div class="sec-eye">To The Point</div>
+  <div class="pull">
+    What if denying your own greatness<br>
+    is not modesty —<br>
+    but a quiet <em>denial of God</em>?
+  </div>
+  <p class="abody">
+    Chapter 12 of <em>Conversations with God — Book 3</em> opens with a disarming question:
+    how does one stay aware of God? The answer is not withdrawal, not ritual — but expression.
+    Become the source of what you seek. If you want love, become loving. If you want peace,
+    become peaceful. If you want to know God, stop shrinking yourself.<br><br>
+    From there the chapter moves through three territories: identity and self-denial, the
+    nature of the soul, and love as freedom. These are not separate subjects — they are one
+    argument, building toward a single recognition. The soul is not a small thing hidden inside
+    a body. It is vast, stretching across time, animating many forms, incapable of being
+    confined by any single biography. And love, when it is real, does not seek to contain.
+    It seeks to free.<br><br>
+    This production asks what those teachings look like when filtered through one human life —
+    through faith tested under financial uncertainty, through identity shaped by a Hungarian
+    literary memory of a boy who trusted God completely, through a marriage between two free
+    souls who chose a shared unknown. Not as proof. As recognition.
+  </p>
+</div>
+
+<!-- ═══ INFOGRAPHIC ═══════════════════════════════════ -->
+<div class="info-wrap">
+  <div class="ia">
+    <div class="ic-title">Becoming Larger</div>
+    <ul class="ic-list">
+      <li>Declare your greatness publicly</li>
+      <li>Be the source of what you seek</li>
+      <li>Soul larger than biography</li>
+      <li>Love as renewed daily choice</li>
+      <li>Trust without guaranteed outcome</li>
+      <li>Identity beyond survival</li>
+    </ul>
+  </div>
+  <div class="vs-col">⟷</div>
+  <div class="ib">
+    <div class="ic-title">Staying Small</div>
+    <ul class="ic-list">
+      <li>Modesty as self-denial</li>
+      <li>Life framed as battle</li>
+      <li>Soul as one body, one life</li>
+      <li>Love as obligation kept</li>
+      <li>Faith requiring proof</li>
+      <li>Identity defined by circumstance</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="flinks">
+    <a class="fl" href="https://www.linkedin.com/in/zsoltzsofka/" target="_blank">
+      <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+    <a class="fl" href="https://x.com/ZVZx1965" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i> X
+    </a>
+    <a class="fl" href="https://www.youtube.com/@HybridIntelligence" target="_blank">
+      <i class="fab fa-youtube"></i> YouTube
+    </a>
+  </div>
+  <div class="fcredit">Zsolt Valér Zsofka &nbsp;·&nbsp; Budapest &nbsp;·&nbsp; 2026</div>
+</footer>
+
+<script>
+  function toggleLP(id) {
+    const node  = document.getElementById('ns-' + id);
+    const plus  = document.getElementById('plus-' + id);
+    const moons = document.querySelectorAll('.moon[data-group="' + id + '"]');
+
+    const isOpen = !node.classList.contains('open');
+
+    document.querySelectorAll('.ns.open').forEach(n => {
+      if (n !== node) {
+        const gid = n.id.replace('ns-', '');
+        document.getElementById('plus-' + gid).textContent = '+';
+        n.classList.remove('open');
+        document.querySelectorAll('.moon[data-group="' + gid + '"]').forEach(m => m.classList.remove('open'));
+      }
+    });
+
+    node.classList.toggle('open', isOpen);
+    plus.textContent = isOpen ? '×' : '+';
+    moons.forEach(m => m.classList.toggle('open', isOpen));
+  }
+</script>
+</body>
+</html>

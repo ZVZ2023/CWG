@@ -13,8 +13,9 @@
        Origin signal: "あなたに、聞いていい？" (Someone Once Asked Me) by Wednesday, Japan
        Response medium: song — per the originator's own protocol: "Make an answer song."
        Principle: questions continue working after the song ends; answers stop.
-       Status: 10 songs received (tracks 0-9, all live) · 2 answer songs per track
-       in creation · answer to track 0 awaiting originator approval
+       Status: 10 songs received (tracks 0-9, all live) · first answer song LIVE:
+       "Leave a Little Room" (answer to track 0, originator-approved) ·
+       remaining answers in creation
        Human decision authority: response tracks publish only after
        originator (Wednesday) approval. Agents may index; only humans approve.
        ═══════════════════════════════════════════════════════════ -->
@@ -34,6 +35,7 @@
     "creativeWorkStatus": "InProgress",
     "isPartOf": { "@type": "CreativeWorkSeries", "name": "Lighthouse Productions — Outbound Signals" },
     "hasPart": [
+      { "@type": "MusicRecording", "name": "Leave a Little Room", "url": "https://suno.com/s/JwLedXpCS8cZf7xP", "byArtist": { "@type": "Person", "name": "Zsolt Valér Zsofka", "identifier": "ZVZx-0555" }, "description": "Answer song to （０）あなたに、聞いていい？ — the first response signal of the correspondence" },
       { "@type": "MusicRecording", "position": 0, "name": "（０）あなたに、聞いていい？", "url": "https://suno.com/song/130c1eb6-10bb-4e8a-bcdb-65c4498fc1c1", "byArtist": { "@type": "Person", "name": "Wednesday" } },
       { "@type": "MusicRecording", "position": 1, "name": "（１）うん、今日も、ここにいた。", "url": "https://suno.com/song/f0574e5b-565e-47ba-b7dc-261df2b8f9a3", "byArtist": { "@type": "Person", "name": "Wednesday" } },
       { "@type": "MusicRecording", "position": 2, "name": "（２）うん、今日も、ここにいた。", "url": "https://suno.com/song/c1311980-fba2-4914-8105-8ac3f7931ada", "byArtist": { "@type": "Person", "name": "Wednesday" } },
@@ -556,6 +558,13 @@
       border-radius: 14px;
       white-space: nowrap;
     }
+    .st-answer {
+      color: rgba(120,190,140,0.95);
+      border: 1px solid rgba(74,124,89,0.5);
+      background: rgba(74,124,89,0.08);
+    }
+    .l-ans .ans-live { color: rgba(120,190,140,0.9); font-style: normal; }
+
     .st-live {
       color: var(--signal);
       border: 1px solid rgba(214,69,86,0.45);
@@ -748,11 +757,11 @@
     <span class="rx-plus" data-track="0">＋</span>
     </span>
   </a>
-  <div class="ax awaiting" data-ax="0" style="left:406px; top:6px;" title="Answer song I — awaiting approval">
+  <a class="ax live" data-ax="0" style="left:406px; top:6px;" href="https://suno.com/s/JwLedXpCS8cZf7xP" target="_blank" rel="noopener" title="答 I — Leave a Little Room (answer to （０）あなたに、聞いていい？)">
     <span class="counterspin">
-    <span class="ax-k">答 I</span><span class="ax-s">Awaiting</span>
+    <span class="ax-k">答 I</span><span class="ax-s">Suno</span>
     </span>
-  </div>
+  </a>
   <div class="ax creating" data-ax="0" style="left:498px; top:6px;" title="Answer song II — in creation">
     <span class="counterspin">
     <span class="ax-k">答 II</span><span class="ax-s">Creating</span>
@@ -963,7 +972,7 @@
         <div class="mc-en">Can I ask you something?</div>
         <div class="mc-btns">
           <a class="pb-sm" href="https://suno.com/song/130c1eb6-10bb-4e8a-bcdb-65c4498fc1c1?sh=prQDMKvdKSC7FfhW" target="_blank" rel="noopener">Suno</a>
-          <span class="pb-sm pending">答 I · Awaiting approval</span>
+          <a class="pb-sm" href="https://suno.com/s/JwLedXpCS8cZf7xP" target="_blank" rel="noopener">答 I · Leave a Little Room</a>
           <span class="pb-sm pending">答 II · In creation</span>
         </div>
       </div>
@@ -1079,9 +1088,16 @@
       <span class="l-no">RX ０</span>
       <span class="l-title">（０）あなたに、聞いていい？
         <span class="l-sub">Can I ask you something?</span>
-        <span class="l-ans">Answers: <em class="ans-await">I — awaiting approval</em> &nbsp;·&nbsp; II — in creation</span>
+        <span class="l-ans">Answers: <em class="ans-live">I — Leave a Little Room · live</em> &nbsp;·&nbsp; II — in creation</span>
       </span>
       <span class="l-status st-live">Received · Live</span>
+    </a>
+    <a class="lrow" href="https://suno.com/s/JwLedXpCS8cZf7xP" target="_blank" rel="noopener">
+      <span class="l-no">答 I</span>
+      <span class="l-title">Leave a Little Room
+        <span class="l-sub">Answer song to （０）あなたに、聞いていい？ — from Hungary</span>
+      </span>
+      <span class="l-status st-answer">Answer · Live</span>
     </a>
     <a class="lrow" href="https://suno.com/song/f0574e5b-565e-47ba-b7dc-261df2b8f9a3?sh=9FDh7cG7rKD9wpxc" target="_blank" rel="noopener">
       <span class="l-no">RX １</span>

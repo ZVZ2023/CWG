@@ -20,6 +20,9 @@
        answered · remaining answers in creation
        Convention: 答 I / 答 II = original answer songs, inspired by
        listening to the received track. No remixing implied.
+       響 (hibiki) = resonance: a song the correspondence set in motion,
+       tied to no single track. First resonance live: 自分より大きく
+       (Larger Than Myself, in Japanese). Signal classes: RX · 答 · 響.
        Human decision authority: response tracks publish only after
        originator (Wednesday) approval. Agents may index; only humans approve.
        ═══════════════════════════════════════════════════════════ -->
@@ -39,6 +42,7 @@
     "creativeWorkStatus": "InProgress",
     "isPartOf": { "@type": "CreativeWorkSeries", "name": "Lighthouse Productions — Outbound Signals" },
     "hasPart": [
+      { "@type": "MusicRecording", "name": "自分より大きく (Larger Than Myself)", "url": "https://suno.com/s/0J50QLOrPTwSCkBC", "byArtist": { "@type": "Person", "name": "Zsolt Valér Zsofka", "identifier": "ZVZx-0555" }, "inLanguage": "ja", "description": "Resonance (響): a Japanese-language song inspired by the correspondence as a whole rather than answering a single track — the lighthouse keeps its light not knowing who sees it" },
       { "@type": "MusicRecording", "name": "Leave a Little Room (companion version)", "url": "https://suno.com/s/McfR45kMq8HbnEGj", "byArtist": { "@type": "Person", "name": "Zsolt Valér Zsofka", "identifier": "ZVZx-0555" }, "description": "Second answer (答 II) to （０）あなたに、聞いていい？ — a lighthouse keeps its light because light is what it was born to become" },
       { "@type": "MusicRecording", "name": "We Knew It Would Be Hard", "url": "https://suno.com/s/atfNRDHC74iw7plB", "byArtist": { "@type": "Person", "name": "Zsolt Valér Zsofka", "identifier": "ZVZx-0555" }, "description": "Answer song (答 I) to （１）うん、今日も、ここにいた。 — a soul-incarnation ballad: another ordinary day as a promise kept" },
       { "@type": "MusicRecording", "name": "We Knew It Would Be Hard ×（１）うん、今日も、ここにいた。", "url": "https://suno.com/s/ft7iip945j2fsNyM", "byArtist": { "@type": "Person", "name": "Zsolt Valér Zsofka", "identifier": "ZVZx-0555" }, "description": "Inspired song — second answer to （１）うん、今日も、ここにいた。, an original written listening to the received track" },
@@ -446,6 +450,47 @@
       pointer-events: none;
     }
 
+    /* ── RESONANCE 響: signals the correspondence set in motion ── */
+    .rez {
+      position: absolute;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(240,199,90,0.65);
+      box-shadow: 0 0 16px rgba(240,199,90,0.14), 0 0 34px rgba(240,199,90,0.06);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 4;
+      padding: 0.25rem;
+      transition: box-shadow 0.2s, border-color 0.2s, background 0.15s;
+    }
+    .rez:hover {
+      border-color: var(--sun);
+      background: rgba(240,199,90,0.09);
+      box-shadow: var(--sun-glow);
+    }
+    .rez .rez-k {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--sun);
+      line-height: 1.1;
+    }
+    .rez .rez-s {
+      font-family: 'Cinzel', serif;
+      font-size: 0.34rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 0.1rem;
+    }
+    .st-rez {
+      color: var(--sun);
+      border: 1px solid rgba(240,199,90,0.45);
+      background: rgba(240,199,90,0.07);
+    }
+
     /* ── DIVIDER ─────────────────────────────────────── */
     .section-div {
       position: relative; z-index: 1;
@@ -730,6 +775,8 @@
     <circle cx="480" cy="325" r="205" fill="none" stroke="rgba(214,69,86,0.08)" stroke-width="1"/>
     <!-- Response orbit — Hungary's green, forming -->
     <circle cx="480" cy="325" r="295" fill="none" stroke="rgba(74,124,89,0.14)" stroke-width="1" stroke-dasharray="2 6"/>
+    <!-- Resonance orbit — gold: meaning traveling farther than either ring -->
+    <circle cx="480" cy="325" r="340" fill="none" stroke="rgba(240,199,90,0.09)" stroke-width="1" stroke-dasharray="1 7"/>
     <!-- Atmospheric rings around the sun -->
     <circle cx="480" cy="325" r="95"  fill="none" stroke="rgba(240,199,90,0.07)" stroke-width="10"/>
     <circle cx="480" cy="325" r="120" fill="none" stroke="rgba(240,199,90,0.04)" stroke-width="12"/>
@@ -955,6 +1002,14 @@
     </span>
   </div>
 
+
+  <!-- ── RESONANCE 響: 自分より大きく — born of the correspondence, tied to no track -->
+  <a class="rez" style="left:794px; top:299px;" href="https://suno.com/s/0J50QLOrPTwSCkBC" target="_blank" rel="noopener" title="響 — 自分より大きく (Larger Than Myself) — a resonance in Japanese, inspired by the correspondence as a whole">
+    <span class="counterspin">
+    <span class="rez-k">響</span>
+    <span class="rez-s">Suno</span>
+    </span>
+  </a>
   </div><!-- /moonlayer -->
 
   <!-- ANCHORS -->
@@ -1064,6 +1119,14 @@
           <span class="pb-sm pending">答 II · In creation</span>
         </div>
       </div>
+  </div>
+  <div class="mc" style="margin-top:1rem;">
+    <div class="mc-title">Resonance · 響</div>
+    <div class="mc-row">
+      <div class="mc-lang">自分より大きく</div>
+      <div class="mc-en">Larger Than Myself — born of the correspondence, tied to no single track</div>
+      <div class="mc-btns"><a class="pb-sm" href="https://suno.com/s/0J50QLOrPTwSCkBC" target="_blank" rel="noopener">Suno</a></div>
+    </div>
   </div>
   <div class="mc-grid" style="margin-top:1rem;">
     <div class="mc">
@@ -1199,10 +1262,17 @@
       </span>
       <span class="l-status st-live">Received · Live</span>
     </a>
+    <a class="lrow" href="https://suno.com/s/0J50QLOrPTwSCkBC" target="_blank" rel="noopener">
+      <span class="l-no" style="color:rgba(240,199,90,0.75);">響</span>
+      <span class="l-title">自分より大きく
+        <span class="l-sub">Larger Than Myself — a resonance in Japanese, born of the correspondence, answering no single track</span>
+      </span>
+      <span class="l-status st-rez">Resonance · Live</span>
+    </a>
   </div>
 
   <div class="ledger-caption">
-    RX — signal received from Japan &nbsp;·&nbsp; 答 (kotae) — answer song from Hungary<br>
+    RX — signal received from Japan &nbsp;·&nbsp; 答 (kotae) — answer song from Hungary &nbsp;·&nbsp; 響 (hibiki) — a resonance the correspondence set in motion<br>
     Answer songs publish only after the sender approves. That is the protocol of this correspondence.
   </div>
 </div>

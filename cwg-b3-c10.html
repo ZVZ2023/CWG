@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journey Around Love · Conversations with God Book 3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:        #0a0807;
+      --node-bg:   rgba(16,12,7,0.97);
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,0.22);
+      --gold-line: rgba(201,168,76,0.32);
+      --text:      #e8d8b0;
+      --muted:     #6a6050;
+      --glow-sm:   0 0 18px rgba(201,168,76,0.13), 0 0 35px rgba(201,168,76,0.06);
+      --glow-lg:   0 0 28px rgba(201,168,76,0.16), 0 0 55px rgba(201,168,76,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 20%, rgba(201,168,76,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 85%, rgba(201,168,76,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 85%, rgba(201,168,76,0.025) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+    }
+
+    .h-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.0;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+
+    .h-cwg {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .h-author {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      color: rgba(201,168,76,0.5);
+    }
+
+    .h-signal {
+      margin-top: 1.1rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+    }
+    .h-signal a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,168,76,0.32);
+      padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+    .h-signal a:hover { border-color: var(--gold); }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto 0;
+    }
+
+    .map-shell {
+      position: relative; z-index: 1;
+      padding: 0 0 1rem;
+    }
+
+    .map-stage {
+      position: relative;
+      width: 940px;
+      height: 940px;
+      margin: 0 auto;
+    }
+
+    .map-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .nc {
+      position: absolute;
+      width: 200px; height: 200px;
+      left: 370px; top: 370px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid var(--gold);
+      box-shadow: var(--glow-lg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1rem;
+      z-index: 3;
+    }
+
+    .nc-god {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.45em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+
+    .nc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-style: italic;
+      color: var(--text); line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .nc-title em { color: var(--gold); }
+
+    .nc-sub {
+      font-size: 0.4rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .ns {
+      position: absolute;
+      width: 98px; height: 98px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.5);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 0.6rem;
+      z-index: 3;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .ns:hover, .ns.open {
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+
+    .ns-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.82rem; font-style: italic;
+      color: var(--text); line-height: 1.3;
+    }
+
+    .ns-podcast { left: 171px; top:  58px; }
+    .ns-debate  { left: 691px; top:  58px; }
+    .ns-brief   { left:  96px; top: 448px; }
+    .ns-music   { left: 750px; top: 430px; }
+
+    .moon {
+      position: absolute;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 4;
+      opacity: 0;
+      transform: scale(0.3);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.15s, border-color 0.15s;
+    }
+    .moon.open {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: all;
+    }
+    .moon:hover {
+      background: rgba(201,168,76,0.14);
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+    .moon .m-lang {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+    .moon .m-plat {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+    }
+
+    .music-caption {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .ns-song {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.55rem;
+      color: var(--muted);
+      line-height: 1.3;
+      margin-top: 0.2rem;
+      padding: 0 0.2rem;
+    }
+
+    .ns-plus {
+      margin-top: 0.35rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: rgba(201,168,76,0.6);
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .ns:hover .ns-plus { color: var(--gold); }
+    .ns.open .ns-plus { color: var(--gold); }
+
+    .mobile-map {
+      display: none;
+      padding: 2rem 1.2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .mc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mc {
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      border-radius: 2px;
+      padding: 1.2rem 1rem;
+    }
+
+    .mc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-style: italic;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .mc-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+    .mc-row:last-child { margin-bottom: 0; }
+
+    .mc-lang {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .mc-btns {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .pb-sm {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      border-radius: 16px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .pb-sm:hover { background: rgba(201,168,76,0.15); }
+
+    .section-div {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 1rem;
+    }
+    .section-div::before, .section-div::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25));
+    }
+    .section-div::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
+    }
+    .div-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .article-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px;
+      margin: 3rem auto 0;
+      padding: 0 2rem 3rem;
+      text-align: center;
+    }
+
+    .sec-eye {
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+    }
+
+    .pull {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .pull em { color: var(--gold); }
+
+    .abody {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--muted);
+      text-align: left;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .abody em { color: rgba(201,168,76,0.7); font-style: italic; }
+
+    .info-wrap {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2rem 1.8rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(201,168,76,0.12);
+      text-align: left;
+    }
+
+    .ic-title {
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      padding-bottom: 0.55rem;
+      margin-bottom: 0.9rem;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .ia .ic-title { color: var(--gold); }
+    .ib .ic-title { color: rgba(201,168,76,0.55); }
+
+    .ic-list { list-style: none; }
+    .ic-list li {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem; font-style: italic;
+      color: var(--muted);
+      padding: 0.24rem 0 0.24rem 0.9rem;
+      position: relative;
+    }
+    .ic-list li::before {
+      content: '·';
+      position: absolute; left: 0;
+      color: var(--gold); opacity: 0.5;
+    }
+
+    .vs-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: 0.25;
+    }
+
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .flinks {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .fl {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      transition: color 0.18s;
+    }
+    .fl:hover { color: var(--gold); }
+
+    .fcredit {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,168,76,0.2);
+    }
+
+    @media (max-width: 980px) {
+      .map-stage {
+        transform: scale(0.82);
+        transform-origin: top center;
+        margin-bottom: -169px;
+      }
+    }
+    @media (max-width: 800px) {
+      .map-stage {
+        transform: scale(0.66);
+        transform-origin: top center;
+        margin-bottom: -320px;
+      }
+    }
+    @media (max-width: 640px) {
+      .map-shell { display: none; }
+      .mobile-map { display: block; }
+      .info-wrap { grid-template-columns: 1fr; }
+      .vs-col { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ════════════════════════════════════════ -->
+<header>
+  <div class="h-eyebrow">July 2026</div>
+  <h1><em>Journey Around</em><br>Love</h1>
+  <div class="h-cwg">Conversations with God &nbsp;·&nbsp; Book 3 &nbsp;·&nbsp; Chapter 10</div>
+  <div class="h-author">Zsolt Valér Zsofka</div>
+  <div class="h-signal"><a href="https://zvz2023.github.io/CWG/signal-wednesday.html" target="_blank">Seven songs, one journey around love — this week's Lighthouse Signal →</a></div>
+</header>
+
+<!-- ═══ MAP — DESKTOP ════════════════════════════════ -->
+<div class="map-shell">
+ <div class="map-stage">
+
+  <svg class="map-svg" viewBox="0 0 940 940" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="470" cy="470" r="88"  fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="10"/>
+    <circle cx="470" cy="470" r="112" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="12"/>
+    <circle cx="470" cy="470" r="320" fill="none" stroke="rgba(201,168,76,0.055)" stroke-width="1" stroke-dasharray="2 10"/>
+
+    <line x1="434.4" y1="372.3" x2="382.1" y2="228.5"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="505.6" y1="372.3" x2="557.9" y2="228.5"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="560.1" y1="418.0" x2="692.6" y2="341.5"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="572.4" y1="488.1" x2="723.1" y2="514.6"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="536.8" y1="549.7" x2="635.2" y2="666.9"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="470.0" y1="574.0" x2="470.0" y2="727.0"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="403.2" y1="549.7" x2="304.8" y2="666.9"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="367.6" y1="488.1" x2="216.9" y2="514.6"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="379.9" y1="418.0" x2="247.4" y2="341.5"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+  </svg>
+
+  <!-- CENTER NODE (static — no links, no toggle) -->
+  <div class="nc">
+    <div class="nc-god">God</div>
+    <div class="nc-title"><em>&ldquo;Love. There.</em><br><em>All it is.&rdquo;</em></div>
+    <div class="nc-sub">CWG · BOOK 3<br>CHAPTER 10</div>
+  </div>
+
+  <!-- SATELLITE NODES (9 — Podcast HU/EN + Music 1-7) -->
+  <div class="ns" id="ns-podcasthu" style="left:301.6px; top:110.3px;" onclick="toggleLP('podcasthu')">
+    <div class="ns-label">Podcast HU</div>
+    <div class="ns-plus" id="plus-podcasthu">+</div>
+  </div>
+
+  <div class="ns" id="ns-podcasten" style="left:520.4px; top:110.3px;" onclick="toggleLP('podcasten')">
+    <div class="ns-label">Podcast EN</div>
+    <div class="ns-plus" id="plus-podcasten">+</div>
+  </div>
+
+  <div class="ns" id="ns-music1" style="left:688.1px; top:251.0px;" onclick="toggleLP('music1')">
+    <div class="ns-label">Music 1</div>
+    <div class="ns-song">Receiving · Before I Knew</div>
+    <div class="ns-plus" id="plus-music1">+</div>
+  </div>
+
+  <div class="ns" id="ns-music2" style="left:726.1px; top:466.6px;" onclick="toggleLP('music2')">
+    <div class="ns-label">Music 2</div>
+    <div class="ns-song">Belonging · A Place That Was Already Mine</div>
+    <div class="ns-plus" id="plus-music2">+</div>
+  </div>
+
+  <div class="ns" id="ns-music3" style="left:616.7px; top:656.1px;" onclick="toggleLP('music3')">
+    <div class="ns-label">Music 3</div>
+    <div class="ns-song">Devotion · Not Because You Owe Me</div>
+    <div class="ns-plus" id="plus-music3">+</div>
+  </div>
+
+  <div class="ns" id="ns-music4" style="left:411.0px; top:731.0px;" onclick="toggleLP('music4')">
+    <div class="ns-label">Music 4</div>
+    <div class="ns-song">Compassion · I Won't Look Away</div>
+    <div class="ns-plus" id="plus-music4">+</div>
+  </div>
+
+  <div class="ns" id="ns-music5" style="left:205.3px; top:656.1px;" onclick="toggleLP('music5')">
+    <div class="ns-label">Music 5</div>
+    <div class="ns-song">Friendship · Walking Beside</div>
+    <div class="ns-plus" id="plus-music5">+</div>
+  </div>
+
+  <div class="ns" id="ns-music6" style="left:95.9px; top:466.6px;" onclick="toggleLP('music6')">
+    <div class="ns-label">Music 6</div>
+    <div class="ns-song">Creation · What We Carried In</div>
+    <div class="ns-plus" id="plus-music6">+</div>
+  </div>
+
+  <div class="ns" id="ns-music7" style="left:133.9px; top:251.0px;" onclick="toggleLP('music7')">
+    <div class="ns-label">Music 7</div>
+    <div class="ns-song">Union · There, All It Is</div>
+    <div class="ns-plus" id="plus-music7">+</div>
+  </div>
+
+  <!-- PODCAST HU MOONS -->
+  <a class="moon" data-group="podcasthu" style="left:212.3px; top:88.8px; transition-delay:0s"
+     href="https://youtu.be/_CaSWE59PlI" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcasthu" style="left:297.4px; top:46.3px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078390331150573595" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="podcasthu" style="left:389.8px; top:24.1px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02Pz4HEQdB5Fog9ydHZo6ewQQsNoAUX4Las2aGXHS8LwaZV5cfXofGMuARijE9YuRel&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- PODCAST EN MOONS -->
+  <a class="moon" data-group="podcasten" style="left:492.2px; top:24.1px; transition-delay:0s"
+     href="https://youtu.be/i0BK8tGH1pQ" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcasten" style="left:584.6px; top:46.3px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078384627920626025" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="podcasten" style="left:669.7px; top:88.8px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid031bDhCPPAs7EZwqCyK76jx9XeqxL48Wjbpa62qxYzUT29o4zWBTvh5qc3kASLL4Cnl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC 1 MOONS -->
+  <a class="moon" data-group="music1" style="left:748.2px; top:154.6px; transition-delay:0s"
+     href="https://youtu.be/STiG5xeQKNo" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music1" style="left:804.7px; top:231.0px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078711348217696608?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="music1" style="left:842.6px; top:318.2px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02s9xb6uT3SnarhuWVNFx469sqwNeF9V9vPBWHDz4KnXERrnWWrx7BHKd4Ftwesoffl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC 2 MOONS -->
+  <a class="moon" data-group="music2" style="left:860.4px; top:419.0px; transition-delay:0s"
+     href="https://youtu.be/gsc0n2-806M" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music2" style="left:854.6px; top:513.9px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078713727226876405?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="music2" style="left:827.6px; top:605.1px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02TQbqArjSrLtR8p7ZeWKgdBRhXs4oUL6obRk9L8Y99AT9zAuj5zJCdVdzAXT3n6PAl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC 3 MOONS -->
+  <a class="moon" data-group="music3" style="left:776.4px; top:693.8px; transition-delay:0s"
+     href="https://youtu.be/fZS4lvg3alM" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music3" style="left:711.0px; top:762.7px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078715167874105477?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="music3" style="left:631.7px; top:815.2px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid03yGGsUSps3ggyRPgbGMWCSBnHYvqp1YNRMJp9ebv1yRH8QieVwTehaJnp3r5U3NJl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC 4 MOONS -->
+  <a class="moon" data-group="music4" style="left:535.5px; top:850.2px; transition-delay:0s"
+     href="https://youtu.be/SZiGoxQIB6o" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music4" style="left:441.0px; top:861.0px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078716584332247517?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="music4" style="left:346.5px; top:850.2px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid0uoWWo5WLAXdPYzs4o9BmBfvB4LeW6XS9WZV5CsTzBz69un9HkYgUx4nnABHmToSal&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC 5 MOONS -->
+  <a class="moon" data-group="music5" style="left:250.3px; top:815.2px; transition-delay:0s"
+     href="https://youtu.be/JAkbyERgmSk" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music5" style="left:171.0px; top:762.7px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078718409693393188?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="music5" style="left:105.6px; top:693.8px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02a9MaHEpAPoWHDGFd8EC1LKvi87CPKngJ9nS45j69B6bCecr8kTdjdHSJHXHCjP9Zl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC 6 MOONS -->
+  <a class="moon" data-group="music6" style="left:54.4px; top:605.1px; transition-delay:0s"
+     href="https://youtu.be/O04EhVKLO6A" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music6" style="left:27.4px; top:513.9px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078719934939435244?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="music6" style="left:21.6px; top:419.0px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02u2Bntz2oJNCi9gTCnh4j3AFdUn4FmTJhwwnkZj9XYRiuASfubFkVKdg6GTQKa2Mhl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC 7 MOONS -->
+  <a class="moon" data-group="music7" style="left:39.4px; top:318.2px; transition-delay:0s"
+     href="https://youtu.be/fsVDZW_3UDc" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="music7" style="left:77.3px; top:231.0px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2078721262671601802?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="music7" style="left:133.8px; top:154.6px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid0D9E7wuQ8nyLkU6RRLBqGzz9Uv3L7qtRocBniBmKiNn6L9YbpqiYgTCCTFBU37ivzl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+ </div><!-- /map-stage -->
+</div><!-- /map-shell -->
+
+<!-- ═══ MAP — MOBILE CARDS ════════════════════════════ -->
+<div class="mobile-map">
+  <div class="mc-grid">
+
+    <div class="mc">
+      <div class="mc-title">Podcast HU</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/_CaSWE59PlI" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078390331150573595" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02Pz4HEQdB5Fog9ydHZo6ewQQsNoAUX4Las2aGXHS8LwaZV5cfXofGMuARijE9YuRel&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Podcast EN</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/i0BK8tGH1pQ" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078384627920626025" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid031bDhCPPAs7EZwqCyK76jx9XeqxL48Wjbpa62qxYzUT29o4zWBTvh5qc3kASLL4Cnl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music 1</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/STiG5xeQKNo" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078711348217696608?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02s9xb6uT3SnarhuWVNFx469sqwNeF9V9vPBWHDz4KnXERrnWWrx7BHKd4Ftwesoffl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Receiving · Before I Knew
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music 2</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/gsc0n2-806M" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078713727226876405?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02TQbqArjSrLtR8p7ZeWKgdBRhXs4oUL6obRk9L8Y99AT9zAuj5zJCdVdzAXT3n6PAl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Belonging · A Place That Was Already Mine
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music 3</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/fZS4lvg3alM" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078715167874105477?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid03yGGsUSps3ggyRPgbGMWCSBnHYvqp1YNRMJp9ebv1yRH8QieVwTehaJnp3r5U3NJl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Devotion · Not Because You Owe Me
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music 4</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/SZiGoxQIB6o" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078716584332247517?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0uoWWo5WLAXdPYzs4o9BmBfvB4LeW6XS9WZV5CsTzBz69un9HkYgUx4nnABHmToSal&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Compassion · I Won't Look Away
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music 5</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/JAkbyERgmSk" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078718409693393188?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02a9MaHEpAPoWHDGFd8EC1LKvi87CPKngJ9nS45j69B6bCecr8kTdjdHSJHXHCjP9Zl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Friendship · Walking Beside
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music 6</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/O04EhVKLO6A" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078719934939435244?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02u2Bntz2oJNCi9gTCnh4j3AFdUn4FmTJhwwnkZj9XYRiuASfubFkVKdg6GTQKa2Mhl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Creation · What We Carried In
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music 7</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/fsVDZW_3UDc" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2078721262671601802?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0D9E7wuQ8nyLkU6RRLBqGzz9Uv3L7qtRocBniBmKiNn6L9YbpqiYgTCCTFBU37ivzl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Union · There, All It Is
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ═══ TO THE POINT ══════════════════════════════════ -->
+<div class="section-div" style="margin-top:1rem;">
+  <span class="div-label">· · ·</span>
+</div>
+
+<div class="article-wrap">
+  <div class="sec-eye">To The Point</div>
+  <div class="pull">
+    Perhaps the spiritual journey is not becoming worthy of love —<br>
+    but becoming able to <em>receive</em> what has always been offered.
+  </div>
+  <p class="abody">
+    Chapter 10 of <em>Conversations with God — Book 3</em> is the shortest chapter in the
+    trilogy — four lines, no more. "I love You, do You know that?" "Yes. And I love you.
+    Do you know that?" "I'm starting to. I'm really starting to." "Good." God does not begin
+    loving in this exchange. The love was already present. What changes is the capacity to
+    recognize it — and that single shift carries the whole chapter.<br><br>
+    This production follows that shift outward into seven doorways — Receiving, Belonging,
+    Devotion, Compassion, Friendship, Creation, Union — each one a different angle on the same
+    center. Not degrees of how much love exists, but degrees of how fully it has been let in.
+    Along the way it draws a hard line between love as transaction — negotiated, measured,
+    protected — and love as gift, where <em>Being</em> comes before <em>Doing</em>, and
+    <em>Doing</em> before <em>Having</em>.<br><br>
+    This one carries something more personal than most: parents, extended family, children,
+    the animals who stayed loyal without needing the word. Chapter 10 isn't asking whether
+    love exists. It's asking whether we can finally let it in.
+  </p>
+</div>
+
+<!-- ═══ INFOGRAPHIC ═══════════════════════════════════ -->
+<div class="info-wrap">
+  <div class="ia">
+    <div class="ic-title">Love Received</div>
+    <ul class="ic-list">
+      <li>Given without condition</li>
+      <li>No ledger, no debt</li>
+      <li>Trusted before proof</li>
+      <li>Being before Doing</li>
+      <li>Presence, not performance</li>
+      <li>Permission to stop earning</li>
+    </ul>
+  </div>
+  <div class="vs-col">⟷</div>
+  <div class="ib">
+    <div class="ic-title">Love Transacted</div>
+    <ul class="ic-list">
+      <li>Given to be repaid</li>
+      <li>Kept as a running account</li>
+      <li>Proof demanded first</li>
+      <li>Doing before Being</li>
+      <li>Performance as safety</li>
+      <li>Earning as identity</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="flinks">
+    <a class="fl" href="https://www.linkedin.com/in/zsoltzsofka/" target="_blank">
+      <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+    <a class="fl" href="https://x.com/ZVZx1965" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i> X
+    </a>
+    <a class="fl" href="https://www.youtube.com/@HybridIntelligence" target="_blank">
+      <i class="fab fa-youtube"></i> YouTube
+    </a>
+  </div>
+  <div class="fcredit">Zsolt Valér Zsofka &nbsp;·&nbsp; Budapest &nbsp;·&nbsp; 2026</div>
+</footer>
+
+<script>
+  function toggleLP(id) {
+    const node  = document.getElementById('ns-' + id);
+    const plus  = document.getElementById('plus-' + id);
+    const moons = document.querySelectorAll('.moon[data-group="' + id + '"]');
+
+    const isOpen = !node.classList.contains('open');
+
+    document.querySelectorAll('.ns.open').forEach(n => {
+      if (n !== node) {
+        const gid = n.id.replace('ns-', '');
+        document.getElementById('plus-' + gid).textContent = '+';
+        n.classList.remove('open');
+        document.querySelectorAll('.moon[data-group="' + gid + '"]').forEach(m => m.classList.remove('open'));
+      }
+    });
+
+    node.classList.toggle('open', isOpen);
+    plus.textContent = isOpen ? '×' : '+';
+    moons.forEach(m => m.classList.toggle('open', isOpen));
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Art of Wakefulness · Conversations with God Book 3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:        #0a0807;
+      --node-bg:   rgba(16,12,7,0.97);
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,0.22);
+      --gold-line: rgba(201,168,76,0.32);
+      --text:      #e8d8b0;
+      --muted:     #6a6050;
+      --glow-sm:   0 0 18px rgba(201,168,76,0.13), 0 0 35px rgba(201,168,76,0.06);
+      --glow-lg:   0 0 28px rgba(201,168,76,0.16), 0 0 55px rgba(201,168,76,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 20%, rgba(201,168,76,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 85%, rgba(201,168,76,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 85%, rgba(201,168,76,0.025) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+    }
+
+    .h-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.0;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+
+    .h-cwg {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .h-author {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      color: rgba(201,168,76,0.5);
+    }
+
+    .h-signal {
+      margin-top: 1.1rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+    }
+    .h-signal a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,168,76,0.32);
+      padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+    .h-signal a:hover { border-color: var(--gold); }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto 0;
+    }
+
+    .map-shell {
+      position: relative; z-index: 1;
+      padding: 0 0 1rem;
+    }
+
+    .map-stage {
+      position: relative;
+      width: 940px;
+      height: 940px;
+      margin: 0 auto;
+    }
+
+    .map-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .nc {
+      position: absolute;
+      width: 200px; height: 200px;
+      left: 370px; top: 370px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid var(--gold);
+      box-shadow: var(--glow-lg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1rem;
+      z-index: 3;
+    }
+
+    .nc-god {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.45em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+
+    .nc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-style: italic;
+      color: var(--text); line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .nc-title em { color: var(--gold); }
+
+    .nc-sub {
+      font-size: 0.4rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .ns {
+      position: absolute;
+      width: 98px; height: 98px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.5);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 0.6rem;
+      z-index: 3;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .ns:hover, .ns.open {
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+
+    .ns-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.82rem; font-style: italic;
+      color: var(--text); line-height: 1.3;
+    }
+
+    .ns-podcast { left: 171px; top:  58px; }
+    .ns-debate  { left: 691px; top:  58px; }
+    .ns-brief   { left:  96px; top: 448px; }
+    .ns-music   { left: 750px; top: 430px; }
+
+    .moon {
+      position: absolute;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 4;
+      opacity: 0;
+      transform: scale(0.3);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.15s, border-color 0.15s;
+    }
+    .moon.open {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: all;
+    }
+    .moon:hover {
+      background: rgba(201,168,76,0.14);
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+    .moon .m-lang {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+    .moon .m-plat {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+    }
+
+    .music-caption {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .ns-song {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.55rem;
+      color: var(--muted);
+      line-height: 1.3;
+      margin-top: 0.2rem;
+      padding: 0 0.2rem;
+    }
+
+    .ns-plus {
+      margin-top: 0.35rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: rgba(201,168,76,0.6);
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .ns:hover .ns-plus { color: var(--gold); }
+    .ns.open .ns-plus { color: var(--gold); }
+
+    .mobile-map {
+      display: none;
+      padding: 2rem 1.2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .mc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mc {
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      border-radius: 2px;
+      padding: 1.2rem 1rem;
+    }
+
+    .mc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-style: italic;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .mc-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+    .mc-row:last-child { margin-bottom: 0; }
+
+    .mc-lang {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .mc-btns {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .pb-sm {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      border-radius: 16px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .pb-sm:hover { background: rgba(201,168,76,0.15); }
+
+    .section-div {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 1rem;
+    }
+    .section-div::before, .section-div::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25));
+    }
+    .section-div::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
+    }
+    .div-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .article-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px;
+      margin: 3rem auto 0;
+      padding: 0 2rem 3rem;
+      text-align: center;
+    }
+
+    .sec-eye {
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+    }
+
+    .pull {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .pull em { color: var(--gold); }
+
+    .abody {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--muted);
+      text-align: left;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .abody em { color: rgba(201,168,76,0.7); font-style: italic; }
+
+    .info-wrap {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2rem 1.8rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(201,168,76,0.12);
+      text-align: left;
+    }
+
+    .ic-title {
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      padding-bottom: 0.55rem;
+      margin-bottom: 0.9rem;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .ia .ic-title { color: var(--gold); }
+    .ib .ic-title { color: rgba(201,168,76,0.55); }
+
+    .ic-list { list-style: none; }
+    .ic-list li {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem; font-style: italic;
+      color: var(--muted);
+      padding: 0.24rem 0 0.24rem 0.9rem;
+      position: relative;
+    }
+    .ic-list li::before {
+      content: '·';
+      position: absolute; left: 0;
+      color: var(--gold); opacity: 0.5;
+    }
+
+    .vs-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: 0.25;
+    }
+
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .flinks {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .fl {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      transition: color 0.18s;
+    }
+    .fl:hover { color: var(--gold); }
+
+    .fcredit {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,168,76,0.2);
+    }
+
+    @media (max-width: 980px) {
+      .map-stage {
+        transform: scale(0.82);
+        transform-origin: top center;
+        margin-bottom: -169px;
+      }
+    }
+    @media (max-width: 800px) {
+      .map-stage {
+        transform: scale(0.66);
+        transform-origin: top center;
+        margin-bottom: -320px;
+      }
+    }
+    @media (max-width: 640px) {
+      .map-shell { display: none; }
+      .mobile-map { display: block; }
+      .info-wrap { grid-template-columns: 1fr; }
+      .vs-col { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ════════════════════════════════════════ -->
+<header>
+  <div class="h-eyebrow">July 2026</div>
+  <h1><em>The Art of</em><br>Wakefulness</h1>
+  <div class="h-cwg">Conversations with God &nbsp;·&nbsp; Book 3 &nbsp;·&nbsp; Chapter 9</div>
+  <div class="h-author">Zsolt Valér Zsofka</div>
+  <div class="h-signal"><a href="https://zvz2023.github.io/CWG/signal-wednesday.html" target="_blank">Bringing extraordinary awareness to ordinary moments — this week's Lighthouse Signal →</a></div>
+</header>
+
+<!-- ═══ MAP — DESKTOP ════════════════════════════════ -->
+<div class="map-shell">
+ <div class="map-stage">
+
+  <svg class="map-svg" viewBox="0 0 940 940" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="470" cy="470" r="88"  fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="10"/>
+    <circle cx="470" cy="470" r="112" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="12"/>
+    <circle cx="470" cy="470" r="320" fill="none" stroke="rgba(201,168,76,0.055)" stroke-width="1" stroke-dasharray="2 10"/>
+
+    <line x1="385.1" y1="385.1" x2="279.1" y2="279.1"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="554.9" y1="385.1" x2="660.9" y2="279.1"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="385.1" y1="554.9" x2="279.1" y2="660.9"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <line x1="554.9" y1="554.9" x2="660.9" y2="660.9"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+  </svg>
+
+  <!-- CENTER NODE (static — no links, no toggle) -->
+  <div class="nc">
+    <div class="nc-god">God</div>
+    <div class="nc-title"><em>&ldquo;Walk in wakefulness,</em><br><em>not as one asleep.&rdquo;</em></div>
+    <div class="nc-sub">CWG · BOOK 3<br>CHAPTER 9</div>
+  </div>
+
+  <!-- SATELLITE NODES (4 — Podcast HU/EN + Music HU/EN) -->
+  <div class="ns" id="ns-podcasthu" style="left:194.7px; top:194.7px;" onclick="toggleLP('podcasthu')">
+    <div class="ns-label">Podcast HU</div>
+    <div class="ns-plus" id="plus-podcasthu">+</div>
+  </div>
+
+  <div class="ns" id="ns-podcasten" style="left:647.3px; top:194.7px;" onclick="toggleLP('podcasten')">
+    <div class="ns-label">Podcast EN</div>
+    <div class="ns-plus" id="plus-podcasten">+</div>
+  </div>
+
+  <div class="ns" id="ns-musichu" style="left:194.7px; top:647.3px;" onclick="toggleLP('musichu')">
+    <div class="ns-label">Music HU</div>
+    <div class="ns-song">Wake Into This Moment</div>
+    <div class="ns-plus" id="plus-musichu">+</div>
+  </div>
+
+  <div class="ns" id="ns-musicen" style="left:647.3px; top:647.3px;" onclick="toggleLP('musicen')">
+    <div class="ns-label">Music EN</div>
+    <div class="ns-song">Wake Into This Moment</div>
+    <div class="ns-plus" id="plus-musicen">+</div>
+  </div>
+
+  <!-- PODCAST HU MOONS -->
+  <a class="moon" data-group="podcasthu" style="left:20.2px; top:312.4px; transition-delay:0s"
+     href="https://youtu.be/Ew5QmsTyCAQ" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcasthu" style="left:129.9px; top:129.9px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2081158599426887870?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="podcasthu" style="left:312.4px; top:20.2px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02SuzVnskQAzevxiiLh9wMrC8meyXKMwmm5pbQq7Uu8dbgiZKxTtWLUw1TLkphXeLXl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- PODCAST EN MOONS -->
+  <a class="moon" data-group="podcasten" style="left:569.6px; top:20.2px; transition-delay:0s"
+     href="https://youtu.be/tU581LxdDDc" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcasten" style="left:752.1px; top:129.9px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2081155688697299205?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="podcasten" style="left:861.8px; top:312.4px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid0RWQvJhrv7a43ojNZZJUF4CXduoDk7Xom7VvwAnS4vjfsQ7DvNGX9UpDi2xqTHbKal&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC HU MOONS -->
+  <a class="moon" data-group="musichu" style="left:312.4px; top:861.8px; transition-delay:0s"
+     href="https://youtu.be/HcY0Fe8pGlA" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="musichu" style="left:129.9px; top:752.1px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2081285457204174924?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="musichu" style="left:20.2px; top:569.6px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid036wAPP9Mfp7PYyUmgSdZvZ1gi88QLtQSzEWYSuBp1EAAKEjDjYMj1WqiPsKNhomMkl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+  <!-- MUSIC EN MOONS -->
+  <a class="moon" data-group="musicen" style="left:861.8px; top:569.6px; transition-delay:0s"
+     href="https://youtu.be/P5shebwYkaw" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="musicen" style="left:752.1px; top:752.1px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2081276060235141213?s=20" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X.com</span>
+  </a>
+  <a class="moon" data-group="musicen" style="left:569.6px; top:861.8px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid033SaUHCKjggNAeAafdkYyzC8TMdXE3TiE3JCxYrB5AVtv2bcSMxhKgpSxj2M7peMsl&id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+
+ </div><!-- /map-stage -->
+</div><!-- /map-shell -->
+
+<!-- ═══ MAP — MOBILE CARDS ════════════════════════════ -->
+<div class="mobile-map">
+  <div class="mc-grid">
+
+    <div class="mc">
+      <div class="mc-title">Podcast HU</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/Ew5QmsTyCAQ" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2081158599426887870?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02SuzVnskQAzevxiiLh9wMrC8meyXKMwmm5pbQq7Uu8dbgiZKxTtWLUw1TLkphXeLXl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Podcast EN</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/tU581LxdDDc" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2081155688697299205?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0RWQvJhrv7a43ojNZZJUF4CXduoDk7Xom7VvwAnS4vjfsQ7DvNGX9UpDi2xqTHbKal&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music HU</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/HcY0Fe8pGlA" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2081285457204174924?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid036wAPP9Mfp7PYyUmgSdZvZ1gi88QLtQSzEWYSuBp1EAAKEjDjYMj1WqiPsKNhomMkl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Wake Into This Moment
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Music EN</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/P5shebwYkaw" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2081276060235141213?s=20" target="_blank">X.com</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid033SaUHCKjggNAeAafdkYyzC8TMdXE3TiE3JCxYrB5AVtv2bcSMxhKgpSxj2M7peMsl&id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+      <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.65rem; color:var(--muted); margin-top:0.5rem; line-height:1.5;">
+        Wake Into This Moment
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ═══ TO THE POINT ══════════════════════════════════ -->
+<div class="section-div" style="margin-top:1rem;">
+  <span class="div-label">· · ·</span>
+</div>
+
+<div class="article-wrap">
+  <div class="sec-eye">To The Point</div>
+  <div class="pull">
+    A meaningful life is not created by escaping ordinary moments —<br>
+    but by bringing <em>extraordinary awareness</em> to ordinary moments.
+  </div>
+  <p class="abody">
+    Chapter 9 of <em>Conversations with God — Book 3</em> opens with an unlikely claim: sleep
+    is not primarily something the body needs, but something the soul desires. Embodiment is
+    described as extraordinary — and extraordinarily demanding. The text offers a simple image
+    for this: an actor who loves the stage still needs the green room between acts. Rest is not
+    a rejection of the play. It is part of performing it well. From there the chapter turns, and
+    begins speaking not of sleep but of <em>wakefulness</em> — a quality of attention that can
+    accompany any ordinary act: walking, working, breathing, washing a dish, preparing a
+    meal.<br><br>
+    This production follows that turn into lived territory — three silent years in a
+    childhood that never resolved into explanation, a story about a film director who dressed
+    background extras in clothing no camera would ever see, and the discipline of holding space
+    between stimulus and response rather than closing it too quickly. It draws a line many
+    people already feel intuitively: the difference between <em>Meaning Beyond Work</em> — who am
+    I when work no longer defines me — and <em>Meaning Within Work</em> — how do I bring
+    awareness into whatever I happen to be doing. Not competing questions. Complementary
+    ones.<br><br>
+    Chapter 9 isn't asking whether the soul leaves the body at night. It's asking something
+    closer to home: whether presence, not escape, is what turns an ordinary kitchen into
+    something worth staying awake for.
+  </p>
+</div>
+
+<!-- ═══ INFOGRAPHIC ═══════════════════════════════════ -->
+<div class="info-wrap">
+  <div class="ia">
+    <div class="ic-title">True Wakefulness</div>
+    <ul class="ic-list">
+      <li>Mind and body in the same place</li>
+      <li>Awareness before reaction</li>
+      <li>Ordinary tasks become meditation</li>
+      <li>Space held between stimulus and response</li>
+      <li>Presence dictates the meaning</li>
+      <li>Understanding allowed to ripen</li>
+    </ul>
+  </div>
+  <div class="vs-col">⟷</div>
+  <div class="ib">
+    <div class="ic-title">Sleepwalking</div>
+    <ul class="ic-list">
+      <li>Body present, mind elsewhere</li>
+      <li>Reaction before awareness</li>
+      <li>Ordinary tasks pass unnoticed</li>
+      <li>No space, only reflex</li>
+      <li>The task alone decides the meaning</li>
+      <li>Resolution forced too soon</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="flinks">
+    <a class="fl" href="https://www.linkedin.com/in/zsoltzsofka/" target="_blank">
+      <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+    <a class="fl" href="https://x.com/ZVZx1965" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i> X
+    </a>
+    <a class="fl" href="https://www.youtube.com/@HybridIntelligence" target="_blank">
+      <i class="fab fa-youtube"></i> YouTube
+    </a>
+  </div>
+  <div class="fcredit">Zsolt Valér Zsofka &nbsp;·&nbsp; Budapest &nbsp;·&nbsp; 2026</div>
+</footer>
+
+<script>
+  function toggleLP(id) {
+    const node  = document.getElementById('ns-' + id);
+    const plus  = document.getElementById('plus-' + id);
+    const moons = document.querySelectorAll('.moon[data-group="' + id + '"]');
+
+    const isOpen = !node.classList.contains('open');
+
+    document.querySelectorAll('.ns.open').forEach(n => {
+      if (n !== node) {
+        const gid = n.id.replace('ns-', '');
+        document.getElementById('plus-' + gid).textContent = '+';
+        n.classList.remove('open');
+        document.querySelectorAll('.moon[data-group="' + gid + '"]').forEach(m => m.classList.remove('open'));
+      }
+    });
+
+    node.classList.toggle('open', isOpen);
+    plus.textContent = isOpen ? '×' : '+';
+    moons.forEach(m => m.classList.toggle('open', isOpen));
+  }
+</script>
+</body>
+</html>

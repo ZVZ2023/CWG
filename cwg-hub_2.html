@@ -270,6 +270,12 @@ footer{text-align:center;padding:56px 24px;border-top:1px solid #c9a84c18;}
       <div class="archive-ref">What Happens When a Civilization Stops Listening to Its Elders?</div>
       <div class="archive-arrow">View Episode →</div>
     </a>
+    <a href="https://zvz2023.github.io/CWG/cwg-b3-conclusions.html" target="_blank" class="archive-card">
+      <div class="archive-ep">E108 · Conclusions</div>
+      <div class="archive-title">A Book I Kept Returning To</div>
+      <div class="archive-ref">Living Biography, AI &amp; Conversations with God Book 3</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
   </div>
 </div>
 
@@ -320,15 +326,17 @@ const b3=[
   {n:1,title:'The Generation We Pushed Aside',desc:'Every civilization inherits its wisdom from those who came before it. Chapter 1 asks what happens when the young stop listening to the ones who remember why.',url:'https://zvz2023.github.io/CWG/cwg-b3-c01.html',vid:'ocglBmFaJTs',live:true},
 ];
 for(let i=0;i>=1;i--)b3.push({n:i,live:false});
+const b3c={title:'A Book I Kept Returning To',desc:'Living Biography, AI \u0026 Conversations with God Book 3.',url:'https://zvz2023.github.io/CWG/cwg-b3-conclusions.html',vid:'XS2o-WNJLd8'};
+let concHover=false;
 const b2=[];for(let i=20;i>=1;i--)b2.push({n:i,live:false});
 const b1=[];for(let i=14;i>=1;i--)b1.push({n:i,live:false});
 b3.forEach((c,i)=>{c.week=i;c.date=schedDate(i);});
 b2.forEach((c,i)=>{c.week=21+i;c.date=schedDate(21+i);});
 b1.forEach((c,i)=>{c.week=41+i;c.date=schedDate(41+i);});
 const books=[
-  {id:1,label:'BOOK 1',chapters:b1,baseAngle:-Math.PI/2,open:false,rot:0},
-  {id:2,label:'BOOK 2',chapters:b2,baseAngle:-Math.PI/2+(Math.PI*2/3),open:false,rot:0},
-  {id:3,label:'BOOK 3',chapters:b3,baseAngle:-Math.PI/2+(Math.PI*4/3),open:false,rot:0},
+  {id:1,label:'BOOK 1',r:40,chapters:b1,baseAngle:-Math.PI/2,open:false,rot:0},
+  {id:2,label:'BOOK 2',r:40,chapters:b2,baseAngle:-Math.PI/2+(Math.PI*2/3),open:false,rot:0},
+  {id:3,label:'BOOK 3',r:54,conc:b3c,chapters:b3,baseAngle:-Math.PI/2+(Math.PI*4/3),open:false,rot:0},
 ];
 let bookRot=0;
 const SPOKE=210,BRAD=40,CRAD=14,CORBIT=90,SPEED=0.0003,BOOK_SPEED=0.00015;
@@ -348,20 +356,31 @@ function drawHub(){
 function drawSpoke(b){
   const a=Math.atan2(b.by-CY,b.bx-CX);
   ctx.beginPath();ctx.moveTo(CX+Math.cos(a)*74,CY+Math.sin(a)*74);
-  ctx.lineTo(b.bx-Math.cos(a)*(BRAD+2),b.by-Math.sin(a)*(BRAD+2));
+  ctx.lineTo(b.bx-Math.cos(a)*(b.r+2),b.by-Math.sin(a)*(b.r+2));
   ctx.strokeStyle=gold(0.3);ctx.lineWidth=0.8;ctx.stroke();
 }
 function drawBook(b){
-  ctx.beginPath();ctx.arc(b.bx,b.by,BRAD+10,0,Math.PI*2);ctx.strokeStyle=gold(0.05);ctx.lineWidth=12;ctx.stroke();
-  ctx.beginPath();ctx.arc(b.bx,b.by,BRAD,0,Math.PI*2);ctx.fillStyle='#1c1710';ctx.fill();
+  const R=b.r;
+  ctx.beginPath();ctx.arc(b.bx,b.by,R+10,0,Math.PI*2);ctx.strokeStyle=gold(0.05);ctx.lineWidth=12;ctx.stroke();
+  ctx.beginPath();ctx.arc(b.bx,b.by,R,0,Math.PI*2);ctx.fillStyle='#1c1710';ctx.fill();
   ctx.strokeStyle=b.open?gold(0.9):gold(0.45);ctx.lineWidth=b.open?1.4:0.8;ctx.stroke();
-  ctx.beginPath();ctx.arc(b.bx,b.by,BRAD-7,0,Math.PI*2);ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.4;ctx.stroke();
+  ctx.beginPath();ctx.arc(b.bx,b.by,R-7,0,Math.PI*2);ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.4;ctx.stroke();
   ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.font="600 11px 'Cinzel',serif";ctx.fillStyle=gold(0.6);ctx.fillText(b.label,b.bx,b.by-10);
-  ctx.font="700 20px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText(b.id,b.bx,b.by+6);
-  ctx.font="700 16px 'Cinzel',serif";ctx.fillStyle=gold(b.open?0.9:0.55);ctx.fillText(b.open?'\u2212':'+',b.bx,b.by+22);
+  if(b.conc){
+    ctx.font="600 11px 'Cinzel',serif";ctx.fillStyle=gold(0.6);ctx.fillText(b.label,b.bx,b.by-25);
+    ctx.font="700 20px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText(b.id,b.bx,b.by-8);
+    ctx.font="600 9px 'Cinzel',serif";ctx.fillStyle=gold(concHover?1:0.8);ctx.fillText('CONCLUSIONS',b.bx,b.by+12);
+    const w=ctx.measureText('CONCLUSIONS').width;
+    ctx.beginPath();ctx.moveTo(b.bx-w/2,b.by+19);ctx.lineTo(b.bx+w/2,b.by+19);ctx.strokeStyle=gold(concHover?0.9:0.35);ctx.lineWidth=0.6;ctx.stroke();
+    ctx.font="700 16px 'Cinzel',serif";ctx.fillStyle=gold(b.open?0.9:0.55);ctx.fillText(b.open?'\u2212':'+',b.bx,b.by+34);
+  }else{
+    ctx.font="600 11px 'Cinzel',serif";ctx.fillStyle=gold(0.6);ctx.fillText(b.label,b.bx,b.by-10);
+    ctx.font="700 20px 'Cinzel',serif";ctx.fillStyle=gold(0.95);ctx.fillText(b.id,b.bx,b.by+6);
+    ctx.font="700 16px 'Cinzel',serif";ctx.fillStyle=gold(b.open?0.9:0.55);ctx.fillText(b.open?'\u2212':'+',b.bx,b.by+22);
+  }
   ctx.restore();
 }
+function hitConc(mx,my){const b=books[2];return b.conc&&Math.abs(mx-b.bx)<=44&&my>=b.by+4&&my<=b.by+23;}
 function drawChapters(b){
   if(!b.open)return;
   const n=b.chapters.length,step=(Math.PI*2)/n;
@@ -370,7 +389,7 @@ function drawChapters(b){
     const a=b.rot+step*i;
     const cx2=b.bx+Math.cos(a)*CORBIT,cy2=b.by+Math.sin(a)*CORBIT;
     ch._cx=cx2;ch._cy=cy2;
-    ctx.beginPath();ctx.moveTo(b.bx+Math.cos(a)*(BRAD+1),b.by+Math.sin(a)*(BRAD+1));ctx.lineTo(cx2-Math.cos(a)*(CRAD+1),cy2-Math.sin(a)*(CRAD+1));ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.5;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(b.bx+Math.cos(a)*(b.r+1),b.by+Math.sin(a)*(b.r+1));ctx.lineTo(cx2-Math.cos(a)*(CRAD+1),cy2-Math.sin(a)*(CRAD+1));ctx.strokeStyle=gold(0.1);ctx.lineWidth=0.5;ctx.stroke();
     ctx.beginPath();ctx.arc(cx2,cy2,CRAD,0,Math.PI*2);ctx.fillStyle=ch.live?'#221d0e':'#0f0d08';ctx.fill();ctx.strokeStyle=ch.live?gold(0.9):gold(0.28);ctx.lineWidth=ch.live?1.1:0.5;ctx.stroke();
     ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.font=`${ch.live?'600':'400'} ${n>16?'9':'10'}px 'Cinzel',serif`;ctx.fillStyle=gold(ch.live?1:0.4);ctx.fillText(ch.n,cx2,cy2);ctx.restore();
@@ -393,14 +412,16 @@ function hit(mx,my,cx2,cy2,r){return(mx-cx2)**2+(my-cy2)**2<=r*r;}
 cv.addEventListener('click',e=>{
   const rect=cv.getBoundingClientRect(),sx=W/rect.width,sy=H/rect.height;
   const mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sy;
+  if(hitConc(mx,my)){window.open(b3c.url,'_blank');return;}
   for(const b of books){if(!b.open)continue;for(const ch of b.chapters){if(ch._cx===undefined)continue;if(hit(mx,my,ch._cx,ch._cy,CRAD+4)){showPanel(b,ch);return;}}}
-  for(const b of books){if(hit(mx,my,b.bx,b.by,BRAD+6)){b.open=!b.open;if(!b.open)closePanel();return;}}
+  for(const b of books){if(hit(mx,my,b.bx,b.by,b.r+6)){b.open=!b.open;if(!b.open)closePanel();return;}}
 });
 cv.addEventListener('mousemove',e=>{
   const rect=cv.getBoundingClientRect(),sx=W/rect.width,sy=H/rect.height;
   const mx=(e.clientX-rect.left)*sx,my=(e.clientY-rect.top)*sy;
-  let p=false;
-  for(const b of books){if(hit(mx,my,b.bx,b.by,BRAD+6)){p=true;break;}if(b.open)for(const ch of b.chapters){if(ch._cx!==undefined&&hit(mx,my,ch._cx,ch._cy,CRAD+4)){p=true;break;}}}
+  concHover=hitConc(mx,my);
+  let p=concHover;
+  for(const b of books){if(hit(mx,my,b.bx,b.by,b.r+6)){p=true;break;}if(b.open)for(const ch of b.chapters){if(ch._cx!==undefined&&hit(mx,my,ch._cx,ch._cy,CRAD+4)){p=true;break;}}}
   cv.style.cursor=p?'pointer':'default';
 });
 function showPanel(b,ch){

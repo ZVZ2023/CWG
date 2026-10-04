@@ -140,6 +140,20 @@ footer{text-align:center;padding:56px 24px;border-top:1px solid #c9a84c18;}
 </div>
 
 <hr class="section-divider">
+<div class="section-label">CWG · BOOK 2 · EPISODE ARCHIVE</div>
+
+<div class="archive-section">
+  <div class="archive-grid">
+    <a href="https://zvz2023.github.io/CWG/cwg-b2-c20.html" target="_blank" class="archive-card">
+      <div class="archive-ep">E112 · Chapter 20</div>
+      <div class="archive-title">The Light Has Been There All Along</div>
+      <div class="archive-ref">Remembering Oneness · Direct Relationship with God</div>
+      <div class="archive-arrow">View Episode →</div>
+    </a>
+  </div>
+</div>
+
+<hr class="section-divider">
 <div class="section-label">CWG · BOOK 3 · EPISODE ARCHIVE</div>
 
 <div class="archive-section">
@@ -328,7 +342,10 @@ const b3=[
 for(let i=0;i>=1;i--)b3.push({n:i,live:false});
 const b3c={title:'A Book I Kept Returning To',desc:'Living Biography, AI \u0026 Conversations with God Book 3.',url:'https://zvz2023.github.io/CWG/cwg-b3-conclusions.html',vid:'XS2o-WNJLd8'};
 let concHover=false;
-const b2=[];for(let i=20;i>=1;i--)b2.push({n:i,live:false});
+const b2=[
+  {n:20,title:'The Light Has Been There All Along',desc:'Remembering Oneness, reclaiming a direct relationship with God, and becoming a bringer of the light.',url:'https://zvz2023.github.io/CWG/cwg-b2-c20.html',vid:'b7-nPDj1el0',live:true},
+];
+for(let i=19;i>=1;i--)b2.push({n:i,live:false});
 const b1=[];for(let i=14;i>=1;i--)b1.push({n:i,live:false});
 b3.forEach((c,i)=>{c.week=i;c.date=schedDate(i);});
 b2.forEach((c,i)=>{c.week=21+i;c.date=schedDate(21+i);});

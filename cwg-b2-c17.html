@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Price of Peace · Conversations with God Book 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg:        #0a0807;
+      --node-bg:   rgba(16,12,7,0.97);
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,0.22);
+      --gold-line: rgba(201,168,76,0.32);
+      --text:      #e8d8b0;
+      --muted:     #6a6050;
+      --glow-sm:   0 0 18px rgba(201,168,76,0.13), 0 0 35px rgba(201,168,76,0.06);
+      --glow-lg:   0 0 28px rgba(201,168,76,0.16), 0 0 55px rgba(201,168,76,0.07);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 20%, rgba(201,168,76,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 85%, rgba(201,168,76,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 85% 85%, rgba(201,168,76,0.025) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    header {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 1.5rem;
+    }
+
+    .h-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.05;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+
+    .h-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+      color: rgba(201,168,76,0.7);
+      margin-bottom: 0.9rem;
+    }
+
+    .h-cwg {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .h-author {
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      color: rgba(201,168,76,0.5);
+    }
+
+    .h-signal {
+      margin-top: 1.1rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+    }
+    .h-signal a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,168,76,0.32);
+      padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+    .h-signal a:hover { border-color: var(--gold); }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 2rem auto 0;
+    }
+
+    /* ── MAP ── */
+    .map-shell {
+      position: relative; z-index: 1;
+      padding: 0 0 1rem;
+    }
+
+    .map-stage {
+      position: relative;
+      width: 940px;
+      height: 940px;
+      margin: 0 auto;
+    }
+
+    .map-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .nc {
+      position: absolute;
+      width: 200px; height: 200px;
+      left: 370px; top: 370px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid var(--gold);
+      box-shadow: var(--glow-lg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1rem;
+      z-index: 3;
+    }
+
+    .nc-god {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.45em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+
+    .nc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; font-style: italic;
+      color: var(--text); line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .nc-title em { color: var(--gold); }
+
+    .nc-sub {
+      font-size: 0.4rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .ns {
+      position: absolute;
+      width: 98px; height: 98px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.5);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 0.6rem;
+      z-index: 3;
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .ns:hover, .ns.open {
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+
+    .ns-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.82rem; font-style: italic;
+      color: var(--text); line-height: 1.3;
+    }
+
+    .ns-song {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.5rem;
+      color: var(--muted);
+      line-height: 1.3;
+      margin-top: 0.2rem;
+      padding: 0 0.2rem;
+    }
+
+    .ns-plus {
+      margin-top: 0.35rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      color: rgba(201,168,76,0.6);
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .ns:hover .ns-plus { color: var(--gold); }
+    .ns.open .ns-plus { color: var(--gold); }
+
+    .moon {
+      position: absolute;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      z-index: 4;
+      opacity: 0;
+      transform: scale(0.3);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.15s, border-color 0.15s;
+    }
+    .moon.open {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: all;
+    }
+    .moon:hover {
+      background: rgba(201,168,76,0.14);
+      border-color: var(--gold);
+      box-shadow: var(--glow-lg);
+    }
+    .moon .m-plat {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+    }
+
+    /* ── 5-SATELLITE POSITIONS (pentagon) ──
+       Center: 470,470  Radius to satellite center: 310px
+       Top:       470, 160     → left=421, top=111
+       Upper-R:   764, 314     → left=715, top=265
+       Lower-R:   664, 664     → left=615, top=615
+       Lower-L:   276, 664     → left=227, top=615
+       Upper-L:   176, 314     → left=127, top=265
+    */
+
+    /* Moon orbit radii ~115px from satellite center */
+
+    /* Mobile */
+    .mobile-map {
+      display: none;
+      padding: 2rem 1.2rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .mc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .mc {
+      background: var(--node-bg);
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: var(--glow-sm);
+      border-radius: 2px;
+      padding: 1.2rem 1rem;
+    }
+
+    .mc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-style: italic;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .mc-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+    .mc-row:last-child { margin-bottom: 0; }
+
+    .mc-btns {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .pb-sm {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.05);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      border-radius: 16px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .pb-sm:hover { background: rgba(201,168,76,0.15); }
+
+    /* ── ARTICLE ── */
+    .section-div {
+      position: relative; z-index: 1;
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 1rem;
+    }
+    .section-div::before, .section-div::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25));
+    }
+    .section-div::after {
+      background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
+    }
+    .div-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .article-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px;
+      margin: 3rem auto 0;
+      padding: 0 2rem 3rem;
+      text-align: center;
+    }
+
+    .sec-eye {
+      font-size: 0.6rem;
+      letter-spacing: 0.55em;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      text-transform: uppercase;
+    }
+
+    .pull {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .pull em { color: var(--gold); }
+
+    .abody {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--muted);
+      text-align: left;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .abody em { color: rgba(201,168,76,0.7); font-style: italic; }
+
+    /* ── INFOGRAPHIC ── */
+    .info-wrap {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2rem 1.8rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(201,168,76,0.12);
+      text-align: left;
+    }
+
+    .ic-title {
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      padding-bottom: 0.55rem;
+      margin-bottom: 0.9rem;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .ia .ic-title { color: var(--gold); }
+    .ib .ic-title { color: rgba(201,168,76,0.55); }
+
+    .ic-list { list-style: none; }
+    .ic-list li {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem; font-style: italic;
+      color: var(--muted);
+      padding: 0.24rem 0 0.24rem 0.9rem;
+      position: relative;
+    }
+    .ic-list li::before {
+      content: '·';
+      position: absolute; left: 0;
+      color: var(--gold); opacity: 0.5;
+    }
+
+    .vs-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: 0.25;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .flinks {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .fl {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      color: var(--muted);
+      transition: color 0.18s;
+    }
+    .fl:hover { color: var(--gold); }
+
+    .fcredit {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(201,168,76,0.2);
+    }
+
+    @media (max-width: 980px) {
+      .map-stage {
+        transform: scale(0.82);
+        transform-origin: top center;
+        margin-bottom: -169px;
+      }
+    }
+    @media (max-width: 800px) {
+      .map-stage {
+        transform: scale(0.66);
+        transform-origin: top center;
+        margin-bottom: -320px;
+      }
+    }
+    @media (max-width: 640px) {
+      .map-shell { display: none; }
+      .mobile-map { display: block; }
+      .info-wrap { grid-template-columns: 1fr; }
+      .vs-col { display: none; }
+    }
+      .mc { min-width: 0; }
+    .pb-sm.long { white-space: normal; text-align: left; justify-content: flex-start; line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ════════════════════════════════════════ -->
+<header>
+  <div class="h-eyebrow">October 2026</div>
+  <h1>The Price of <em>Peace</em></h1>
+  <div class="h-sub">Can Humanity Outgrow the Need to Win?</div>
+  <div class="h-cwg">Conversations with God &nbsp;·&nbsp; Book 2 &nbsp;·&nbsp; Chapter 17</div>
+  <div class="h-author">Zsolt Valér Zsofka</div>
+</header>
+
+<!-- ═══ MAP — DESKTOP ════════════════════════════════ -->
+<div class="map-shell">
+ <div class="map-stage">
+
+  <!--
+    4-node layout — Book 2 Chapter 17 · E123 (Podcast HU / Podcast EN / Shorts HU / Shorts EN)
+    Center: 470,470  Radius to satellite center: 300px
+    Podcasts at 240° / 300° (3 moons, orbit 115px, 30° step)
+    Shorts at 120° / 60° (9 shorts + Facebook = 10 moons, orbit 150px, 27° step, fanned away from center)
+  -->
+  <svg class="map-svg" viewBox="0 0 940 940" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="470" cy="470" r="88"  fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="10"/>
+    <circle cx="470" cy="470" r="112" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="12"/>
+    <circle cx="470" cy="470" r="300" fill="none" stroke="rgba(201,168,76,0.055)" stroke-width="1" stroke-dasharray="2 10"/>
+
+    <!-- Podcast HU -->
+    <line x1="414" y1="373" x2="344" y2="253"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <!-- Podcast EN -->
+    <line x1="526" y1="373" x2="596" y2="253"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <!-- Shorts HU -->
+    <line x1="414" y1="567" x2="345" y2="687"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+    <!-- Shorts EN -->
+    <line x1="526" y1="567" x2="596" y2="687"
+          stroke="var(--gold-line)" stroke-width="1" stroke-dasharray="4 7"/>
+  </svg>
+
+  <!-- CENTER NODE (static) -->
+  <div class="nc">
+    <div class="nc-god">God</div>
+    <div class="nc-title"><em>The Price of</em><br><em>Peace</em></div>
+    <div class="nc-sub">CWG · BOOK 2<br>CHAPTER 17</div>
+  </div>
+
+  <!-- Podcast HU — satellite center: 320,210 -->
+  <div class="ns" id="ns-podcasthu" style="left:271px; top:161px;" onclick="toggleLP('podcasthu')">
+    <div class="ns-label">Podcast HU</div>
+    <div class="ns-plus" id="plus-podcasthu">+</div>
+  </div>
+  <!-- Podcast EN — satellite center: 620,210 -->
+  <div class="ns" id="ns-podcasten" style="left:571px; top:161px;" onclick="toggleLP('podcasten')">
+    <div class="ns-label">Podcast EN</div>
+    <div class="ns-plus" id="plus-podcasten">+</div>
+  </div>
+  <!-- Shorts HU — satellite center: 320,730 -->
+  <div class="ns" id="ns-shortshu" style="left:271px; top:681px;" onclick="toggleLP('shortshu')">
+    <div class="ns-label">Shorts HU</div>
+    <div class="ns-plus" id="plus-shortshu">+</div>
+  </div>
+  <!-- Shorts EN — satellite center: 620,730 -->
+  <div class="ns" id="ns-shortsen" style="left:571px; top:681px;" onclick="toggleLP('shortsen')">
+    <div class="ns-label">Shorts EN</div>
+    <div class="ns-plus" id="plus-shortsen">+</div>
+  </div>
+
+  <!-- PODCAST HU MOONS -->
+  <a class="moon" data-group="podcasthu" style="left:191.4px; top:123.7px; transition-delay:0.00s"
+     href="https://youtu.be/Df8rw3HjBYM" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcasthu" style="left:233.5px; top:81.6px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2114003832611254770" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X</span>
+  </a>
+  <a class="moon" data-group="podcasthu" style="left:291.0px; top:66.2px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02u19cm4MwUoTYrUAwXsqBVdcuBrQASEGhFD98ZyAdVUhYQ9z9TDGLYPLPCaU6ZHyDl&amp;id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+  <!-- PODCAST EN MOONS -->
+  <a class="moon" data-group="podcasten" style="left:591.0px; top:66.2px; transition-delay:0.00s"
+     href="https://youtu.be/_X-q86L7Njg" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">YouTube</span>
+  </a>
+  <a class="moon" data-group="podcasten" style="left:648.5px; top:81.6px; transition-delay:0.04s"
+     href="https://x.com/ZVZx1965/status/2114004301781803364" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">X</span>
+  </a>
+  <a class="moon" data-group="podcasten" style="left:690.6px; top:123.7px; transition-delay:0.08s"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid0qcu7trMznveUEaJFRw3666ApzmMxgUWNUh2PKmna7UAo6WPkLZ2m2Pv1CDQji2Rxl&amp;id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+  <!-- SHORTS HU MOONS -->
+  <a class="moon" data-group="shortshu" style="left:440.9px; top:696.9px; transition-delay:0.00s" title="Az ész nem hatalom"
+     href="https://youtube.com/shorts/qoa3UEub3k0" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#1</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:426.4px; top:765.4px; transition-delay:0.04s" title="A kidőlt fa"
+     href="https://youtube.com/shorts/0apxPtXVQ6E" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#2</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:382.3px; top:819.8px; transition-delay:0.08s" title="Petrov és Arhipov"
+     href="https://youtube.com/shorts/O1yHDbC7nuE" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#3</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:318.3px; top:848.3px; transition-delay:0.12s" title="MI-kormány? Nem."
+     href="https://youtube.com/shorts/ndx7ewzVFQc" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#4</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:248.4px; top:844.6px; transition-delay:0.16s" title="Először tisztán látni"
+     href="https://youtube.com/shorts/V2rpiejMMYA" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#5</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:187.7px; top:809.6px; transition-delay:0.20s" title="Az ismeretlen nem semmi"
+     href="https://youtube.com/shorts/W_vrtnLN2KM" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#6</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:149.6px; top:750.9px; transition-delay:0.24s" title="Az igazság lassabb"
+     href="https://youtube.com/shorts/U7h3Fmizc74" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#7</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:142.3px; top:681.2px; transition-delay:0.28s" title="Verseny vagy pusztítás"
+     href="https://youtube.com/shorts/nPksrIO3T24" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#8</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:167.4px; top:615.8px; transition-delay:0.32s" title="Zárógondolat"
+     href="https://youtube.com/shorts/Rh4gyAWC3Sw" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#9</span>
+  </a>
+  <a class="moon" data-group="shortshu" style="left:219.4px; top:569.0px; transition-delay:0.36s" title="All 9 shorts — Facebook post"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid0gxkXkz6G9YvyFaTpyVTU9zgHxfdRw9biEXRiVqdcWtepAdhwS4oYiFZNgg8m4994l&amp;id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+  <!-- SHORTS EN MOONS -->
+  <a class="moon" data-group="shortsen" style="left:662.6px; top:569.0px; transition-delay:0.00s" title="AI Can Inform You. It Shouldn't Rule You."
+     href="https://youtube.com/shorts/KLB92mAOYG4" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#1</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:714.6px; top:615.8px; transition-delay:0.04s" title="Two Soviet Officers Who Questioned the Nuclear Warning"
+     href="https://youtube.com/shorts/CCgqzUteEkY" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#2</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:739.7px; top:681.2px; transition-delay:0.08s" title="Truth Should Be Slower Than an AI Answer"
+     href="https://youtube.com/shorts/VK-vvKtcy9k" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#3</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:732.4px; top:750.9px; transition-delay:0.12s" title="What If Your Decisions Are Based on the Wrong Reality?"
+     href="https://youtube.com/shorts/S2GKhv4rBBQ" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#4</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:694.3px; top:809.6px; transition-delay:0.16s" title="The Most Dangerous Mistake? Treating the Unknown as Nothing."
+     href="https://youtube.com/shorts/RFi-HVKsrnU" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#5</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:633.6px; top:844.6px; transition-delay:0.20s" title="The Fallen Tree: Why Seeing Isn't Always Understanding"
+     href="https://youtube.com/shorts/YM-U0CSomJw" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#6</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:563.7px; top:848.3px; transition-delay:0.24s" title="Could AI Help Govern Humanity Without Ruling It?"
+     href="https://youtube.com/shorts/QEvu1T7jQLI" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#7</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:499.7px; top:819.8px; transition-delay:0.28s" title="Competition Isn't the Problem. Destruction Is."
+     href="https://youtube.com/shorts/azRDt2UFwv8" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#8</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:455.6px; top:765.4px; transition-delay:0.32s" title="Can Humanity Outgrow the Need to Win?"
+     href="https://youtube.com/shorts/xqdKE08vULU" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">#9</span>
+  </a>
+  <a class="moon" data-group="shortsen" style="left:441.1px; top:696.9px; transition-delay:0.36s" title="All 9 shorts — Facebook post"
+     href="https://www.facebook.com/permalink.php?story_fbid=pfbid02S6KRiXgyDotKkoayQAcDATRmxMZMRzt7tb8PSU85wYX8g5FL4UkcaH8QTqXySRnel&amp;id=61589212142331" onclick="event.stopPropagation()" target="_blank">
+    <span class="m-plat">Facebook</span>
+  </a>
+ </div><!-- /map-stage -->
+</div><!-- /map-shell -->
+
+<!-- ═══ MAP — MOBILE CARDS ════════════════════════════ -->
+<div class="mobile-map">
+  <div class="mc-grid">
+
+    <div class="mc">
+      <div class="mc-title">Podcast HU</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/Df8rw3HjBYM" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2114003832611254770" target="_blank">X</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02u19cm4MwUoTYrUAwXsqBVdcuBrQASEGhFD98ZyAdVUhYQ9z9TDGLYPLPCaU6ZHyDl&amp;id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Podcast EN</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm" href="https://youtu.be/_X-q86L7Njg" target="_blank">YouTube</a>
+          <a class="pb-sm" href="https://x.com/ZVZx1965/status/2114004301781803364" target="_blank">X</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0qcu7trMznveUEaJFRw3666ApzmMxgUWNUh2PKmna7UAo6WPkLZ2m2Pv1CDQji2Rxl&amp;id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Shorts HU</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm long" href="https://youtube.com/shorts/qoa3UEub3k0" target="_blank">1. Az ész nem hatalom</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/0apxPtXVQ6E" target="_blank">2. A kidőlt fa</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/O1yHDbC7nuE" target="_blank">3. Petrov és Arhipov</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/ndx7ewzVFQc" target="_blank">4. MI-kormány? Nem.</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/V2rpiejMMYA" target="_blank">5. Először tisztán látni</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/W_vrtnLN2KM" target="_blank">6. Az ismeretlen nem semmi</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/U7h3Fmizc74" target="_blank">7. Az igazság lassabb</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/nPksrIO3T24" target="_blank">8. Verseny vagy pusztítás</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/Rh4gyAWC3Sw" target="_blank">9. Zárógondolat</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid0gxkXkz6G9YvyFaTpyVTU9zgHxfdRw9biEXRiVqdcWtepAdhwS4oYiFZNgg8m4994l&amp;id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="mc-title">Shorts EN</div>
+      <div class="mc-row">
+        <div class="mc-btns">
+          <a class="pb-sm long" href="https://youtube.com/shorts/KLB92mAOYG4" target="_blank">1. AI Can Inform You. It Shouldn't Rule You.</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/CCgqzUteEkY" target="_blank">2. Two Soviet Officers Who Questioned the Nuclear Warning</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/VK-vvKtcy9k" target="_blank">3. Truth Should Be Slower Than an AI Answer</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/S2GKhv4rBBQ" target="_blank">4. What If Your Decisions Are Based on the Wrong Reality?</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/RFi-HVKsrnU" target="_blank">5. The Most Dangerous Mistake? Treating the Unknown as Nothing.</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/YM-U0CSomJw" target="_blank">6. The Fallen Tree: Why Seeing Isn't Always Understanding</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/QEvu1T7jQLI" target="_blank">7. Could AI Help Govern Humanity Without Ruling It?</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/azRDt2UFwv8" target="_blank">8. Competition Isn't the Problem. Destruction Is.</a>
+          <a class="pb-sm long" href="https://youtube.com/shorts/xqdKE08vULU" target="_blank">9. Can Humanity Outgrow the Need to Win?</a>
+          <a class="pb-sm" href="https://www.facebook.com/permalink.php?story_fbid=pfbid02S6KRiXgyDotKkoayQAcDATRmxMZMRzt7tb8PSU85wYX8g5FL4UkcaH8QTqXySRnel&amp;id=61589212142331" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="flinks">
+    <a class="fl" href="https://www.linkedin.com/in/zsoltzsofka/" target="_blank">
+      <i class="fab fa-linkedin"></i> LinkedIn
+    </a>
+    <a class="fl" href="https://x.com/ZVZx1965" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i> X
+    </a>
+    <a class="fl" href="https://www.youtube.com/@HybridIntelligence" target="_blank">
+      <i class="fab fa-youtube"></i> YouTube
+    </a>
+  </div>
+  <div class="fcredit">Zsolt Valér Zsofka &nbsp;·&nbsp; Budapest &nbsp;·&nbsp; 2026</div>
+</footer>
+
+<script>
+  function toggleLP(id) {
+    const node  = document.getElementById('ns-' + id);
+    const plus  = document.getElementById('plus-' + id);
+    const moons = document.querySelectorAll('.moon[data-group="' + id + '"]');
+
+    const isOpen = !node.classList.contains('open');
+
+    document.querySelectorAll('.ns.open').forEach(n => {
+      if (n !== node) {
+        const gid = n.id.replace('ns-', '');
+        document.getElementById('plus-' + gid).textContent = '+';
+        n.classList.remove('open');
+        document.querySelectorAll('.moon[data-group="' + gid + '"]').forEach(m => m.classList.remove('open'));
+      }
+    });
+
+    node.classList.toggle('open', isOpen);
+    plus.textContent = isOpen ? '×' : '+';
+    moons.forEach(m => m.classList.toggle('open', isOpen));
+  }
+</script>
+</body>
+</html>

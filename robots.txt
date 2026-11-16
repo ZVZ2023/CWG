@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cwg.agenteconomydaily.com/sitemap.xml

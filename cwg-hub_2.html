@@ -916,9 +916,9 @@ const books=[
 let bookRot=0;
 const SPOKE=210,BRAD=40,SPEED=0.0003,BOOK_SPEED=0.00015;
 /* on phones the map is drawn at about half size, so chapter moons get larger and sit on a wider orbit */
-let CRAD=14,CORBIT=90,CFONT=10;
+let CRAD=14,CORBIT=90,CFONT=10,small=false;
 function fitMap(){
-  const small=cv.getBoundingClientRect().width<520;
+  small=cv.getBoundingClientRect().width<520;
   CRAD=small?16:14;CORBIT=small?110:90;CFONT=small?13:10;
 }
 fitMap();window.addEventListener('resize',fitMap);
@@ -979,14 +979,14 @@ function drawChapters(b){
   });
 }
 let selected=null;
-function draw(){ctx.clearRect(0,0,W,H);books.forEach(b=>drawSpoke(b));books.forEach(b=>drawChapters(b));drawHub();books.forEach(b=>drawBook(b));}
+function draw(){ctx.clearRect(0,0,W,H);books.forEach(b=>drawSpoke(b));books.forEach(b=>drawChapters(b));drawHub();books.forEach(b=>drawBook(b));drawBloom();}
 function animate(ts){
-  if(!still)bookRot+=BOOK_SPEED;
+  if(!still&&!bloom)bookRot+=BOOK_SPEED;
   books.forEach(b=>{
     const a=b.baseAngle+bookRot;
     b.bx=CX+Math.cos(a)*SPOKE;
     b.by=CY+Math.sin(a)*SPOKE;
-    if(b.open&&!still)b.rot+=SPEED;
+    if(b.open&&!still&&!(bloom&&bloom.b===b))b.rot+=SPEED;
   });
   draw();
   requestAnimationFrame(animate);
@@ -994,6 +994,44 @@ function animate(ts){
 requestAnimationFrame(animate);
 function hit(mx,my,cx2,cy2,r){return(mx-cx2)**2+(my-cy2)**2<=r*r;}
 /* nearest chapter moon within a finger-sized radius, so small moons stay tappable on phones */
+
+/* ===== chapter bloom: platform petals (restored) ===== */
+const PROFILE_IN='https://www.linkedin.com/in/zsoltzsofka/';
+const CHLINKS={"cwg-b2-c15.html": {"x": "https://x.com/ZVZx1965/status/2119607646718206171", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02VejXvGw2ddpF6igWcobWTxrrgUchmwiVvh9KBveQxu7XDRiMUtH8VfxJBqbfofg5l&amp;id=61589212142331"}, "cwg-b2-c16.html": {"x": "https://x.com/ZVZx1965/status/2116479090483994663", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid0zetnwbyfWNxyn4nBr3u7BCpgJr5pyCedWAUeTv4hrpXCDRNpz4aTnKT6eqaRmT5tl&amp;id=61589212142331"}, "cwg-b2-c17.html": {"x": "https://x.com/ZVZx1965/status/2114003832611254770", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02u19cm4MwUoTYrUAwXsqBVdcuBrQASEGhFD98ZyAdVUhYQ9z9TDGLYPLPCaU6ZHyDl&amp;id=61589212142331"}, "cwg-b2-c18.html": {"x": "https://x.com/ZVZx1965/status/2111753700100223081", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid0QmsMk1A65gfw3Zssmqw7M2zJH9pnxn4HmkGtZtrEfHMr9Vh3Pg4AcEapGkrRM6PEl&amp;id=61589212142331"}, "cwg-b2-c19.html": {"x": "https://x.com/ZVZx1965/status/2106948778221584869", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02ds67hVfKZUncPNwN8BEz7w6UyrXvRoeYA2sFTc2e3UB7gXuFvbTLqoVrsKu53KUJl&amp;id=61589212142331"}, "cwg-b2-c20.html": {"x": "https://x.com/ZVZx1965/status/2106641862538797290", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid0zc3DKsKu9Fe7kdZwoWvPBFZBwGTiHXrK6FMCsNSdALuavMKVaWNCkPmKnfq9DAwHl&amp;id=61589212142331"}, "cwg-b3-c01.html": {"x": "https://x.com/ZVZx1965/status/2101618893202579843", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02Ajh2NC3Mb6rrS3wW3TYXTuucYKCuqf2pfLrzCoCEzG3yHb3XxvRME1Leioh8EJtfl&amp;id=61589212142331"}, "cwg-b3-c03.html": {"x": "https://x.com/ZVZx1965/status/2096484153696858150", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02eKB3ezjdYAy9YpvDCXbTaWwLBC6jfQnBUmoRtv7Zne83vzanf2sQuR7zsj1dsDw6l&id=61589212142331"}, "cwg-b3-c04.html": {"x": "https://x.com/ZVZx1965/status/2093590169387512315", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid0bc8GsCHmjszeBnfc437zaT6fcEVS9mh1iffqgfEZ3FfbM9CCjdiZYqe6gNvW8Z4zl&id=61589212142331"}, "cwg-b3-c05.html": {"x": "https://x.com/ZVZx1965/status/2091483657634463781", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid026Wps27Fv7zFqKxot9mobHddJtaeGU3hWSfC7WzxAcRVX3sJ7poyXG5rioC6V9HfTl&id=61589212142331"}, "cwg-b3-c06.html": {"x": "https://x.com/ZVZx1965/status/2088875070890315819", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid08r2RV7mAKJSX2HN3P5FGv7BEYSLMiGX5Hif4XHP4gbpAHVF49GLYoGN3B9hzD3LWl&id=61589212142331"}, "cwg-b3-c07.html": {"x": "https://x.com/ZVZx1965/status/2085399119569330644", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid0jGi1DCdFwnAamk2VixL9unebzSojFvv97XK8dEHp93dRwLjg3gbNARPPWau2ibZFl&id=61589212142331"}, "cwg-b3-c08.html": {"x": "https://x.com/ZVZx1965/status/2083601204295164261", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02LTWo53X7M9ViJwtFRYe7s5obMfP85tMRpBdy7juqqLkGYHpjE1xscA9JYD7c42Ddl&id=61589212142331"}, "cwg-b3-c09.html": {"x": "https://x.com/ZVZx1965/status/2081158599426887870", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02SuzVnskQAzevxiiLh9wMrC8meyXKMwmm5pbQq7Uu8dbgiZKxTtWLUw1TLkphXeLXl&id=61589212142331"}, "cwg-b3-c10.html": {"x": "https://x.com/ZVZx1965/status/2078390331150573595", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02Pz4HEQdB5Fog9ydHZo6ewQQsNoAUX4Las2aGXHS8LwaZV5cfXofGMuARijE9YuRel&id=61589212142331"}, "cwg-b3-c11.html": {"x": "https://x.com/ZVZx1965/status/2075793205719711807"}, "cwg-b3-c12.html": {"x": "https://x.com/ZVZx1965/status/2071624324285444212"}, "cwg-b3-c13.html": {"x": "https://x.com/ZVZx1965/status/2071103380684963958"}, "cwg-b3-c14.html": {"x": "https://x.com/ZVZx1965/status/2067286899446739365"}, "cwg-b3-c15.html": {"x": "https://x.com/ZVZx1965/status/2064413238167543950"}, "cwg-b3-c16.html": {"x": "https://x.com/ZVZx1965/status/2062229841496486083"}, "cwg-b3-c17.html": {"x": "https://x.com/ZVZx1965/status/2059820262825062719", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid0YXjXfYmXHVDFtAHQXhW3QxrF9T6gr4eTjSkm8Ct9fL3Zu7JpEMvVCWNyKCSqA1Tol&id=61589212142331"}, "cwg-b3-c20.html": {"x": "https://x.com/ZVZx1965/status/2052415558289641483", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid0SX2hHYf3ZJn1TyGHmDoL152e2VEcvBsBA8DpjeDuSQJ2eP1GwQczNzWkdpJjgExXl&id=61589212142331"}, "cwg-b3-c21.html": {"x": "https://x.com/ZVZx1965/status/2047223731152425292"}, "cwg-b3-conclusions.html": {"x": "https://x.com/ZVZx1965/status/2103541499468140768", "fb": "https://www.facebook.com/permalink.php?story_fbid=pfbid02RDxQGvowW6m9JFvKkSB8smDN3ky5koy6J1ZV6Ky9Tf3YJLMjXxmemA9VfMrWn2Hfl&amp;id=61589212142331"}};
+let bloom=null,petalHits=[];
+function petalsFor(ch){
+  const out=[];
+  if(ch.vid)out.push({code:'YT',label:'YouTube',href:'https://youtu.be/'+ch.vid});
+  const L=CHLINKS[ch.url]||{};
+  if(L.x)out.push({code:'X',label:'X',href:L.x});
+  if(L.fb)out.push({code:'f',label:'Facebook',href:L.fb});
+  out.push({code:'in',label:'LinkedIn',href:PROFILE_IN});
+  return out;
+}
+function drawBloom(){
+  petalHits=[];
+  if(!bloom)return;
+  const b=bloom.b,ch=bloom.ch;
+  if(!b.open||ch._cx===undefined)return;
+  const pets=petalsFor(ch);
+  if(!pets.length)return;
+  const outA=Math.atan2(ch._cy-b.by,ch._cx-b.bx);
+  const PR=CRAD+34,pr=small?12:11;
+  const span=Math.min(1.5,(pets.length-1)*0.44);
+  pets.forEach((p,i)=>{
+    const t=pets.length===1?0:(i/(pets.length-1)-0.5)*span;
+    const a=outA+t;
+    const px=ch._cx+Math.cos(a)*PR,py=ch._cy+Math.sin(a)*PR;
+    ctx.beginPath();ctx.moveTo(ch._cx+Math.cos(a)*(CRAD+1),ch._cy+Math.sin(a)*(CRAD+1));ctx.lineTo(px-Math.cos(a)*(pr+1),py-Math.sin(a)*(pr+1));ctx.strokeStyle=gold(0.32);ctx.lineWidth=0.7;ctx.stroke();
+    ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);ctx.fillStyle='#19150b';ctx.fill();ctx.strokeStyle=gold(0.88);ctx.lineWidth=1.1;ctx.stroke();
+    ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`600 ${small?9:8}px 'Cinzel',serif`;ctx.fillStyle=gold(1);ctx.fillText(p.code,px,py);ctx.restore();
+    const lx=ch._cx+Math.cos(a)*(PR+pr+8),ly=ch._cy+Math.sin(a)*(PR+pr+8);
+    ctx.save();ctx.textAlign=Math.cos(a)<-0.25?'right':(Math.cos(a)>0.25?'left':'center');ctx.textBaseline='middle';ctx.font=`${small?8:7}px 'Cinzel',serif`;ctx.fillStyle=gold(0.62);ctx.fillText(p.label.toUpperCase(),lx,ly);ctx.restore();
+    petalHits.push({px,py,r:pr+8,href:p.href});
+  });
+}
+function petalAt(mx,my){for(const p of petalHits){if((mx-p.px)**2+(my-p.py)**2<=p.r*p.r)return p;}return null;}
+
 function chapterAt(mx,my){
   let best=null,bd=(CRAD+9)**2;
   for(const b of books){if(!b.open)continue;for(const ch of b.chapters){if(ch._cx===undefined)continue;const d=(mx-ch._cx)**2+(my-ch._cy)**2;if(d<=bd){bd=d;best={b,ch};}}}
@@ -1003,14 +1041,15 @@ function pos(e){const rect=cv.getBoundingClientRect();return[(e.clientX-rect.lef
 cv.addEventListener('click',e=>{
   const [mx,my]=pos(e);
   if(hitConc(mx,my)){location.href=b3c.url;return;}
-  for(const b of books){if(hit(mx,my,b.bx,b.by,b.r+2)){b.open=!b.open;if(!b.open&&selected&&selected.b===b)closePanel();return;}}
+  const pet=petalAt(mx,my);if(pet){window.open(pet.href,'_blank','noopener');return;}
+  for(const b of books){if(hit(mx,my,b.bx,b.by,b.r+2)){b.open=!b.open;if(!b.open){if(selected&&selected.b===b)closePanel();if(bloom&&bloom.b===b)bloom=null;}return;}}
   const c=chapterAt(mx,my);
-  if(c){showPanel(c.b,c.ch);return;}
+  if(c){bloom=(bloom&&bloom.ch===c.ch)?null:{b:c.b,ch:c.ch};showPanel(c.b,c.ch);return;}
 });
 cv.addEventListener('mousemove',e=>{
   const [mx,my]=pos(e);
   concHover=hitConc(mx,my);
-  let p=concHover||!!chapterAt(mx,my);
+  let p=concHover||!!chapterAt(mx,my)||!!petalAt(mx,my);
   for(const b of books){if(hit(mx,my,b.bx,b.by,b.r+2)){p=true;break;}}
   cv.style.cursor=p?'pointer':'default';
 });
@@ -1044,7 +1083,7 @@ function showPanel(b,ch){
   panel.classList.add('open');
   setTimeout(()=>panel.scrollIntoView({block:'nearest',behavior:still?'auto':'smooth'}),420);
 }
-function closePanel(){selected=null;document.getElementById('panel').classList.remove('open');}
+function closePanel(){selected=null;bloom=null;document.getElementById('panel').classList.remove('open');}
 document.getElementById('pclose').addEventListener('click',closePanel);
 /* deep links such as #b3-c12 open the full list and jump to that review */
 function openHash(){
